@@ -249,7 +249,7 @@ def cmd_publish(args) -> int:
         "lastConceptTitle": f"{article['titleZh']}（{article['titleEn']}）",
         "lastDay": article["day"],
         "publishedCount": idx["count"],
-        "totalPlanned": cur["totalPlanned"],
+        "totalPlanned": cur.get("totalPlanned", cur.get("totalDays", 30)),
         "nextConceptId": nxt["id"] if nxt else None,
         "nextConceptTitle": f"{nxt['titleZh']}（{nxt['titleEn']}）" if nxt else None,
         "deployVerifiedAt": None,
