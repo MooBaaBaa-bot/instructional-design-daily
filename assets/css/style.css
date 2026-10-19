@@ -31,6 +31,9 @@ html {
 
 body {
   margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
   background: var(--bg);
   color: var(--ink);
   font-family: var(--sans);
@@ -170,12 +173,16 @@ a:hover { text-decoration: underline; }
 /* ---------- 主区域 ---------- */
 
 main {
+  flex: 1 0 auto;
+  width: 100%;
   max-width: 1080px;
   margin: 0 auto;
   padding: 40px 32px 80px;
 }
 
 .view[hidden] { display: none; }
+.view { max-width: 54rem; margin: 0 auto; }
+#view-today { max-width: none; }
 
 .eyebrow {
   font-size: 11.5px;
@@ -193,7 +200,7 @@ main {
   border-left: 3px solid var(--clay);
   background: var(--paper);
   padding: 14px 18px;
-  margin: 0 0 34px;
+  margin: 0 auto 34px;
   font-size: 13.5px;
   color: var(--ink-2);
   line-height: 1.75;
@@ -586,19 +593,19 @@ details li { margin-bottom: 6px; }
 }
 
 .legend {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px 22px;
-  padding: 16px 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px 40px;
+  padding: 18px 0;
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
   margin: 26px 0 34px;
   font-size: 12.5px;
   color: var(--ink-2);
 }
-.legend dt { font-weight: 600; color: var(--ink); margin-right: 6px; }
-.legend div { display: flex; align-items: baseline; max-width: 100%; }
-.legend dd { margin: 0; color: var(--ink-3); font-size: 12px; }
+.legend div { display: grid; grid-template-columns: 82px minmax(0, 1fr); gap: 10px; align-items: baseline; }
+.legend dt { font-weight: 600; color: var(--ink); letter-spacing: 0.04em; }
+.legend dd { margin: 0; color: var(--ink-3); font-size: 12px; line-height: 1.65; }
 
 .stage {
   margin: 0 0 40px;
@@ -642,7 +649,7 @@ details li { margin-bottom: 6px; }
 }
 .plan__row {
   display: grid;
-  grid-template-columns: 44px 1fr auto;
+  grid-template-columns: 60px minmax(0, 1fr) auto;
   gap: 4px 14px;
   align-items: baseline;
   padding: 12px 2px;
@@ -687,8 +694,8 @@ details li { margin-bottom: 6px; }
   margin-left: 6px;
   white-space: nowrap;
 }
-.plan a.plan__link { color: inherit; text-decoration: none; }
-.plan a.plan__link:hover .plan__title { color: var(--green); text-decoration: underline; }
+.plan__link { color: inherit; text-decoration: none; }
+.plan__link:hover { color: var(--green); text-decoration: underline; text-underline-offset: 3px; }
 
 /* ---------- 概念库 ---------- */
 

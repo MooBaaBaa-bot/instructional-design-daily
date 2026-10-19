@@ -206,6 +206,7 @@ function setActiveTab(name) {
 }
 
 async function route() {
+  if (!state.curriculum || !state.index || !state.status) return;
   const r = currentRoute();
   state.route = r.name;
 
@@ -466,16 +467,16 @@ function renderPath() {
       const live = published.has(concept.id);
       const meta = byId.get(concept.id);
       const review = c.reviewDays.includes(concept.day) ? '<span class="plan__review">含本周回顾</span>' : '';
-      const inner = `
+      const title = `${esc(concept.titleZh)}${review}
+          <span class="plan__en">${esc(concept.titleEn)} · ${esc(concept.type)}</span>`;
+      return `<li class="plan__row ${live ? 'plan__row--live' : 'plan__row--planned'}">
         <span class="plan__day">第 ${concept.day} 天</span>
-        <span class="plan__title">${esc(concept.titleZh)}${review}
-          <span class="plan__en">${esc(concept.titleEn)} · ${esc(concept.type)}</span>
-        </span>
+        <span class="plan__title">${live
+          ? `<a class="plan__link" href="#/read/${esc(concept.id)}">${title}</a>`
+          : title}</span>
         <span class="plan__status ${live ? 'plan__status--live' : ''}">${live
           ? `已发布 · ${fmtShort(meta ? meta.date : concept.publishedDate)}`
-          : '计划中'}</span>`;
-      return `<li class="plan__row ${live ? 'plan__row--live' : 'plan__row--planned'}">
-        ${live ? `<a class="plan__link" href="#/read/${esc(concept.id)}">${inner}</a>` : inner}
+          : '计划中'}</span>
       </li>`;
     }).join('');
     return `
