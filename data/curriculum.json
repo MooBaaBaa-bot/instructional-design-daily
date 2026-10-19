@@ -1,0 +1,587 @@
+{
+  "version": "1.0",
+  "title": "教学设计 · 每日一概念",
+  "startDate": "2026-10-19",
+  "totalDays": 30,
+  "reviewDays": [
+    7,
+    14,
+    21,
+    28
+  ],
+  "levelTaxonomy": [
+    {
+      "name": "理论",
+      "en": "Theory",
+      "desc": "解释学习或教学为何如此发生的系统主张，可被检验，也常被修正。例：行为主义、认知负荷理论。"
+    },
+    {
+      "name": "模型",
+      "en": "Model",
+      "desc": "把复杂过程简化为可操作的成分与顺序，本身不解释因果，只规定结构。例：ADDIE、逆向设计。"
+    },
+    {
+      "name": "原则",
+      "en": "Principle",
+      "desc": "从理论推出的、跨情境的规范性主张，告诉设计者应当满足什么条件。例：建构性对齐。"
+    },
+    {
+      "name": "方法",
+      "en": "Method",
+      "desc": "在具体课堂中可执行的做法与流程，有效性高度依赖情境。例：问题式学习、脚手架。"
+    },
+    {
+      "name": "概念 / 机制",
+      "en": "Concept / Mechanism",
+      "desc": "构成上述各层的描述性单元，回答“是什么”或“经由什么过程发生”。例：先验知识、工作记忆。"
+    }
+  ],
+  "pathNote": [
+    "这 30 天不是 30 个孤立名词的清单，而是一条从「解释学习」到「设计学习」再到「检验学习」的路径。前六个概念建立坐标系：行为、认知、建构三种解释各自回答“学习是什么”；第七天用社会文化理论补上“学习发生在哪里”，把个体认知放回互动与文化之中。",
+    "第二周把视角从“一般如何发生”转到“为什么在这个学生身上失效”。先验知识、工作记忆与认知负荷、记忆与遗忘、动机、元认知，是同一间教室里差异最大的五个变量，也是教学设计最容易被忽略的地方。",
+    "第三周才开始谈设计。因为“目标怎么写”“活动怎么排”“评价怎么出”这些问题，只有在前两周的解释框架下才有判断依据。目标—对齐—逆向设计是一条逻辑链，脚手架与 ADDIE、4C/ID 提供操作层的工具。",
+    "第四、五周讨论课堂形态与评价证据。探究、问题、项目、合作、直接教学之间不是先进与落后的关系，而是适用条件与代价的差别；形成性与总结性评价承担不同功能，量规决定证据的质量。第六周回到终点：迁移。它是前五个阶段的汇合处，也是判断 AI 教育价值时最该追问的问题。"
+  ],
+  "reviewNote": "第 7、14、21、28 天在当天新概念之外增加一段简短回顾，只做串联与对比，不引入新知识。",
+  "stages": [
+    {
+      "id": "s1",
+      "order": 1,
+      "name": "学习如何发生",
+      "en": "How Learning Happens",
+      "dayRange": [
+        1,
+        6
+      ],
+      "theme": "学习理论",
+      "description": "四条理论主线：行为、认知、信息加工、建构。先建立判断任何教学主张的坐标系，再谈方法。"
+    },
+    {
+      "id": "s2",
+      "order": 2,
+      "name": "学习者的内部条件",
+      "en": "Conditions Inside the Learner",
+      "dayRange": [
+        7,
+        13
+      ],
+      "theme": "学习机制",
+      "description": "社会文化情境、先验知识、认知负荷、注意与记忆、动机、元认知。解释同样的教法为何效果不同。"
+    },
+    {
+      "id": "s3",
+      "order": 3,
+      "name": "把理论转成设计",
+      "en": "From Theory to Design",
+      "dayRange": [
+        14,
+        19
+      ],
+      "theme": "教学设计",
+      "description": "目标分类、建构性对齐、逆向设计、脚手架，以及 ADDIE 与 4C/ID 两种设计流程。"
+    },
+    {
+      "id": "s4",
+      "order": 4,
+      "name": "课堂形态的选择",
+      "en": "Choosing Instructional Formats",
+      "dayRange": [
+        20,
+        24
+      ],
+      "theme": "教学策略",
+      "description": "探究、问题、项目、合作、直接教学。重点不是记住名称，而是判断适用条件与代价。"
+    },
+    {
+      "id": "s5",
+      "order": 5,
+      "name": "如何知道学会了",
+      "en": "Evidence of Learning",
+      "dayRange": [
+        25,
+        27
+      ],
+      "theme": "学习评价",
+      "description": "形成性与总结性评价的功能分工，真实性任务与量规如何决定证据质量。"
+    },
+    {
+      "id": "s6",
+      "order": 6,
+      "name": "迁移与人工智能",
+      "en": "Transfer and AI",
+      "dayRange": [
+        28,
+        30
+      ],
+      "theme": "迁移与 AI",
+      "description": "迁移是全部教学的终点；在此基础上讨论智能辅导、自适应支持与人机协同的边界。"
+    }
+  ],
+  "concepts": [
+    {
+      "id": "learning",
+      "day": 1,
+      "titleZh": "学习",
+      "titleEn": "Learning",
+      "theme": "学习理论",
+      "stageId": "s1",
+      "type": "概念",
+      "oneLiner": "学习是因经验而产生的、相对持久的能力或行为倾向的变化。",
+      "dependsOn": [],
+      "status": "planned",
+      "publishedDate": null
+    },
+    {
+      "id": "behaviorism",
+      "day": 2,
+      "titleZh": "行为主义",
+      "titleEn": "Behaviorism",
+      "theme": "学习理论",
+      "stageId": "s1",
+      "type": "理论",
+      "oneLiner": "把学习看作刺激与反应之间联结的形成，只研究可观察的行为。",
+      "dependsOn": [
+        "learning"
+      ],
+      "status": "planned",
+      "publishedDate": null
+    },
+    {
+      "id": "reinforcement",
+      "day": 3,
+      "titleZh": "强化与惩罚",
+      "titleEn": "Reinforcement and Punishment",
+      "theme": "学习理论",
+      "stageId": "s1",
+      "type": "原则",
+      "oneLiner": "后果如何改变行为出现的概率，以及为什么“即时反馈”有时反而削弱学习。",
+      "dependsOn": [
+        "behaviorism"
+      ],
+      "status": "planned",
+      "publishedDate": null
+    },
+    {
+      "id": "cognitivism",
+      "day": 4,
+      "titleZh": "认知主义",
+      "titleEn": "Cognitivism",
+      "theme": "学习理论",
+      "stageId": "s1",
+      "type": "理论",
+      "oneLiner": "把学习看作信息的接收、加工与存储，关注内部表征而非外显反应。",
+      "dependsOn": [
+        "learning",
+        "behaviorism"
+      ],
+      "status": "planned",
+      "publishedDate": null
+    },
+    {
+      "id": "information-processing",
+      "day": 5,
+      "titleZh": "信息加工模型",
+      "titleEn": "Information Processing Model",
+      "theme": "学习理论",
+      "stageId": "s1",
+      "type": "模型",
+      "oneLiner": "用感觉登记、工作记忆与长时记忆描述信息如何被选择、加工和保存。",
+      "dependsOn": [
+        "cognitivism"
+      ],
+      "status": "planned",
+      "publishedDate": null
+    },
+    {
+      "id": "constructivism",
+      "day": 6,
+      "titleZh": "建构主义",
+      "titleEn": "Constructivism",
+      "theme": "学习理论",
+      "stageId": "s1",
+      "type": "理论",
+      "oneLiner": "知识不是被传递的，而是学习者在已有经验基础上主动建构的。",
+      "dependsOn": [
+        "cognitivism"
+      ],
+      "status": "planned",
+      "publishedDate": null
+    },
+    {
+      "id": "sociocultural-theory",
+      "day": 7,
+      "titleZh": "社会文化理论与最近发展区",
+      "titleEn": "Sociocultural Theory and ZPD",
+      "theme": "学习理论",
+      "stageId": "s1",
+      "type": "理论",
+      "oneLiner": "学习发生在社会互动与文化工具之中，语言中介了思维；教学应瞄准“跳一跳够得着”的区间。",
+      "dependsOn": [
+        "constructivism"
+      ],
+      "status": "planned",
+      "publishedDate": null
+    },
+    {
+      "id": "prior-knowledge",
+      "day": 8,
+      "titleZh": "先验知识",
+      "titleEn": "Prior Knowledge",
+      "theme": "学习机制",
+      "stageId": "s2",
+      "type": "机制",
+      "oneLiner": "学生已经知道什么，是预测新学习效果最强的单一变量。",
+      "dependsOn": [
+        "constructivism",
+        "sociocultural-theory"
+      ],
+      "status": "planned",
+      "publishedDate": null
+    },
+    {
+      "id": "cognitive-load",
+      "day": 9,
+      "titleZh": "认知负荷理论",
+      "titleEn": "Cognitive Load Theory",
+      "theme": "学习机制",
+      "stageId": "s2",
+      "type": "理论",
+      "oneLiner": "工作记忆容量有限，教学设计首先要管理内在、外在和相关三种负荷。",
+      "dependsOn": [
+        "information-processing",
+        "prior-knowledge"
+      ],
+      "status": "planned",
+      "publishedDate": null
+    },
+    {
+      "id": "attention-working-memory",
+      "day": 10,
+      "titleZh": "注意与工作记忆",
+      "titleEn": "Attention and Working Memory",
+      "theme": "学习机制",
+      "stageId": "s2",
+      "type": "机制",
+      "oneLiner": "注意决定什么能进入加工，工作记忆决定同时能处理多少。",
+      "dependsOn": [
+        "cognitive-load"
+      ],
+      "status": "planned",
+      "publishedDate": null
+    },
+    {
+      "id": "memory-forgetting",
+      "day": 11,
+      "titleZh": "记忆与遗忘",
+      "titleEn": "Memory and Forgetting",
+      "theme": "学习机制",
+      "stageId": "s2",
+      "type": "机制",
+      "oneLiner": "记忆不是往仓库里存放，而是每次重建；遗忘的规律决定了复习的节奏。",
+      "dependsOn": [
+        "attention-working-memory"
+      ],
+      "status": "planned",
+      "publishedDate": null
+    },
+    {
+      "id": "self-determination",
+      "day": 12,
+      "titleZh": "自我决定理论",
+      "titleEn": "Self-Determination Theory",
+      "theme": "学习机制",
+      "stageId": "s2",
+      "type": "理论",
+      "oneLiner": "自主、胜任与归属三种基本心理需要被满足时，动机的质量最高。",
+      "dependsOn": [
+        "learning"
+      ],
+      "status": "planned",
+      "publishedDate": null
+    },
+    {
+      "id": "metacognition-srl",
+      "day": 13,
+      "titleZh": "元认知与自我调节学习",
+      "titleEn": "Metacognition and Self-Regulated Learning",
+      "theme": "学习机制",
+      "stageId": "s2",
+      "type": "机制",
+      "oneLiner": "学习者对自己认知过程的监控与调节，是“学会学习”的核心。",
+      "dependsOn": [
+        "memory-forgetting",
+        "self-determination"
+      ],
+      "status": "planned",
+      "publishedDate": null
+    },
+    {
+      "id": "learning-objectives",
+      "day": 14,
+      "titleZh": "学习目标与结果分类",
+      "titleEn": "Learning Objectives and Bloom's Taxonomy",
+      "theme": "教学设计",
+      "stageId": "s3",
+      "type": "模型",
+      "oneLiner": "用可观察的动词描述学习结果，并按认知复杂度分层。",
+      "dependsOn": [
+        "metacognition-srl"
+      ],
+      "status": "planned",
+      "publishedDate": null
+    },
+    {
+      "id": "constructive-alignment",
+      "day": 15,
+      "titleZh": "建构性对齐",
+      "titleEn": "Constructive Alignment",
+      "theme": "教学设计",
+      "stageId": "s3",
+      "type": "原则",
+      "oneLiner": "目标、活动与评价必须指向同一种认知操作，否则对齐只是形式。",
+      "dependsOn": [
+        "learning-objectives",
+        "constructivism"
+      ],
+      "status": "planned",
+      "publishedDate": null
+    },
+    {
+      "id": "backward-design",
+      "day": 16,
+      "titleZh": "逆向设计",
+      "titleEn": "Backward Design",
+      "theme": "教学设计",
+      "stageId": "s3",
+      "type": "模型",
+      "oneLiner": "先确定期望的结果与可接受的证据，再倒推教学活动。",
+      "dependsOn": [
+        "constructive-alignment"
+      ],
+      "status": "planned",
+      "publishedDate": null
+    },
+    {
+      "id": "scaffolding",
+      "day": 17,
+      "titleZh": "脚手架",
+      "titleEn": "Scaffolding",
+      "theme": "教学设计",
+      "stageId": "s3",
+      "type": "方法",
+      "oneLiner": "在学习者力所不及处提供临时支持，并随能力增长逐步撤除。",
+      "dependsOn": [
+        "sociocultural-theory",
+        "cognitive-load"
+      ],
+      "status": "planned",
+      "publishedDate": null
+    },
+    {
+      "id": "addie",
+      "day": 18,
+      "titleZh": "ADDIE 教学设计模型",
+      "titleEn": "ADDIE Model",
+      "theme": "教学设计",
+      "stageId": "s3",
+      "type": "模型",
+      "oneLiner": "把设计拆成分析、设计、开发、实施、评价五个可管理阶段。",
+      "dependsOn": [
+        "backward-design"
+      ],
+      "status": "planned",
+      "publishedDate": null
+    },
+    {
+      "id": "four-component-id",
+      "day": 19,
+      "titleZh": "四要素教学设计（4C/ID）",
+      "titleEn": "Four-Component Instructional Design",
+      "theme": "教学设计",
+      "stageId": "s3",
+      "type": "模型",
+      "oneLiner": "面向复杂学习，用整体任务、关联知识、程序信息与部分任务练习组织教学。",
+      "dependsOn": [
+        "cognitive-load",
+        "scaffolding"
+      ],
+      "status": "planned",
+      "publishedDate": null
+    },
+    {
+      "id": "inquiry-based",
+      "day": 20,
+      "titleZh": "探究式学习",
+      "titleEn": "Inquiry-Based Learning",
+      "theme": "教学策略",
+      "stageId": "s4",
+      "type": "方法",
+      "oneLiner": "让学生像研究者一样提出问题、收集证据并形成解释。",
+      "dependsOn": [
+        "constructivism",
+        "scaffolding"
+      ],
+      "status": "planned",
+      "publishedDate": null
+    },
+    {
+      "id": "problem-based",
+      "day": 21,
+      "titleZh": "问题式学习",
+      "titleEn": "Problem-Based Learning",
+      "theme": "教学策略",
+      "stageId": "s4",
+      "type": "方法",
+      "oneLiner": "以一个真实问题作为课程组织中心，知识在解决需求的驱动下被引入。",
+      "dependsOn": [
+        "inquiry-based",
+        "prior-knowledge"
+      ],
+      "status": "planned",
+      "publishedDate": null
+    },
+    {
+      "id": "project-based",
+      "day": 22,
+      "titleZh": "项目式学习",
+      "titleEn": "Project-Based Learning",
+      "theme": "教学策略",
+      "stageId": "s4",
+      "type": "方法",
+      "oneLiner": "围绕一个持续数周的作品或成果组织学习，过程与产品同时被评价。",
+      "dependsOn": [
+        "problem-based"
+      ],
+      "status": "planned",
+      "publishedDate": null
+    },
+    {
+      "id": "cooperative-learning",
+      "day": 23,
+      "titleZh": "合作学习",
+      "titleEn": "Cooperative Learning",
+      "theme": "教学策略",
+      "stageId": "s4",
+      "type": "方法",
+      "oneLiner": "通过积极互赖与个体问责，把“分组”变成真正的学习单位。",
+      "dependsOn": [
+        "sociocultural-theory",
+        "project-based"
+      ],
+      "status": "planned",
+      "publishedDate": null
+    },
+    {
+      "id": "direct-instruction",
+      "day": 24,
+      "titleZh": "直接教学",
+      "titleEn": "Direct Instruction",
+      "theme": "教学策略",
+      "stageId": "s4",
+      "type": "方法",
+      "oneLiner": "清晰讲解、示范与引导练习，在入门与高负荷内容上往往更高效。",
+      "dependsOn": [
+        "cognitive-load",
+        "scaffolding"
+      ],
+      "status": "planned",
+      "publishedDate": null
+    },
+    {
+      "id": "formative-assessment",
+      "day": 25,
+      "titleZh": "形成性评价",
+      "titleEn": "Formative Assessment",
+      "theme": "学习评价",
+      "stageId": "s5",
+      "type": "方法",
+      "oneLiner": "在学习过程中收集证据并据此调整教学，评价服务于学习而非筛选。",
+      "dependsOn": [
+        "learning-objectives",
+        "direct-instruction"
+      ],
+      "status": "planned",
+      "publishedDate": null
+    },
+    {
+      "id": "summative-assessment",
+      "day": 26,
+      "titleZh": "总结性评价",
+      "titleEn": "Summative Assessment",
+      "theme": "学习评价",
+      "stageId": "s5",
+      "type": "方法",
+      "oneLiner": "在阶段结束时判断学习结果，用于认证、分级与资源决策。",
+      "dependsOn": [
+        "formative-assessment"
+      ],
+      "status": "planned",
+      "publishedDate": null
+    },
+    {
+      "id": "authentic-assessment",
+      "day": 27,
+      "titleZh": "真实性评价与量规",
+      "titleEn": "Authentic Assessment and Rubrics",
+      "theme": "学习评价",
+      "stageId": "s5",
+      "type": "方法",
+      "oneLiner": "用接近真实实践的任务与透明的标准，判断学习质量而不只是分数。",
+      "dependsOn": [
+        "summative-assessment",
+        "constructive-alignment"
+      ],
+      "status": "planned",
+      "publishedDate": null
+    },
+    {
+      "id": "transfer",
+      "day": 28,
+      "titleZh": "学习迁移",
+      "titleEn": "Transfer of Learning",
+      "theme": "迁移与 AI",
+      "stageId": "s6",
+      "type": "机制",
+      "oneLiner": "把所学用于新情境的能力，是教学效果的最终检验。",
+      "dependsOn": [
+        "authentic-assessment",
+        "prior-knowledge"
+      ],
+      "status": "planned",
+      "publishedDate": null
+    },
+    {
+      "id": "intelligent-tutoring",
+      "day": 29,
+      "titleZh": "智能辅导系统与自适应学习",
+      "titleEn": "Intelligent Tutoring Systems and Adaptive Learning",
+      "theme": "迁移与 AI",
+      "stageId": "s6",
+      "type": "方法",
+      "oneLiner": "用细粒度诊断与即时反馈，模拟一对一辅导中真正起作用的部分。",
+      "dependsOn": [
+        "transfer",
+        "formative-assessment"
+      ],
+      "status": "planned",
+      "publishedDate": null
+    },
+    {
+      "id": "human-ai-agency",
+      "day": 30,
+      "titleZh": "人机协同与学习者主体性",
+      "titleEn": "Human-AI Collaboration and Learner Agency",
+      "theme": "迁移与 AI",
+      "stageId": "s6",
+      "type": "原则",
+      "oneLiner": "AI 承担可外包的认知劳动，学习者保留判断、解释与选择的责任。",
+      "dependsOn": [
+        "intelligent-tutoring",
+        "metacognition-srl",
+        "self-determination"
+      ],
+      "status": "planned",
+      "publishedDate": null
+    }
+  ]
+}
