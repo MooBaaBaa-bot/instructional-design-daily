@@ -1,6 +1,32 @@
 {
   "site": "教学设计 · 每日一概念",
-  "generatedAt": null,
-  "count": 0,
-  "articles": []
+  "generatedAt": "2026-10-19T15:03:38+08:00",
+  "count": 1,
+  "articles": [
+    {
+      "id": "learning",
+      "day": 1,
+      "date": "2026-10-19",
+      "titleZh": "学习",
+      "titleEn": "Learning",
+      "theme": "学习理论",
+      "stageId": "s1",
+      "type": "概念",
+      "readingMinutes": 6,
+      "wordCount": 1163,
+      "oneLiner": "学习是因经验而产生的、相对持久的能力或行为倾向的变化。",
+      "keywords": [
+        "学习",
+        "learning",
+        "学习与表现",
+        "learning vs performance",
+        "潜伏学习",
+        "latent learning",
+        "经验"
+      ],
+      "file": "data/articles/learning.json",
+      "sourceCount": 3,
+      "updatedAt": "2026-10-19T15:03:38+08:00"
+    }
+  ]
 }
