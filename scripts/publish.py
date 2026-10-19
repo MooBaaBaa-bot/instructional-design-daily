@@ -328,6 +328,45 @@ def wait_online(expected: str) -> bool:
     return False
 
 
+def cmd_resume(_args) -> int:
+    """上一次运行中断后继续：补提交、补推送、补验证，不重新生成内容。"""
+    st = status()
+    dirty = git("status", "--porcelain").stdout.strip()
+    if dirty:
+        git("add", "-A")
+        c = git("commit", "-m", "content: 续跑上一次中断的发布")
+        if c.returncode != 0:
+            say(f"提交失败：{(c.stdout + c.stderr).strip()}")
+            return 3
+        say("已补提交本地未提交的改动")
+
+    ahead = git("rev-list", "--count", "origin/main..HEAD").stdout.strip()
+    if ahead and ahead != "0":
+        push = git("push", "origin", "HEAD:main")
+        if push.returncode != 0:
+            say(f"推送仍失败：{push.stderr.strip()}")
+            return 3
+        say(f"已补推送 {ahead} 个提交")
+    else:
+        say("本地与远端一致，无需补推送")
+
+    if not st.get("lastPublishedAt"):
+        say("没有可验证的发布记录")
+        return 4
+    say(f"等待线上确认 {st['lastPublishedAt']} …")
+    if not wait_online(st["lastPublishedAt"]):
+        say("线上仍未确认该版本；请检查 Pages 构建状态。")
+        return 4
+    if not st.get("deployVerifiedAt"):
+        st["deployVerifiedAt"] = iso(now())
+        dump(DATA / "status.json", st)
+        git("add", "data/status.json")
+        git("commit", "-m", "chore: record deploy verification")
+        git("push", "origin", "HEAD:main")
+    say(f"线上已确认：{SITE_URL}")
+    return 0
+
+
 def cmd_verify(_args) -> int:
     local = status()
     remote = fetch_json(SITE_URL.rstrip("/") + f"/data/status.json?cb={int(time.time())}")
@@ -351,6 +390,7 @@ def main() -> int:
     sub.add_parser("next").set_defaults(func=cmd_next)
     sub.add_parser("status").set_defaults(func=cmd_status)
     sub.add_parser("verify").set_defaults(func=cmd_verify)
+    sub.add_parser("resume").set_defaults(func=cmd_resume)
 
     p = sub.add_parser("publish")
     p.add_argument("article")
