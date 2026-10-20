@@ -6,7 +6,7 @@
 <title>教学设计 · 每日一概念</title>
 <meta name="description" content="每天一个教育学与教学设计核心概念：学习理论、学习机制、教学设计、教学策略、学习评价、迁移与 AI 教育。每日 10:00 更新，内容累积保存。">
 <meta name="color-scheme" content="light">
-<meta name="theme-color" content="#faf7f0">
+<meta name="theme-color" content="#f5f1e8">
 <meta property="og:title" content="教学设计 · 每日一概念">
 <meta property="og:description" content="每天一个教育学与教学设计核心概念，从学习理论到迁移与 AI 教育。">
 <meta property="og:type" content="website">
@@ -15,10 +15,16 @@
 </head>
 <body>
 <a class="skip-link" href="#main">跳到正文</a>
-<div class="readbar" id="readbar" hidden></div>
+<div class="readbar" id="readbar" hidden><span class="readbar__fill" id="readbar-fill"></span></div>
 <aside class="qnav" id="qnav" aria-label="学习内容" hidden></aside>
+<div class="qnav-backdrop" id="qnav-backdrop" hidden></div>
 
-<header class="site-head">
+<button class="qnav-toggle" id="qnav-toggle" type="button" aria-controls="qnav" aria-expanded="false" hidden>
+  <svg viewBox="0 0 16 16" aria-hidden="true" width="14" height="14"><path d="M2 4h12M2 8h12M2 12h8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+  <span>学习内容</span>
+</button>
+
+<header class="site-head" id="site-head">
   <div class="site-head__inner">
     <div class="brand">
       <div class="brand__mark">
@@ -33,13 +39,13 @@
       <span class="head-status__line"><span class="dot" id="head-dot"></span><span id="head-status-text">正在读取更新状态…</span></span>
       <span class="head-status__prog" id="head-status-prog"></span>
     </div>
+    <nav class="tabs" aria-label="主导航">
+      <a class="tab" href="#/today" data-route="today" aria-current="page">今日学习</a>
+      <a class="tab" href="#/path" data-route="path">学习路径</a>
+      <a class="tab" href="#/library" data-route="library">概念库<span class="tab__count" id="tab-lib-count"></span></a>
+      <a class="tab" href="#/mine" data-route="mine">我的记录<span class="tab__count" id="tab-mine-count"></span></a>
+    </nav>
   </div>
-  <nav class="tabs" aria-label="主导航">
-    <a class="tab" href="#/today" data-route="today" aria-current="page">今日学习</a>
-    <a class="tab" href="#/path" data-route="path">学习路径</a>
-    <a class="tab" href="#/library" data-route="library">概念库<span class="tab__count" id="tab-lib-count"></span></a>
-    <a class="tab" href="#/mine" data-route="mine">我的记录<span class="tab__count" id="tab-mine-count"></span></a>
-  </nav>
 </header>
 
 <main id="main">
@@ -65,6 +71,10 @@
     </div>
   </div>
 </footer>
+
+<button class="to-top" id="to-top" type="button" aria-label="回到顶部">
+  <svg viewBox="0 0 16 16" aria-hidden="true" width="14" height="14"><path d="M8 13V4M3.5 8.5 8 4l4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <noscript><p style="max-width:34rem;margin:40px auto;padding:0 20px">本站需要启用 JavaScript 才能显示内容。</p></noscript>

@@ -216,10 +216,15 @@ function cleanupReader() {
   if (state.observer) { state.observer.disconnect(); state.observer = null; }
   if (state.onScroll) { window.removeEventListener('scroll', state.onScroll); state.onScroll = null; }
   const bar = el('readbar');
-  if (bar) { bar.hidden = true; bar.style.width = '0'; }
+  if (bar) bar.hidden = true;
+  const fill = el('readbar-fill');
+  if (fill) fill.style.width = '0';
   const qnav = el('qnav');
   if (qnav) { qnav.hidden = true; qnav.innerHTML = ''; }
+  closeQNav();
   document.body.classList.remove('has-qnav');
+  const top = el('to-top');
+  if (top) top.classList.remove('is-on');
 }
 
 async function route() {
@@ -248,11 +253,19 @@ async function route() {
 /* ---------------- 期号条 ---------------- */
 
 function issueBar(article, stateText, stale) {
+  const total = totalPlanned();
+  const ticks = Array.from({ length: total }, (_, i) => {
+    const d = i + 1;
+    const cls = d < article.day ? 'is-on' : (d === article.day ? 'is-now' : '');
+    return `<span class="issue__tick ${cls}"></span>`;
+  }).join('');
+
   return `<div class="issue">
-    <span class="issue__day">DAY <b>${String(article.day).padStart(2, '0')}</b> / ${totalPlanned()}</span>
+    <span class="issue__day">DAY <b>${String(article.day).padStart(2, '0')}</b> / ${total}</span>
     <span class="issue__theme">${esc(article.theme)}</span>
-    <span>${esc(fmtDateCn(article.date))} · ${esc(weekdayCn(article.date))}</span>
+    <span class="issue__date">${esc(fmtDateCn(article.date))} · ${esc(weekdayCn(article.date))}</span>
     <span class="issue__state ${stale ? 'issue__state--stale' : ''}"><span class="dot"></span>${esc(stateText)}</span>
+    <span class="issue__ticks" role="img" aria-label="第 ${article.day} 天，共 ${total} 天">${ticks}</span>
   </div>`;
 }
 
@@ -347,6 +360,7 @@ function readerHTML(article, opts = {}) {
       <nav class="toc">
         <p class="toc__label">本篇目录</p>
         <ul class="toc__list">${toc}</ul>
+        <div class="toc__rail" aria-hidden="true"><span class="toc__rail-fill" id="toc-rail"></span></div>
         <p class="toc__foot">${n} 节 · 约 ${article.readingMinutes} 分钟<br>正文 ${article.wordCount || '—'} 字</p>
       </nav>
     </aside>
@@ -355,11 +369,33 @@ function readerHTML(article, opts = {}) {
 
 function mountReader(article, meta) {
   el('article-body').innerHTML = renderSections(article);
+  applyFontSize();
   mountActions(el('article-actions'), el('article-note'), article);
   setupTOC();
   setupProgress();
   renderTabs();
   if (meta) { /* 元信息已在页头展示，无需重复 */ }
+}
+
+/* ---------------- 阅读字号偏好 ---------------- */
+
+const FONT_KEY = 'idd.fontsize.v1';
+const FONT_STEPS = [
+  { key: 's', label: '小', title: '小字号' },
+  { key: 'm', label: '中', title: '默认字号' },
+  { key: 'l', label: '大', title: '大字号' },
+];
+
+function currentFontSize() {
+  try {
+    const v = localStorage.getItem(FONT_KEY);
+    return FONT_STEPS.some((s) => s.key === v) ? v : 'm';
+  } catch (err) { return 'm'; }
+}
+
+function applyFontSize() {
+  const body = el('article-body');
+  if (body) body.dataset.size = currentFontSize();
 }
 
 /* ---------------- 上一篇 / 下一篇 ---------------- */
@@ -538,7 +574,10 @@ function mountQNav(article) {
   const planRows = all.filter((c) => !c.published).map(row).join('');
 
   nav.innerHTML = `
-    <p class="qnav__title">学习内容</p>
+    <div class="qnav__head">
+      <p class="qnav__title">学习内容</p>
+      <button class="qnav__close" type="button" aria-label="关闭学习内容">关闭</button>
+    </div>
     <div class="qnav__filter">
       <input id="qnav-q" type="search" autocomplete="off" placeholder="筛选概念" aria-label="按名称或关键词筛选概念">
     </div>
@@ -553,6 +592,7 @@ function mountQNav(article) {
 
   nav.hidden = false;
   document.body.classList.add('has-qnav');
+  el('qnav-toggle').hidden = false;
 
   const input = el('qnav-q');
   const rows = [...nav.querySelectorAll('.qnav__row')];
@@ -584,20 +624,105 @@ function mountQNav(article) {
     }
   });
   apply();
+
+  const active = nav.querySelector('.qnav__link[aria-current="true"]');
+  if (active) {
+    const scroller = nav.querySelector('.qnav__scroll');
+    if (scroller && scroller.scrollHeight > scroller.clientHeight) {
+      const top = active.offsetTop - scroller.clientHeight / 2;
+      scroller.scrollTop = Math.max(0, top);
+    }
+  }
+
+  nav.querySelector('.qnav__close').addEventListener('click', closeQNav);
+}
+
+/* ---------------- 抽屉开合 ---------------- */
+
+function openQNav() {
+  if (!document.body.classList.contains('has-qnav')) return;
+  const toggle = el('qnav-toggle');
+  if (toggle) toggle.classList.remove('is-tucked');
+  document.body.classList.add('qnav-open');
+  el('qnav-backdrop').hidden = false;
+  const btn = el('qnav-toggle');
+  if (btn) btn.setAttribute('aria-expanded', 'true');
+  const input = el('qnav-q');
+  if (input && window.innerWidth < 1280) setTimeout(() => input.focus({ preventScroll: true }), 260);
+}
+
+function closeQNav() {
+  document.body.classList.remove('qnav-open');
+  const btn = el('qnav-toggle');
+  if (btn) btn.setAttribute('aria-expanded', 'false');
+}
+
+function setupQNavToggle() {
+  const btn = el('qnav-toggle');
+  const backdrop = el('qnav-backdrop');
+  if (btn) {
+    btn.addEventListener('click', () => {
+      if (document.body.classList.contains('qnav-open')) closeQNav();
+      else openQNav();
+    });
+  }
+  if (backdrop) backdrop.addEventListener('click', closeQNav);
 }
 
 function setupProgress() {
   const bar = el('readbar');
-  if (!bar) return;
+  const fill = el('readbar-fill');
+  if (!bar || !fill) return;
   bar.hidden = false;
   const update = () => {
     const h = document.documentElement.scrollHeight - window.innerHeight;
     const p = h > 0 ? Math.min(1, Math.max(0, window.scrollY / h)) : 0;
-    bar.style.width = `${(p * 100).toFixed(2)}%`;
+    const pct = `${(p * 100).toFixed(2)}%`;
+    fill.style.width = pct;
+    const rail = el('toc-rail');
+    if (rail) rail.style.width = pct;
   };
   update();
   state.onScroll = update;
   window.addEventListener('scroll', update, { passive: true });
+}
+
+/* ---------------- 页头收起、回到顶部、抽屉 ---------------- */
+
+function setupChrome() {
+  const head = el('site-head');
+  const top = el('to-top');
+  const navBtn = el('qnav-toggle');
+  let ticking = false;
+  let lastY = window.scrollY;
+
+  const onScroll = () => {
+    if (ticking) return;
+    ticking = true;
+    window.requestAnimationFrame(() => {
+      const y = window.scrollY;
+      if (head) head.classList.toggle('is-compact', y > 30);
+      if (top) top.classList.toggle('is-on', y > 720);
+
+      /* 向下阅读时收起浮动「学习内容」按钮，向上滚动时回来 */
+      if (navBtn && !document.body.classList.contains('qnav-open')) {
+        if (y > lastY + 6 && y > 280) navBtn.classList.add('is-tucked');
+        else if (y < lastY - 6 || y < 120) navBtn.classList.remove('is-tucked');
+      }
+      lastY = y;
+      ticking = false;
+    });
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  if (top) {
+    top.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  setupQNavToggle();
 }
 
 /* ---------------- 阅读操作 ---------------- */
@@ -605,11 +730,17 @@ function setupProgress() {
 function mountActions(actionsEl, noteEl, article) {
   const id = article.id;
   const rec = state.records;
+  const size = currentFontSize();
 
   actionsEl.innerHTML = `
     <button class="btn" type="button" data-act="read" aria-pressed="false"></button>
     <button class="btn" type="button" data-act="fav" aria-pressed="false"></button>
     <button class="btn btn--quiet" type="button" data-act="jump-note">写一条笔记</button>
+    <button class="btn btn--quiet" type="button" data-act="copy">复制链接</button>
+    <div class="fontctl" role="group" aria-label="正文字号">
+      <span class="fontctl__label" aria-hidden="true">字号</span>
+      ${FONT_STEPS.map((s) => `<button type="button" data-size="${s.key}" title="${esc(s.title)}" aria-label="${esc(s.title)}" aria-pressed="${s.key === size}">${esc(s.label)}</button>`).join('')}
+    </div>
   `;
 
   const readBtn = actionsEl.querySelector('[data-act="read"]');
@@ -644,6 +775,36 @@ function mountActions(actionsEl, noteEl, article) {
     if (ta) { ta.focus(); ta.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
   });
 
+  actionsEl.querySelector('[data-act="copy"]').addEventListener('click', async () => {
+    const url = `${window.location.origin}${window.location.pathname}#/read/${id}`;
+    try {
+      await navigator.clipboard.writeText(url);
+      toast('链接已复制');
+    } catch (err) {
+      const tmp = document.createElement('textarea');
+      tmp.value = url;
+      tmp.setAttribute('readonly', '');
+      tmp.style.position = 'fixed';
+      tmp.style.opacity = '0';
+      document.body.appendChild(tmp);
+      tmp.select();
+      const ok = document.execCommand && document.execCommand('copy');
+      tmp.remove();
+      toast(ok ? '链接已复制' : '复制失败，请手动复制地址栏');
+    }
+  });
+
+  actionsEl.querySelectorAll('[data-size]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const next = btn.dataset.size;
+      try { localStorage.setItem(FONT_KEY, next); } catch (err) { /* 忽略 */ }
+      applyFontSize();
+      actionsEl.querySelectorAll('[data-size]').forEach((b) => {
+        b.setAttribute('aria-pressed', String(b.dataset.size === next));
+      });
+    });
+  });
+
   noteEl.innerHTML = `
     <label for="note-input">我的笔记</label>
     <textarea id="note-input" placeholder="这个概念能用在哪个课程、哪次设计里？"></textarea>
@@ -675,6 +836,10 @@ function renderPath() {
   const byId = new Map(state.index.articles.map((a) => [a.id, a]));
   const total = c.concepts.length;
   const done = c.concepts.filter((x) => published.has(x.id)).length;
+  const currentStage = c.stages.find((stage) => c.concepts
+    .filter((x) => x.stageId === stage.id)
+    .some((x) => !published.has(x.id)));
+  const nextConcept = state.status.nextConceptTitle || '';
 
   const segs = c.stages.map((stage) => {
     const items = c.concepts.filter((x) => x.stageId === stage.id);
@@ -712,7 +877,7 @@ function renderPath() {
 
     const p = items.length ? Math.round((hit / items.length) * 100) : 0;
     return `
-      <section class="stage">
+      <section class="stage ${isCurrent ? 'stage--current' : ''}">
         <div class="stage__head">
           <span class="stage__no">STAGE ${String(stage.order).padStart(2, '0')}</span>
           <h2 class="stage__name">${esc(stage.name)}</h2>
@@ -733,8 +898,7 @@ function renderPath() {
     <div class="page-head">
       <p class="eyebrow">Learning Path</p>
       <h1>学习路径</h1>
-      ${c.pathNote.map((p) => `<p>${esc(p)}</p>`).join('')}
-      <p>${esc(c.reviewNote)}</p>
+      <p>${esc(c.pathNote[0])}</p>
     </div>
 
     <div class="progress-block">
@@ -744,6 +908,14 @@ function renderPath() {
       </div>
       <div class="track" role="img" aria-label="各阶段已发布比例">${segs}</div>
       <p class="track__legend">六段对应六个阶段，深色为已发布比例；「进行中」为当前正在学习的阶段。</p>
+      <p class="progress-block__next">${
+        currentStage ? `当前阶段 · <b>${esc(currentStage.name)}</b>` : '全部阶段已完成'
+      }${nextConcept ? `<span class="sep">/</span>下一篇 · <b>${esc(nextConcept)}</b>` : ''}</p>
+    </div>
+
+    <div class="path-note">
+      ${c.pathNote.slice(1).map((p) => `<p>${esc(p)}</p>`).join('')}
+      <p>${esc(c.reviewNote)}</p>
     </div>
 
     <dl class="legend">${legend}</dl>
@@ -1118,6 +1290,10 @@ async function importRecords(e) {
 window.addEventListener('hashchange', route);
 
 document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && document.body.classList.contains('qnav-open')) {
+    closeQNav();
+    return;
+  }
   const tag = (e.target.tagName || '').toLowerCase();
   const typing = tag === 'input' || tag === 'textarea' || e.target.isContentEditable;
   if (e.key === '/' && !typing) {
@@ -1129,4 +1305,5 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
+setupChrome();
 bootstrap();
