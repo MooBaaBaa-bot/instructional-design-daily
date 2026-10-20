@@ -358,7 +358,11 @@ function readerHTML(article, opts = {}) {
     </div>
     <aside class="reader__aside" aria-label="本篇目录">
       <nav class="toc">
-        <p class="toc__label">本篇目录</p>
+        <div class="toc__head">
+          <p class="toc__label">本篇目录</p>
+          <button class="toc__collapse" type="button" aria-label="收起目录" title="收起目录（Alt+2）">收起<span aria-hidden="true">›</span></button>
+        </div>
+        <button class="toc__expand" type="button" aria-label="展开目录" title="展开目录（Alt+2）">本篇目录</button>
         <ul class="toc__list">${toc}</ul>
         <div class="toc__rail" aria-hidden="true"><span class="toc__rail-fill" id="toc-rail"></span></div>
         <p class="toc__foot">${n} 节 · 约 ${article.readingMinutes} 分钟<br>正文 ${article.wordCount || '—'} 字</p>
@@ -373,6 +377,7 @@ function mountReader(article, meta) {
   mountActions(el('article-actions'), el('article-note'), article);
   setupTOC();
   setupProgress();
+  bindPanelButtons(document.querySelector('.reader__aside'));
   renderTabs();
   if (meta) { /* 元信息已在页头展示，无需重复 */ }
 }
@@ -396,6 +401,53 @@ function currentFontSize() {
 function applyFontSize() {
   const body = el('article-body');
   if (body) body.dataset.size = currentFontSize();
+}
+
+/* ---------------- 左右栏开合 ---------------- */
+
+const PANEL_KEY = 'idd.panels.v1';
+
+function loadPanels() {
+  try {
+    const raw = JSON.parse(localStorage.getItem(PANEL_KEY) || '{}');
+    return { qnav: raw.qnav === 'collapsed', toc: raw.toc === 'collapsed' };
+  } catch (err) {
+    return { qnav: false, toc: false };
+  }
+}
+
+/* 把状态写回 body，宽度变量随 class 联动 */
+function paintPanels() {
+  const s = loadPanels();
+  document.body.classList.toggle('qnav-collapsed', s.qnav);
+  document.body.classList.toggle('toc-collapsed', s.toc);
+}
+
+function setPanel(name, collapsed) {
+  const s = loadPanels();
+  s[name] = !!collapsed;
+  try {
+    localStorage.setItem(PANEL_KEY, JSON.stringify({
+      qnav: s.qnav ? 'collapsed' : 'open',
+      toc: s.toc ? 'collapsed' : 'open',
+    }));
+  } catch (err) { /* 隐私模式下忽略 */ }
+  if (name === 'qnav' && collapsed) closeQNav();
+  paintPanels();
+  /* 栏位变化后文档高度会变，重算一次进度 */
+  if (typeof state.onScroll === 'function') state.onScroll();
+}
+
+function bindPanelButtons(root) {
+  if (!root) return;
+  const bind = (sel, fn) => {
+    const node = root.querySelector(sel);
+    if (node) node.addEventListener('click', fn);
+  };
+  bind('.qnav__collapse', () => setPanel('qnav', true));
+  bind('.qnav__expand', () => setPanel('qnav', false));
+  bind('.toc__collapse', () => setPanel('toc', true));
+  bind('.toc__expand', () => setPanel('toc', false));
 }
 
 /* ---------------- 上一篇 / 下一篇 ---------------- */
@@ -577,7 +629,9 @@ function mountQNav(article) {
     <div class="qnav__head">
       <p class="qnav__title">学习内容</p>
       <button class="qnav__close" type="button" aria-label="关闭学习内容">关闭</button>
+      <button class="qnav__collapse" type="button" aria-label="收起学习内容" title="收起学习内容（Alt+1）">收起<span aria-hidden="true">‹</span></button>
     </div>
+    <button class="qnav__expand" type="button" aria-label="展开学习内容" title="展开学习内容（Alt+1）">学习内容</button>
     <div class="qnav__filter">
       <input id="qnav-q" type="search" autocomplete="off" placeholder="筛选概念" aria-label="按名称或关键词筛选概念">
     </div>
@@ -635,6 +689,7 @@ function mountQNav(article) {
   }
 
   nav.querySelector('.qnav__close').addEventListener('click', closeQNav);
+  bindPanelButtons(nav);
 }
 
 /* ---------------- 抽屉开合 ---------------- */
@@ -1303,7 +1358,17 @@ document.addEventListener('keydown', (e) => {
       q.focus();
     }
   }
+  /* Alt+1 收起/展开学习内容，Alt+2 收起/展开本篇目录 */
+  if (e.altKey && (e.code === 'Digit1' || e.code === 'Digit2')) {
+    const name = e.code === 'Digit1' ? 'qnav' : 'toc';
+    const cls = name === 'qnav' ? 'qnav-collapsed' : 'toc-collapsed';
+    /* 右栏只在宽屏存在，窄屏不响应 */
+    if (name === 'toc' && window.innerWidth < 1080) return;
+    e.preventDefault();
+    setPanel(name, !document.body.classList.contains(cls));
+  }
 });
 
+paintPanels();
 setupChrome();
 bootstrap();
