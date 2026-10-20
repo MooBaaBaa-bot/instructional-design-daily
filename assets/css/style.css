@@ -429,7 +429,7 @@ main {
   line-height: 1.7;
 }
 
-/* ---------- 左侧快捷栏（学习内容） ---------- */
+/* ---------- 左侧快捷栏：概念筛选 ---------- */
 
 .qnav { display: none; }
 .qnav[hidden] { display: none !important; }
@@ -440,10 +440,55 @@ main {
   font-weight: 600;
   letter-spacing: 0.12em;
   color: var(--ink);
-  margin: 0 0 12px;
+  margin: 0 0 10px;
   padding-bottom: 8px;
   border-bottom: 1px solid var(--line-strong);
 }
+
+.qnav__filter { margin: 0 0 10px; }
+
+.qnav__filter input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 5px 8px;
+  font-family: var(--sans);
+  font-size: 11.5px;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 0;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.qnav__filter input::placeholder { color: var(--ink-3); }
+.qnav__filter input:focus {
+  outline: none;
+  border-color: var(--green-3);
+  box-shadow: 0 0 0 2px var(--green-tint);
+}
+
+.qnav__scroll {
+  max-height: calc(100vh - 300px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  padding-right: 4px;
+}
+.qnav__scroll::-webkit-scrollbar { width: 3px; }
+.qnav__scroll::-webkit-scrollbar-thumb { background: var(--line-strong); }
+
+.qnav__group {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+  color: var(--ink-3);
+  margin: 10px 0 4px;
+  padding-bottom: 3px;
+  border-bottom: 1px solid var(--line-soft);
+}
+.qnav__group:first-child { margin-top: 0; }
+.qnav__group b { color: var(--green-2); font-weight: 600; margin-left: 2px; }
+.qnav__group[hidden] { display: none; }
 
 .qnav__list {
   list-style: none;
@@ -451,63 +496,59 @@ main {
   padding: 0;
   border-left: 1px solid var(--line);
 }
-
+.qnav__list[hidden] { display: none; }
 .qnav__list li { margin: 0; }
 
 .qnav__link {
   display: flex;
   gap: 6px;
+  align-items: baseline;
   width: 100%;
   text-align: left;
-  background: none;
-  border: 0;
   border-left: 2px solid transparent;
   margin-left: -1px;
-  padding: 5px 6px 5px 10px;
+  padding: 4px 6px 4px 9px;
   font-family: var(--sans);
   font-size: 12px;
-  line-height: 1.5;
-  color: var(--ink-3);
-  cursor: pointer;
-  transition: color 0.15s, border-color 0.15s, background 0.15s;
+  line-height: 1.45;
+  color: var(--ink-2);
+  transition: color 0.15s, background 0.15s, border-color 0.15s;
 }
-.qnav__link:hover { color: var(--green); background: var(--green-tint); }
+.qnav__link:hover { color: var(--green); background: var(--green-tint); text-decoration: none; }
 .qnav__link[aria-current="true"] {
   color: var(--green);
   font-weight: 600;
   border-left-color: var(--green-2);
   background: linear-gradient(90deg, var(--green-tint), transparent 92%);
 }
+.qnav__link--plan { color: var(--ink-3); cursor: default; opacity: 0.62; }
+.qnav__link--plan:hover { color: var(--ink-3); background: none; }
 
-.qnav__no {
+.qnav__day {
   font-family: var(--mono);
   font-size: 9.5px;
   color: var(--gold);
-  padding-top: 1px;
   flex: none;
 }
-
+.qnav__link[aria-current="true"] .qnav__day { color: var(--green-2); }
 .qnav__text { min-width: 0; }
 
+.qnav__none {
+  font-size: 11px;
+  color: var(--ink-3);
+  margin: 6px 0;
+  list-style: none;
+}
+
 .qnav__foot {
-  margin: 12px 0 0;
+  margin: 10px 0 0;
+  padding-top: 8px;
+  border-top: 1px solid var(--line-soft);
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 9.5px;
   color: var(--ink-3);
   letter-spacing: 0.02em;
 }
-
-.qnav__top {
-  margin-top: 8px;
-  padding: 0;
-  background: none;
-  border: 0;
-  font-family: var(--sans);
-  font-size: 11px;
-  color: var(--ink-3);
-  cursor: pointer;
-}
-.qnav__top:hover { color: var(--green); }
 
 /* ---------- 文章正文 ---------- */
 
@@ -1457,25 +1498,15 @@ mark { background: #f4e8c4; color: inherit; padding: 0 1px; }
   .toc { position: sticky; top: 26px; }
 }
 
-/* 宽屏：最左侧快捷栏；首页与右侧「本篇目录」不重复展示 */
+/* 宽屏：最左侧概念筛选栏 */
 @media (min-width: 1280px) {
   .qnav {
     display: block;
     position: fixed;
-    top: 140px;
-    left: max(16px, calc(50% - 446px));
-    width: 152px;
+    top: 128px;
+    left: max(16px, calc(50% - 604px));
+    width: 190px;
     z-index: 20;
-  }
-  body.has-qnav .reader {
-    grid-template-columns: minmax(0, var(--read));
-    max-width: var(--read);
-  }
-  body.has-qnav .reader__aside { display: none; }
-  body.has-qnav .issue,
-  body.has-qnav .notice {
-    max-width: var(--read);
-    padding-right: 0;
   }
 }
 

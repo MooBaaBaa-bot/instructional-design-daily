@@ -18,7 +18,6 @@ const state = {
   lib: { q: '', theme: 'all', month: 'all', view: 'theme' },
   records: loadRecords(),
   observer: null,
-  qnavObserver: null,
   onScroll: null,
 };
 
@@ -215,7 +214,6 @@ function setActiveTab(name) {
 
 function cleanupReader() {
   if (state.observer) { state.observer.disconnect(); state.observer = null; }
-  if (state.qnavObserver) { state.qnavObserver.disconnect(); state.qnavObserver = null; }
   if (state.onScroll) { window.removeEventListener('scroll', state.onScroll); state.onScroll = null; }
   const bar = el('readbar');
   if (bar) { bar.hidden = true; bar.style.width = '0'; }
@@ -313,6 +311,7 @@ async function renderReader(id) {
     ${readerHTML(article, { back: '#/library' })}
   `;
   mountReader(article, meta);
+  mountQNav(article);
   window.scrollTo({ top: 0, behavior: 'auto' });
 }
 
@@ -495,68 +494,96 @@ function setupTOC() {
   state.observer = io;
 }
 
-/* ---------------- 左侧快捷栏（学习内容） ---------------- */
+/* ---------------- 左侧快捷栏：概念筛选 ---------------- */
+
+function qnavConcepts() {
+  const live = new Map(state.index.articles.map((a) => [a.id, a]));
+  return [...state.curriculum.concepts]
+    .sort((a, b) => a.day - b.day)
+    .map((c) => {
+      const meta = live.get(c.id);
+      return {
+        id: c.id,
+        day: c.day,
+        titleZh: c.titleZh,
+        titleEn: c.titleEn,
+        theme: c.theme,
+        published: !!meta,
+        keywords: meta ? (meta.keywords || []) : [],
+      };
+    });
+}
 
 function mountQNav(article) {
   const nav = el('qnav');
-  if (!nav || !article || !article.sections || !article.sections.length) return;
-  const items = article.sections.map((s, i) => `
-    <li><button class="qnav__link" type="button" data-target="sec-${esc(s.key)}">
-      <span class="qnav__no">${String(i + 1).padStart(2, '0')}</span>
-      <span class="qnav__text">${esc(s.heading)}</span>
-    </button></li>`).join('');
+  if (!nav) return;
+
+  const all = qnavConcepts();
+  if (!all.length) { nav.hidden = true; return; }
+  const currentId = (article && article.id) || state.status.lastConceptId;
+  const liveCount = all.filter((c) => c.published).length;
+
+  const row = (c) => {
+    const day = String(c.day).padStart(2, '0');
+    const search = esc([c.titleZh, c.titleEn, c.theme, ...c.keywords].join(' ').toLowerCase());
+    const inner = `<span class="qnav__day">${day}</span><span class="qnav__text">${esc(c.titleZh)}</span>`;
+    return `<li class="qnav__row ${c.published ? 'is-live' : 'is-plan'}" data-search="${search}">
+      ${c.published
+        ? `<a class="qnav__link" href="#/read/${esc(c.id)}"${c.id === currentId ? ' aria-current="true"' : ''}>${inner}</a>`
+        : `<span class="qnav__link qnav__link--plan" title="尚未发布">${inner}</span>`}
+    </li>`;
+  };
+
+  const liveRows = all.filter((c) => c.published).map(row).join('');
+  const planRows = all.filter((c) => !c.published).map(row).join('');
 
   nav.innerHTML = `
     <p class="qnav__title">学习内容</p>
-    <ul class="qnav__list">${items}</ul>
-    <p class="qnav__foot">${article.sections.length} 节 · 约 ${article.readingMinutes} 分钟</p>
-    <button class="qnav__top" type="button" data-target="qnav-top">回到开头 ↑</button>`;
+    <div class="qnav__filter">
+      <input id="qnav-q" type="search" autocomplete="off" placeholder="筛选概念" aria-label="按名称或关键词筛选概念">
+    </div>
+    <div class="qnav__scroll">
+      <p class="qnav__group" data-group="live">已发布 <b>${liveCount}</b></p>
+      <ul class="qnav__list" data-list="live">${liveRows || '<li class="qnav__none">暂无</li>'}</ul>
+      <p class="qnav__group" data-group="plan">计划中 <b>${all.length - liveCount}</b></p>
+      <ul class="qnav__list" data-list="plan">${planRows || '<li class="qnav__none">暂无</li>'}</ul>
+      <p class="qnav__none" id="qnav-empty" hidden>没有匹配的概念</p>
+    </div>
+    <p class="qnav__foot">共 ${all.length} 天 · 已发布 ${liveCount} 篇</p>`;
+
   nav.hidden = false;
   document.body.classList.add('has-qnav');
-  setupQNav();
-}
 
-function setupQNav() {
-  const links = [...document.querySelectorAll('.qnav__link')];
-  if (!links.length) return;
-  const targets = links.map((l) => document.getElementById(l.dataset.target)).filter(Boolean);
-  const setActive = (id) => {
-    links.forEach((l) => {
-      if (l.dataset.target === id) l.setAttribute('aria-current', 'true');
-      else l.removeAttribute('aria-current');
+  const input = el('qnav-q');
+  const rows = [...nav.querySelectorAll('.qnav__row')];
+  const apply = () => {
+    const term = input.value.trim().toLowerCase();
+    let hits = 0;
+    rows.forEach((r) => {
+      const ok = !term || r.dataset.search.includes(term);
+      r.hidden = !ok;
+      if (ok) hits += 1;
     });
+    nav.querySelectorAll('.qnav__list').forEach((list) => {
+      const group = list.dataset.list;
+      const hasVisible = [...list.querySelectorAll('.qnav__row')].some((r) => !r.hidden);
+      const head = nav.querySelector(`.qnav__group[data-group="${group}"]`);
+      if (head) head.hidden = !hasVisible;
+      list.hidden = !hasVisible;
+    });
+    const empty = el('qnav-empty');
+    if (empty) empty.hidden = hits > 0;
   };
-  const jump = (id) => {
-    const t = document.getElementById(id);
-    if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  };
 
-  links.forEach((l) => l.addEventListener('click', () => {
-    jump(l.dataset.target);
-    setActive(l.dataset.target);
-  }));
-
-  const top = document.querySelector('.qnav__top');
-  if (top) {
-    top.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      setActive(null);
-    });
-  }
-
-  if (!('IntersectionObserver' in window) || !targets.length) return;
-
-  const visible = new Set();
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach((e) => {
-      if (e.isIntersecting) visible.add(e.target.id);
-      else visible.delete(e.target.id);
-    });
-    const first = targets.find((t) => visible.has(t.id));
-    if (first) setActive(first.id);
-  }, { rootMargin: '-8% 0px -72% 0px', threshold: 0 });
-  targets.forEach((t) => io.observe(t));
-  state.qnavObserver = io;
+  input.addEventListener('input', apply);
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') { input.value = ''; apply(); }
+    if (e.key === 'Enter') {
+      const first = rows.find((r) => !r.hidden && r.querySelector('a'));
+      if (first) first.querySelector('a').click();
+    }
+  });
+  apply();
 }
 
 function setupProgress() {
