@@ -4,32 +4,39 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>教学设计 · 每日一概念</title>
-<meta name="description" content="每天一个教育学与教学设计核心概念：学习理论、学习机制、教学设计、教学策略、学习评价、迁移与 AI 教育。每日 10:00 更新。">
+<meta name="description" content="每天一个教育学与教学设计核心概念：学习理论、学习机制、教学设计、教学策略、学习评价、迁移与 AI 教育。每日 10:00 更新，内容累积保存。">
 <meta name="color-scheme" content="light">
 <meta name="theme-color" content="#faf7f0">
 <meta property="og:title" content="教学设计 · 每日一概念">
 <meta property="og:description" content="每天一个教育学与教学设计核心概念，从学习理论到迁移与 AI 教育。">
 <meta property="og:type" content="website">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%231f4a3a'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='19' fill='%23faf7f0' text-anchor='middle'%3E%E6%A6%82%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%231e4638'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='19' fill='%23faf7f0' text-anchor='middle'%3E%E6%A6%82%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 <a class="skip-link" href="#main">跳到正文</a>
+<div class="readbar" id="readbar" hidden></div>
 
 <header class="site-head">
   <div class="site-head__inner">
-    <div>
-      <p class="brand__title"><a href="#/today">教学设计 · 每日一概念</a></p>
-      <p class="brand__sub">教育学 · 学习科学 · 教学设计</p>
+    <div class="brand">
+      <div class="brand__mark">
+        <span class="brand__seal" aria-hidden="true">概</span>
+        <div>
+          <p class="brand__title"><a href="#/today">教学设计 · 每日一概念</a></p>
+          <p class="brand__sub">Education · Learning Science · Design</p>
+        </div>
+      </div>
     </div>
-    <div class="head-status" id="head-status">
-      <span class="dot" id="head-dot"></span><span id="head-status-text">正在读取更新状态…</span>
+    <div class="head-status">
+      <span class="head-status__line"><span class="dot" id="head-dot"></span><span id="head-status-text">正在读取更新状态…</span></span>
+      <span class="head-status__prog" id="head-status-prog"></span>
     </div>
   </div>
   <nav class="tabs" aria-label="主导航">
     <a class="tab" href="#/today" data-route="today" aria-current="page">今日学习</a>
     <a class="tab" href="#/path" data-route="path">学习路径</a>
-    <a class="tab" href="#/library" data-route="library">历史概念库<span class="tab__count" id="tab-lib-count"></span></a>
+    <a class="tab" href="#/library" data-route="library">概念库<span class="tab__count" id="tab-lib-count"></span></a>
     <a class="tab" href="#/mine" data-route="mine">我的记录<span class="tab__count" id="tab-mine-count"></span></a>
   </nav>
 </header>
@@ -40,7 +47,7 @@
   <div id="app" hidden>
     <section class="view" id="view-today" aria-label="今日学习" hidden></section>
     <section class="view" id="view-path" aria-label="学习路径" hidden></section>
-    <section class="view" id="view-library" aria-label="历史概念库" hidden></section>
+    <section class="view" id="view-library" aria-label="概念库" hidden></section>
     <section class="view" id="view-mine" aria-label="我的记录" hidden></section>
   </div>
 </main>
@@ -48,12 +55,12 @@
 <footer class="site-foot">
   <div class="site-foot__inner">
     <div>
-      <p>内容由每日定时任务生成并提交到仓库，页面只展示已提交的版本；当天尚未发布时会明确提示，不会用前端日期伪装更新。</p>
-      <p>已读、收藏与笔记保存在当前浏览器（localStorage），不上传服务器。</p>
+      <p>每篇文章发布后即固定，新内容以新增文件的方式累加，旧文不会被覆盖或删除。首页只呈现最新一期；当天尚未发布时会明确提示，不用旧内容冒充更新。</p>
+      <p>已读、收藏与笔记保存在当前浏览器（localStorage），不上传服务器，可在「我的记录」导出备份。</p>
     </div>
     <div>
-      <p><a href="#/path">学习路径</a> · <a href="#/mine">更新状态</a></p>
-      <p>纯静态站点，无追踪脚本。</p>
+      <p class="site-foot__meta">纯静态 · 无追踪脚本 · 每日 10:00 启动更新</p>
+      <p><a href="#/path">学习路径</a> · <a href="#/library">概念库</a> · <a href="#/mine">更新状态</a></p>
     </div>
   </div>
 </footer>

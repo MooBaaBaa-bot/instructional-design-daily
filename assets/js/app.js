@@ -1,6 +1,8 @@
 /* ============================================================
    教学设计 · 每日一概念
-   页面只负责展示 data/ 中已提交的内容，不生成文章、不改写日期。
+   页面只负责展示 data/ 中已提交的内容：
+   status.json 只指向最新一期，index.json 累积全部篇目。
+   前端不改写日期、不生成文章、不预置未来内容。
    ============================================================ */
 
 const TZ = 'Asia/Shanghai';
@@ -13,8 +15,10 @@ const state = {
   status: null,
   articles: new Map(),
   route: 'today',
-  lib: { q: '', theme: 'all', month: 'all' },
+  lib: { q: '', theme: 'all', month: 'all', view: 'theme' },
   records: loadRecords(),
+  observer: null,
+  onScroll: null,
 };
 
 /* ---------------- 工具 ---------------- */
@@ -35,16 +39,6 @@ function shanghaiDate(d = new Date()) {
   return `${get('year')}-${get('month')}-${get('day')}`;
 }
 
-function shanghaiClock(d = new Date()) {
-  const p = new Intl.DateTimeFormat('en-US', {
-    timeZone: TZ, hour: '2-digit', minute: '2-digit', hour12: false,
-  }).formatToParts(d);
-  return {
-    hour: Number(p.find((x) => x.type === 'hour').value),
-    minute: Number(p.find((x) => x.type === 'minute').value),
-  };
-}
-
 function fmtDateCn(iso) {
   if (!iso) return '';
   const [y, m, d] = iso.split('-').map(Number);
@@ -57,17 +51,24 @@ function fmtShort(iso) {
   return `${m} 月 ${d} 日`;
 }
 
+function fmtClock(iso) {
+  if (!iso) return '';
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return '';
+  return new Intl.DateTimeFormat('zh-CN', {
+    timeZone: TZ, hour: '2-digit', minute: '2-digit', hour12: false,
+  }).format(d);
+}
+
 function fmtStamp(iso) {
   if (!iso) return '—';
   const d = new Date(iso);
   if (Number.isNaN(d.getTime())) return iso;
-  const date = new Intl.DateTimeFormat('zh-CN', {
+  const p = new Intl.DateTimeFormat('en-US', {
     timeZone: TZ, year: 'numeric', month: '2-digit', day: '2-digit',
-  }).format(d);
-  const time = new Intl.DateTimeFormat('zh-CN', {
-    timeZone: TZ, hour: '2-digit', minute: '2-digit', hour12: false,
-  }).format(d);
-  return `${date.replace(/\//g, '-')} ${time}`;
+  }).formatToParts(d);
+  const get = (t) => p.find((x) => x.type === t).value;
+  return `${get('year')}-${get('month')}-${get('day')} ${fmtClock(iso)}`;
 }
 
 function weekdayCn(iso) {
@@ -87,6 +88,10 @@ async function fetchJSON(path) {
   const res = await fetch(new URL(path, BASE), { cache: 'no-cache' });
   if (!res.ok) throw new Error(`${path} 请求失败（${res.status}）`);
   return res.json();
+}
+
+function totalPlanned() {
+  return state.curriculum.totalDays || state.curriculum.concepts.length || 30;
 }
 
 /* ---------------- 本地学习记录 ---------------- */
@@ -163,6 +168,9 @@ function renderHeaderStatus() {
   const st = state.status;
   const dot = el('head-dot');
   const text = el('head-status-text');
+  const prog = el('head-status-prog');
+  prog.innerHTML = `已发布 <b>${st.publishedCount || 0}</b> / ${totalPlanned()} 篇`;
+
   if (!st.lastPublishedAt) {
     dot.className = 'dot dot--stale';
     text.textContent = '尚无发布记录';
@@ -171,13 +179,12 @@ function renderHeaderStatus() {
   const stale = st.lastPublishedDate !== today;
   dot.className = stale ? 'dot dot--stale' : 'dot';
   text.innerHTML = stale
-    ? `今日（${fmtShort(today)}）尚未发布<span class="sep">·</span>最近一期 ${fmtShort(st.lastPublishedDate)}`
-    : `今日已更新<span class="sep">·</span>${fmtStamp(st.lastPublishedAt)}`;
+    ? `今日尚未发布<span class="sep">·</span>最近一期 ${fmtShort(st.lastPublishedDate)}`
+    : `今日已更新<span class="sep">·</span>${fmtClock(st.lastPublishedAt)}`;
 }
 
 function renderTabs() {
-  const count = state.index.articles.length;
-  el('tab-lib-count').textContent = count;
+  el('tab-lib-count').textContent = state.index.articles.length;
   el('tab-mine-count').textContent = Object.keys(state.records.read).length || '';
 }
 
@@ -191,7 +198,7 @@ const ROUTES = {
 function currentRoute() {
   const hash = window.location.hash.replace(/^#\/?/, '');
   const [name, param] = hash.split('/');
-  if (name === 'read' && param) return { name: 'read', id: param };
+  if (name === 'read' && param) return { name: 'read', id: decodeURIComponent(param) };
   if (ROUTES[name]) return { name, id: null };
   return { name: 'today', id: null };
 }
@@ -205,15 +212,23 @@ function setActiveTab(name) {
   });
 }
 
+function cleanupReader() {
+  if (state.observer) { state.observer.disconnect(); state.observer = null; }
+  if (state.onScroll) { window.removeEventListener('scroll', state.onScroll); state.onScroll = null; }
+  const bar = el('readbar');
+  if (bar) { bar.hidden = true; bar.style.width = '0'; }
+}
+
 async function route() {
   if (!state.curriculum || !state.index || !state.status) return;
+  cleanupReader();
   const r = currentRoute();
   state.route = r.name;
 
   ['today', 'path', 'library', 'mine'].forEach((v) => { el(ROUTES[v]).hidden = true; });
 
   if (r.name === 'read') {
-    await renderReader(r.id, { standalone: true });
+    await renderReader(r.id);
     setActiveTab('read');
     return;
   }
@@ -224,7 +239,18 @@ async function route() {
   if (r.name === 'library') renderLibrary();
   if (r.name === 'mine') renderMine();
   el(ROUTES[r.name]).hidden = false;
-  window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
+  window.scrollTo({ top: 0, behavior: 'auto' });
+}
+
+/* ---------------- 期号条 ---------------- */
+
+function issueBar(article, stateText, stale) {
+  return `<div class="issue">
+    <span class="issue__day">DAY <b>${String(article.day).padStart(2, '0')}</b> / ${totalPlanned()}</span>
+    <span class="issue__theme">${esc(article.theme)}</span>
+    <span>${esc(fmtDateCn(article.date))} · ${esc(weekdayCn(article.date))}</span>
+    <span class="issue__state ${stale ? 'issue__state--stale' : ''}"><span class="dot"></span>${esc(stateText)}</span>
+  </div>`;
 }
 
 /* ---------------- 今日 ---------------- */
@@ -232,52 +258,42 @@ async function route() {
 async function renderToday() {
   const today = shanghaiDate();
   const st = state.status;
-  const publishedToday = st.lastPublishedDate === today;
   const view = el('view-today');
 
   if (!st.lastConceptId) {
     view.innerHTML = `
-      <div class="today-banner" role="status"><strong>还没有已发布的内容。</strong>
-      第一篇会在下一次更新任务成功后出现在这里。在此之前，这个位置不会显示任何预置文章。</div>
+      <div class="notice"><strong>还没有已发布的内容。</strong>
+      第一篇会在下一次更新任务成功后出现在这里；在此之前，这个位置不显示任何预置文章。</div>
       <div class="page-head"><h1>准备中</h1>
-      <p>学习路径已经确定，可在「学习路径」查看 30 天目录。</p></div>`;
+      <p>30 天目录已经确定，可在「学习路径」查看。</p></div>`;
     view.hidden = false;
     return;
   }
 
   const article = await getArticle(st.lastConceptId);
+  const publishedToday = st.lastPublishedDate === today;
+  const meta = state.index.articles.find((a) => a.id === st.lastConceptId);
+
+  const staleNote = publishedToday ? '' : `
+    <div class="notice" role="status">
+      <strong>今日尚未发布，以下是最近一期。</strong>
+      今天是 ${esc(fmtDateCn(today))}，站内最新一期为 ${esc(fmtDateCn(st.lastPublishedDate))}。
+      每日任务在 10:00 启动，检索、撰写、校验与部署需要几分钟；若已过 10:30 仍未出现，说明今天这次更新没有成功。
+      页面不会把旧内容说成今天的更新。
+    </div>`;
+
   view.innerHTML = `
-    <div class="today-banner ${publishedToday ? 'today-banner--ok' : ''}" role="status">
-      ${publishedToday
-        ? `<strong>今日已更新。</strong>${fmtDateCn(today)} ${weekdayCn(today)} · 第 ${article.day} 天 · 最近一次成功更新于 ${fmtStamp(st.lastPublishedAt)}（北京时间）。`
-        : `<strong>今日尚未发布，下面是最近一期的内容。</strong>今天是 ${fmtDateCn(today)}，站内的最新一期为 ${fmtDateCn(st.lastPublishedDate)}。每日任务在 10:00 启动，检索、撰写、校验与部署需要几分钟；若已过 10:30 仍未出现，说明今天这次更新没有成功，页面不会用旧内容伪装成更新。`}
-    </div>
-    <article class="article-wrap">
-      <header class="article-head">
-        <p class="article-head__day">DAY ${String(article.day).padStart(2, '0')} · ${esc(article.theme)}</p>
-        <h1>${esc(article.titleZh)}</h1>
-        <p class="article-head__en">${esc(article.titleEn)}</p>
-        <div class="article-head__meta">
-          <span class="chip chip--theme">${esc(article.theme)}</span>
-          <span class="chip chip--type">${esc(article.type)}</span>
-          <span>${esc(fmtDateCn(article.date))}</span>
-          <span>约 ${article.readingMinutes} 分钟</span>
-          <span>正文 ${article.wordCount || ''} 字</span>
-        </div>
-      </header>
-      <div class="article" id="article-body"></div>
-      <div class="article-actions" id="today-actions"></div>
-      <div class="note-editor" id="today-note"></div>
-    </article>
+    ${staleNote}
+    ${issueBar(article, publishedToday ? `今日 ${fmtClock(st.lastPublishedAt)} 发布` : `最近一期 ${fmtShort(article.date)}`, !publishedToday)}
+    ${readerHTML(article, { back: null })}
   `;
-  el('article-body').innerHTML = renderSections(article);
-  mountActions(el('today-actions'), el('today-note'), article);
+  mountReader(article, meta);
   view.hidden = false;
 }
 
-/* ---------------- 阅读器（历史文章） ---------------- */
+/* ---------------- 单篇阅读 ---------------- */
 
-async function renderReader(id, opts = {}) {
+async function renderReader(id) {
   const view = el('view-today');
   const article = await getArticle(id);
   view.hidden = false;
@@ -287,28 +303,83 @@ async function renderReader(id, opts = {}) {
   }
   const meta = state.index.articles.find((a) => a.id === id);
   view.innerHTML = `
-    <p class="eyebrow"><a href="#/library">← 历史概念库</a></p>
-    <article class="article-wrap">
+    ${issueBar(article, '已发布', false)}
+    ${readerHTML(article, { back: '#/library' })}
+  `;
+  mountReader(article, meta);
+  window.scrollTo({ top: 0, behavior: 'auto' });
+}
+
+function readerHTML(article, opts = {}) {
+  const n = article.sections.length;
+  const toc = article.sections.map((s, i) => `
+    <li><button class="toc__link" type="button" data-target="sec-${esc(s.key)}">
+      <span class="toc__no">${String(i + 1).padStart(2, '0')}</span>${esc(s.heading)}
+    </button></li>`).join('');
+
+  return `
+  <div class="reader">
+    <div class="reader__main">
+      ${opts.back ? `<p class="eyebrow"><a href="${esc(opts.back)}">← 概念库</a></p>` : ''}
       <header class="article-head">
-        <p class="article-head__day">DAY ${String(article.day).padStart(2, '0')} · ${esc(article.theme)}</p>
         <h1>${esc(article.titleZh)}</h1>
         <p class="article-head__en">${esc(article.titleEn)}</p>
+        <p class="article-head__lead">${esc(article.oneLiner)}</p>
         <div class="article-head__meta">
           <span class="chip chip--theme">${esc(article.theme)}</span>
           <span class="chip chip--type">${esc(article.type)}</span>
           <span>${esc(fmtDateCn(article.date))}</span>
           <span>约 ${article.readingMinutes} 分钟</span>
-          ${meta && meta.updatedAt ? `<span>更新于 ${fmtStamp(meta.updatedAt)}</span>` : ''}
+          <span>正文 ${article.wordCount || '—'} 字</span>
         </div>
       </header>
       <div class="article" id="article-body"></div>
-      <div class="article-actions" id="today-actions"></div>
-      <div class="note-editor" id="today-note"></div>
-    </article>
-  `;
+      <div class="article-actions" id="article-actions"></div>
+      <div class="note-editor" id="article-note"></div>
+      ${pagerHTML(article.day)}
+    </div>
+    <aside class="reader__aside" aria-label="本篇目录">
+      <nav class="toc">
+        <p class="toc__label">本篇目录</p>
+        <ul class="toc__list">${toc}</ul>
+        <p class="toc__foot">${n} 节 · 约 ${article.readingMinutes} 分钟<br>正文 ${article.wordCount || '—'} 字</p>
+      </nav>
+    </aside>
+  </div>`;
+}
+
+function mountReader(article, meta) {
   el('article-body').innerHTML = renderSections(article);
-  mountActions(el('today-actions'), el('today-note'), article);
-  if (!opts.silent) window.scrollTo({ top: 0 });
+  mountActions(el('article-actions'), el('article-note'), article);
+  setupTOC();
+  setupProgress();
+  renderTabs();
+  if (meta) { /* 元信息已在页头展示，无需重复 */ }
+}
+
+/* ---------------- 上一篇 / 下一篇 ---------------- */
+
+function pagerHTML(day) {
+  const concepts = [...state.curriculum.concepts].sort((a, b) => a.day - b.day);
+  const pub = new Set(state.index.articles.map((a) => a.id));
+  const prev = concepts.filter((c) => c.day < day && pub.has(c.id)).pop();
+  const nextPub = concepts.find((c) => c.day > day && pub.has(c.id));
+  const nextPlan = concepts.find((c) => c.day > day && !pub.has(c.id));
+  if (!prev && !nextPub && !nextPlan) return '';
+
+  const linked = (c, dir) => `<div class="pager__item pager__item--${dir}">
+      <span class="pager__label">${dir === 'prev' ? '上一期' : '下一期'}</span>
+      <a class="pager__title" href="#/read/${esc(c.id)}">${esc(c.titleZh)}<span class="pager__en">${esc(c.titleEn)}</span></a>
+    </div>`;
+  const pending = (c) => `<div class="pager__item pager__item--next">
+      <span class="pager__label">下一期 · 计划中</span>
+      <span class="pager__title pager__title--pending">${esc(c.titleZh)}<span class="pager__en">${esc(c.titleEn)} · 尚未发布</span></span>
+    </div>`;
+  const blank = (dir) => `<div class="pager__item pager__item--${dir}"></div>`;
+
+  const left = prev ? linked(prev, 'prev') : blank('prev');
+  const right = nextPub ? linked(nextPub, 'next') : (nextPlan ? pending(nextPlan) : blank('next'));
+  return `<nav class="pager" aria-label="篇目导航">${left}${right}</nav>`;
 }
 
 /* ---------------- 文章渲染 ---------------- */
@@ -332,10 +403,10 @@ function renderSections(article) {
       body = (section.blocks || []).map(renderBlock).join('');
     }
     return `
-      <section class="section" aria-labelledby="sec-${section.key}">
+      <section class="section" id="sec-${esc(section.key)}" aria-labelledby="sec-${esc(section.key)}-h">
         <div class="section__head">
           <span class="section__no">${no}</span>
-          <h2 id="sec-${section.key}">${esc(section.heading)}</h2>
+          <h2 id="sec-${esc(section.key)}-h">${esc(section.heading)}</h2>
         </div>
         ${body}
       </section>`;
@@ -385,6 +456,53 @@ function renderRef(item) {
   </li>`;
 }
 
+/* ---------------- 目录联动与阅读进度 ---------------- */
+
+function setupTOC() {
+  const links = [...document.querySelectorAll('.toc__link')];
+  if (!links.length) return;
+  const targets = links.map((l) => document.getElementById(l.dataset.target)).filter(Boolean);
+  const setActive = (id) => {
+    links.forEach((l) => {
+      if (l.dataset.target === id) l.setAttribute('aria-current', 'true');
+      else l.removeAttribute('aria-current');
+    });
+  };
+  links.forEach((l) => {
+    l.addEventListener('click', () => {
+      const t = document.getElementById(l.dataset.target);
+      if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+  if (!('IntersectionObserver' in window) || !targets.length) return;
+
+  const visible = new Set();
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) visible.add(e.target.id);
+      else visible.delete(e.target.id);
+    });
+    const first = targets.find((t) => visible.has(t.id));
+    if (first) setActive(first.id);
+  }, { rootMargin: '-8% 0px -72% 0px', threshold: 0 });
+  targets.forEach((t) => io.observe(t));
+  state.observer = io;
+}
+
+function setupProgress() {
+  const bar = el('readbar');
+  if (!bar) return;
+  bar.hidden = false;
+  const update = () => {
+    const h = document.documentElement.scrollHeight - window.innerHeight;
+    const p = h > 0 ? Math.min(1, Math.max(0, window.scrollY / h)) : 0;
+    bar.style.width = `${(p * 100).toFixed(2)}%`;
+  };
+  update();
+  state.onScroll = update;
+  window.addEventListener('scroll', update, { passive: true });
+}
+
 /* ---------------- 阅读操作 ---------------- */
 
 function mountActions(actionsEl, noteEl, article) {
@@ -392,9 +510,9 @@ function mountActions(actionsEl, noteEl, article) {
   const rec = state.records;
 
   actionsEl.innerHTML = `
-    <button class="btn" type="button" data-act="read" aria-pressed="${!!rec.read[id]}"></button>
-    <button class="btn" type="button" data-act="fav" aria-pressed="${!!rec.fav[id]}"></button>
-    <button class="btn btn--quiet" type="button" data-act="jump-note">写笔记</button>
+    <button class="btn" type="button" data-act="read" aria-pressed="false"></button>
+    <button class="btn" type="button" data-act="fav" aria-pressed="false"></button>
+    <button class="btn btn--quiet" type="button" data-act="jump-note">写一条笔记</button>
   `;
 
   const readBtn = actionsEl.querySelector('[data-act="read"]');
@@ -425,12 +543,13 @@ function mountActions(actionsEl, noteEl, article) {
   });
 
   actionsEl.querySelector('[data-act="jump-note"]').addEventListener('click', () => {
-    noteEl.querySelector('textarea').focus();
+    const ta = noteEl.querySelector('textarea');
+    if (ta) { ta.focus(); ta.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
   });
 
   noteEl.innerHTML = `
     <label for="note-input">我的笔记</label>
-    <textarea id="note-input" placeholder="写给自己：这个概念能用在哪个课程、哪次设计里？"></textarea>
+    <textarea id="note-input" placeholder="这个概念能用在哪个课程、哪次设计里？"></textarea>
     <p class="note-editor__hint"><span id="note-saved">笔记保存在当前浏览器（localStorage），不会上传。</span></p>
   `;
   const ta = noteEl.querySelector('textarea');
@@ -445,7 +564,7 @@ function mountActions(actionsEl, noteEl, article) {
       if (text) rec.notes[id] = ta.value;
       else delete rec.notes[id];
       saveRecords();
-      hint.textContent = `已保存到本机 · ${new Date().toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' })}`;
+      hint.textContent = `已保存到本机 · ${fmtClock(new Date().toISOString())}`;
     }, 500);
   });
 }
@@ -457,12 +576,26 @@ function renderPath() {
   const view = el('view-path');
   const published = new Set(state.index.articles.map((a) => a.id));
   const byId = new Map(state.index.articles.map((a) => [a.id, a]));
+  const total = c.concepts.length;
+  const done = c.concepts.filter((x) => published.has(x.id)).length;
+
+  const segs = c.stages.map((stage) => {
+    const items = c.concepts.filter((x) => x.stageId === stage.id);
+    const hit = items.filter((x) => published.has(x.id)).length;
+    const p = items.length ? Math.round((hit / items.length) * 100) : 0;
+    return `<div class="track__seg" title="${esc(stage.name)}：已发布 ${hit} / ${items.length}"><span class="track__fill" style="--p:${p}%"></span></div>`;
+  }).join('');
 
   const legend = c.levelTaxonomy.map((l) => `
     <div><dt>${esc(l.name)}</dt><dd>${esc(l.desc)}</dd></div>`).join('');
 
+  let currentMarked = false;
   const stages = c.stages.map((stage) => {
     const items = c.concepts.filter((x) => x.stageId === stage.id);
+    const hit = items.filter((x) => published.has(x.id)).length;
+    const isCurrent = !currentMarked && hit < items.length;
+    if (isCurrent) currentMarked = true;
+
     const rows = items.map((concept) => {
       const live = published.has(concept.id);
       const meta = byId.get(concept.id);
@@ -479,29 +612,46 @@ function renderPath() {
           : '计划中'}</span>
       </li>`;
     }).join('');
+
+    const p = items.length ? Math.round((hit / items.length) * 100) : 0;
     return `
       <section class="stage">
         <div class="stage__head">
           <span class="stage__no">STAGE ${String(stage.order).padStart(2, '0')}</span>
           <h2 class="stage__name">${esc(stage.name)}</h2>
           <span class="stage__en">${esc(stage.en)}</span>
+          ${isCurrent ? '<span class="stage__badge">进行中</span>' : ''}
           <span class="stage__range">DAY ${stage.dayRange[0]}–${stage.dayRange[1]}</span>
         </div>
         <p class="stage__desc">${esc(stage.description)}</p>
+        <div class="stage__bar">
+          <span class="stage__bar-track"><span class="stage__bar-fill" style="--p:${p}%"></span></span>
+          <span class="stage__bar-label">${hit} / ${items.length} 篇</span>
+        </div>
         <ul class="plan">${rows}</ul>
       </section>`;
   }).join('');
 
   view.innerHTML = `
     <div class="page-head">
-      <p class="eyebrow">LEARNING PATH</p>
+      <p class="eyebrow">Learning Path</p>
       <h1>学习路径</h1>
       ${c.pathNote.map((p) => `<p>${esc(p)}</p>`).join('')}
       <p>${esc(c.reviewNote)}</p>
     </div>
+
+    <div class="progress-block">
+      <div class="progress-block__top">
+        <span class="progress-block__num"><b>${done}</b> / ${total} 篇已发布</span>
+        <span class="progress-block__note">每天新增一篇，旧文保留</span>
+      </div>
+      <div class="track" role="img" aria-label="各阶段已发布比例">${segs}</div>
+      <p class="track__legend">六段对应六个阶段，深色为已发布比例；「进行中」为当前正在学习的阶段。</p>
+    </div>
+
     <dl class="legend">${legend}</dl>
-    <p class="explain" style="margin-bottom:32px">以上区分了理论、模型、原则、方法四个层级。同一主题下的名词常常不在同一层：例如“认知负荷理论”是理论，“脚手架”是由它推出的方法，
-      而“建构性对齐”是从建构主义与目标分类中提炼的原则。把它们放在同一层讨论，是教学设计文档里最常见的混乱来源。</p>
+    <p class="page-head__note">以上区分了理论、模型、原则、方法四个层级。同一主题下的名词常常不在同一层：例如“认知负荷理论”是理论，“脚手架”是由它推出的方法，而“建构性对齐”是从建构主义与目标分类中提炼的原则。把它们放在同一层讨论，是教学设计文档里最常见的混乱来源。</p>
+
     ${stages}
   `;
   view.hidden = false;
@@ -516,14 +666,14 @@ function renderLibrary() {
 
   view.innerHTML = `
     <div class="page-head">
-      <p class="eyebrow">ARCHIVE</p>
-      <h1>历史概念库</h1>
-      <p>已发布的全部概念，按发布日期倒序。可按主题筛选、按月份浏览，或直接搜索中英文概念名与关键词。</p>
+      <p class="eyebrow">Archive</p>
+      <h1>概念库</h1>
+      <p>已发布的全部概念累积在这里，不会因为新一期上线而消失。默认按学习路径的六个主题聚合，可切换为按发布时间浏览，或直接搜索中英文概念名与关键词。</p>
     </div>
     <div class="toolbar">
       <div class="field field--search">
         <label for="q">搜索</label>
-        <input id="q" type="search" placeholder="输入中文或英文关键词，例如 学习、scaffolding、认知负荷" autocomplete="off">
+        <input id="q" type="search" placeholder="中文或英文关键词，例如 学习、scaffolding、认知负荷" autocomplete="off">
       </div>
       <div class="field">
         <label for="theme">主题</label>
@@ -539,12 +689,19 @@ function renderLibrary() {
           ${months.map((m) => `<option value="${esc(m)}">${esc(m.replace('-', ' 年 '))} 月</option>`).join('')}
         </select>
       </div>
+      <div class="field field--view">
+        <label>排列</label>
+        <div class="segmented" role="group" aria-label="排列方式">
+          <button type="button" data-view="theme" aria-pressed="true">按主题</button>
+          <button type="button" data-view="time" aria-pressed="false">按时间</button>
+        </div>
+      </div>
     </div>
     <div class="result-line">
       <span id="result-count"></span>
       <span class="kbd-hint">按 <kbd>/</kbd> 聚焦搜索，<kbd>Esc</kbd> 清空</span>
     </div>
-    <ul class="lib-list" id="lib-list"></ul>
+    <div id="lib-body"></div>
   `;
   view.hidden = false;
 
@@ -554,6 +711,13 @@ function renderLibrary() {
   q.value = state.lib.q;
   themeSel.value = state.lib.theme;
   monthSel.value = state.lib.month;
+
+  const syncViewButtons = () => {
+    view.querySelectorAll('[data-view]').forEach((b) => {
+      b.setAttribute('aria-pressed', String(b.dataset.view === state.lib.view));
+    });
+  };
+  syncViewButtons();
 
   const update = () => {
     state.lib.q = q.value;
@@ -566,6 +730,13 @@ function renderLibrary() {
   monthSel.addEventListener('change', update);
   q.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') { q.value = ''; update(); }
+  });
+  view.querySelectorAll('[data-view]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      state.lib.view = btn.dataset.view;
+      syncViewButtons();
+      renderLibList();
+    });
   });
   renderLibList();
 }
@@ -587,39 +758,68 @@ function highlight(text, query) {
   return safe.replace(new RegExp(`(${tokens.join('|')})`, 'gi'), '<mark>$1</mark>');
 }
 
-function renderLibList() {
-  const { q, theme, month } = state.lib;
+function libItemHTML(a, query) {
   const rec = state.records;
-  const list = el('lib-list');
-  const items = state.index.articles.filter((a) => {
-    if (theme !== 'all' && a.theme !== theme) return false;
-    if (month !== 'all' && !a.date.startsWith(month)) return false;
-    return matches(a, q.trim());
-  });
-
-  el('result-count').textContent = `共 ${items.length} 篇${q ? ` · 关键词「${q.trim()}」` : ''}`;
-
-  if (!items.length) {
-    list.innerHTML = `<li class="empty">没有匹配的内容。<br>换一个关键词，或把主题、月份重置为「全部」。</li>`;
-    return;
-  }
-
-  list.innerHTML = items.map((a) => `
-    <li class="lib-item">
-      <div class="lib-item__date">${esc(a.date)}<br>DAY ${String(a.day).padStart(2, '0')}</div>
+  return `<li class="lib-item">
+      <div class="lib-item__date">${esc(fmtShort(a.date))}<b>DAY ${String(a.day).padStart(2, '0')}</b></div>
       <div class="lib-item__body">
-        <h3 class="lib-item__title"><a href="#/read/${esc(a.id)}">${highlight(a.titleZh, q.trim())}</a></h3>
-        <p class="lib-item__en">${highlight(a.titleEn, q.trim())}</p>
-        <p class="lib-item__one">${highlight(a.oneLiner, q.trim())}</p>
+        <h3 class="lib-item__title"><a href="#/read/${esc(a.id)}">${highlight(a.titleZh, query)}</a></h3>
+        <p class="lib-item__en">${highlight(a.titleEn, query)} · ${esc(a.type)}</p>
+        <p class="lib-item__one">${highlight(a.oneLiner, query)}</p>
       </div>
       <div class="lib-item__side">
-        <span class="chip chip--theme">${esc(a.theme)}</span>
         ${rec.fav[a.id] ? '<span class="mark mark--fav">已收藏</span>' : ''}
         ${rec.read[a.id] ? '<span class="mark">已读</span>' : ''}
         ${rec.notes[a.id] ? '<span class="mark">有笔记</span>' : ''}
         <span>${a.readingMinutes} 分钟</span>
       </div>
-    </li>`).join('');
+    </li>`;
+}
+
+function renderLibList() {
+  const { q, theme, month, view } = state.lib;
+  const query = q.trim();
+  const body = el('lib-body');
+  const items = state.index.articles.filter((a) => {
+    if (theme !== 'all' && a.theme !== theme) return false;
+    if (month !== 'all' && !a.date.startsWith(month)) return false;
+    return matches(a, query);
+  });
+
+  el('result-count').textContent = `共 ${items.length} 篇${query ? ` · 关键词「${query}」` : ''}${theme !== 'all' ? ` · ${theme}` : ''}`;
+
+  if (!items.length) {
+    body.innerHTML = `<p class="empty">没有匹配的内容。<br>换一个关键词，或把主题、月份重置为「全部」。</p>`;
+    return;
+  }
+
+  if (view === 'time') {
+    body.innerHTML = `<ul class="lib-list">${items.map((a) => libItemHTML(a, query)).join('')}</ul>`;
+    return;
+  }
+
+  const order = state.curriculum.stages.map((s) => s.theme);
+  const map = new Map();
+  items.forEach((a) => {
+    if (!map.has(a.theme)) map.set(a.theme, []);
+    map.get(a.theme).push(a);
+  });
+  const keys = [...map.keys()].sort((a, b) => {
+    const ia = order.indexOf(a); const ib = order.indexOf(b);
+    return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib);
+  });
+
+  body.innerHTML = keys.map((k) => {
+    const stage = state.curriculum.stages.find((s) => s.theme === k);
+    return `<section class="lib-group">
+      <div class="lib-group__head">
+        <h2 class="lib-group__name">${esc(k)}</h2>
+        <span class="lib-group__count">${map.get(k).length} 篇</span>
+        ${stage ? `<span class="lib-group__stage">STAGE ${String(stage.order).padStart(2, '0')} · DAY ${stage.dayRange[0]}–${stage.dayRange[1]}</span>` : ''}
+      </div>
+      <ul class="lib-list">${map.get(k).map((a) => libItemHTML(a, query)).join('')}</ul>
+    </section>`;
+  }).join('');
 }
 
 /* ---------------- 我的记录 ---------------- */
@@ -636,6 +836,8 @@ function renderMine() {
   const st = state.status;
   const today = shanghaiDate();
   const publishedToday = st.lastPublishedDate === today;
+  const total = totalPlanned();
+  const pct = total ? Math.round(((st.publishedCount || 0) / total) * 100) : 0;
 
   const link = (a, when) => `<li><a href="#/read/${esc(a.id)}">${esc(a.titleZh)}</a><span class="when">${esc(when)}</span></li>`;
 
@@ -650,59 +852,66 @@ function renderMine() {
         <p class="note-card__text">${esc(rec.notes[id])}</p>
       </div>`;
     }).join('')
-    : '<p class="empty" style="padding:24px 0">还没有笔记。</p>';
+    : '<p class="empty" style="padding:22px 0">还没有笔记。在任意文章底部可以写一条。</p>';
 
   view.innerHTML = `
     <div class="page-head">
-      <p class="eyebrow">MY LEARNING</p>
+      <p class="eyebrow">My Learning</p>
       <h1>我的记录</h1>
       <p>已读、收藏与笔记只保存在当前浏览器（localStorage）。换设备、换浏览器或清理浏览数据都会丢失，建议定期导出备份。</p>
     </div>
 
+    <div class="stats">
+      <div><span class="stat__num">${readIds.length}</span><span class="stat__label">已读</span></div>
+      <div><span class="stat__num">${favIds.length}</span><span class="stat__label">收藏</span></div>
+      <div><span class="stat__num">${noteIds.length}</span><span class="stat__label">有笔记</span></div>
+      <div><span class="stat__num">${all.length}</span><span class="stat__label">已发布概念</span></div>
+    </div>
+
     <div class="panel-grid">
       <div>
-        <div class="stat-row">
-          <div><span class="stat__num">${readIds.length}</span><span class="stat__label">已读</span></div>
-          <div><span class="stat__num">${favIds.length}</span><span class="stat__label">收藏</span></div>
-          <div><span class="stat__num">${noteIds.length}</span><span class="stat__label">有笔记</span></div>
-          <div><span class="stat__num">${all.length}</span><span class="stat__label">已发布概念</span></div>
-        </div>
-
         <section class="panel">
-          <h2>复习</h2>
-          <p class="panel__hint">重新看一遍比第一次读懂更重要。随机抽一条已学内容，或从收藏开始。</p>
+          <h2>复习入口</h2>
+          <p class="panel__hint">重新看一遍比多读一篇更有效。随机抽一条已学内容，或从收藏里挑。</p>
           <div class="data-actions">
-            <button class="btn btn--primary" type="button" id="review-random">随机复习一条</button>
+            <button class="btn btn--primary" type="button" id="review-random" ${all.length ? '' : 'disabled'}>随机复习一条</button>
+            <button class="btn" type="button" id="review-fav" ${favIds.length ? '' : 'disabled'}>从收藏中抽</button>
             <a class="btn" href="#/library">去概念库筛选</a>
           </div>
+          <p class="note-editor__hint" id="review-hint">${
+            readIds.length ? `当前已读 ${readIds.length} 篇，随机复习优先从已读中抽取。` : '还没有标记已读，随机复习会从全部已发布内容中抽取。'
+          }</p>
         </section>
 
-        <section class="panel" style="margin-top:38px">
-          <h2>收藏 (${favIds.length})</h2>
-          <p class="panel__hint">按收藏时间倒序。</p>
+        <section class="panel">
+          <h2>收藏 <span class="panel__num">${favIds.length}</span></h2>
           <ul class="mini-list">
-            ${favIds.length ? favIds.sort((a, b) => (rec.fav[a] < rec.fav[b] ? 1 : -1)).map((id) => link(byId.get(id), rec.fav[id].slice(0, 10))).join('') : '<li style="color:var(--ink-3)">还没有收藏。</li>'}
+            ${favIds.length
+              ? favIds.sort((a, b) => (rec.fav[a] < rec.fav[b] ? 1 : -1)).map((id) => link(byId.get(id), rec.fav[id].slice(0, 10))).join('')
+              : '<li class="none">还没有收藏。</li>'}
           </ul>
         </section>
 
-        <section class="panel" style="margin-top:38px">
-          <h2>已读 (${readIds.length})</h2>
+        <section class="panel">
+          <h2>已读 <span class="panel__num">${readIds.length}</span></h2>
           <ul class="mini-list">
-            ${readIds.length ? readIds.sort((a, b) => (rec.read[a] < rec.read[b] ? 1 : -1)).map((id) => link(byId.get(id), rec.read[id].slice(0, 10))).join('') : '<li style="color:var(--ink-3)">还没有标记已读。</li>'}
+            ${readIds.length
+              ? readIds.sort((a, b) => (rec.read[a] < rec.read[b] ? 1 : -1)).map((id) => link(byId.get(id), rec.read[id].slice(0, 10))).join('')
+              : '<li class="none">还没有标记已读。</li>'}
           </ul>
         </section>
       </div>
 
       <div>
         <section class="panel">
-          <h2>我的笔记</h2>
-          <p class="panel__hint">共 ${noteIds.length} 条。点击标题回到原文继续修改。</p>
-          <div id="notes-panel">${notesHtml}</div>
+          <h2>我的笔记 <span class="panel__num">${noteIds.length}</span></h2>
+          <p class="panel__hint">点击标题回到原文继续修改。</p>
+          <div>${notesHtml}</div>
         </section>
 
-        <section class="panel" style="margin-top:38px">
+        <section class="panel">
           <h2>备份与迁移</h2>
-          <p class="panel__hint">导出为一个 JSON 文件，包含已读、收藏与笔记。导入时会与现有记录合并，不会覆盖已有内容。</p>
+          <p class="panel__hint">导出为一个 JSON 文件，包含已读、收藏与笔记。导入时与现有记录合并，不覆盖已有内容。</p>
           <div class="data-actions">
             <button class="btn" type="button" id="export-btn">导出记录</button>
             <label class="btn" for="import-file" style="cursor:pointer">导入记录</label>
@@ -711,19 +920,21 @@ function renderMine() {
           <p class="note-editor__hint" id="import-hint"></p>
         </section>
 
-        <section class="panel" style="margin-top:38px">
+        <section class="panel">
           <h2>更新状态</h2>
           <dl class="status-list">
             <div><dt>最近成功更新</dt><dd class="${publishedToday ? 'ok' : 'warn'}">${esc(st.lastPublishedAt ? fmtStamp(st.lastPublishedAt) + '（北京时间）' : '尚无记录')}</dd></div>
+            <div><dt>部署验证</dt><dd>${esc(st.deployVerifiedAt ? fmtStamp(st.deployVerifiedAt) + ' 线上已确认' : '尚未记录线上确认')}</dd></div>
             <div><dt>最新一期</dt><dd>${st.lastDay ? `第 ${st.lastDay} 天 · ${esc(st.lastConceptTitle)}` : '尚无记录'}</dd></div>
             <div><dt>今天</dt><dd class="${publishedToday ? 'ok' : 'warn'}">${esc(fmtDateCn(today))} · ${publishedToday ? '已发布' : '尚未发布'}</dd></div>
-            <div><dt>进度</dt><dd>已发布 ${st.publishedCount} / 计划 ${st.totalPlanned} 篇</dd></div>
-            <div><dt>下一篇</dt><dd>${esc(st.nextConceptTitle || '—')}</dd></div>
+            <div><dt>进度</dt><dd>已发布 ${st.publishedCount || 0} / ${total} 篇${st.nextConceptTitle ? ` · 下一篇 ${esc(st.nextConceptTitle)}` : ''}
+              <span class="mini-progress"><span style="width:${pct}%"></span></span></dd></div>
             <div><dt>更新时间</dt><dd>每日 ${esc(st.schedule.startTime)}（${esc(st.schedule.timezone)}）启动，生成与部署需要数分钟</dd></div>
           </dl>
-          <div class="explain">
+          <div class="mechanism">
             <p>${esc(st.schedule.note)}</p>
             <p>${esc(st.deployNote)}</p>
+            <p>内容分三层存放：<code>data/articles/</code> 每篇一个文件，只增不改；<code>data/index.json</code> 追加一条记录，概念库据此汇聚；<code>data/status.json</code> 覆盖为最新一期指针，首页只读它。因此失败时首页停在上一期并明确提示，已发布的内容不受影响。</p>
           </div>
         </section>
       </div>
@@ -732,9 +943,15 @@ function renderMine() {
   view.hidden = false;
 
   el('review-random').addEventListener('click', () => {
-    const pool = (readIds.length ? readIds : all.map((a) => a.id));
-    if (!pool.length) return;
+    const pool = readIds.length ? readIds : all.map((a) => a.id);
+    if (!pool.length) { toast('还没有已发布的内容'); return; }
     const pick = pool[Math.floor(Math.random() * pool.length)];
+    window.location.hash = `#/read/${pick}`;
+  });
+
+  el('review-fav').addEventListener('click', () => {
+    if (!favIds.length) { toast('还没有收藏'); return; }
+    const pick = favIds[Math.floor(Math.random() * favIds.length)];
     window.location.hash = `#/read/${pick}`;
   });
 

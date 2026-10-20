@@ -143,8 +143,8 @@
       "dependsOn": [
         "learning"
       ],
-      "status": "planned",
-      "publishedDate": null
+      "status": "published",
+      "publishedDate": "2026-10-20"
     },
     {
       "id": "reinforcement",

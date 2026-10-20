@@ -1,8 +1,36 @@
 {
   "site": "教学设计 · 每日一概念",
-  "generatedAt": "2026-10-19T15:03:38+08:00",
-  "count": 1,
+  "generatedAt": "2026-10-20T10:10:19+08:00",
+  "count": 2,
   "articles": [
+    {
+      "id": "behaviorism",
+      "day": 2,
+      "date": "2026-10-20",
+      "titleZh": "行为主义",
+      "titleEn": "Behaviorism",
+      "theme": "学习理论",
+      "stageId": "s1",
+      "type": "理论",
+      "readingMinutes": 6,
+      "wordCount": 1165,
+      "oneLiner": "把学习看作刺激与反应之间联结的形成，只研究可观察的行为。",
+      "keywords": [
+        "行为主义",
+        "behaviorism",
+        "操作性条件作用",
+        "operant conditioning",
+        "强化",
+        "reinforcement",
+        "刺激与反应",
+        "stimulus-response",
+        "教学机器",
+        "teaching machine"
+      ],
+      "file": "data/articles/behaviorism.json",
+      "sourceCount": 3,
+      "updatedAt": "2026-10-20T10:10:19+08:00"
+    },
     {
       "id": "learning",
       "day": 1,
