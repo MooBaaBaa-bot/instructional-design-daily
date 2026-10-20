@@ -3,3 +3,4 @@ __pycache__/
 *.pyc
 content/drafts/*.json
 content/drafts/*.md
+.workbuddy/

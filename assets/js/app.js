@@ -18,6 +18,7 @@ const state = {
   lib: { q: '', theme: 'all', month: 'all', view: 'theme' },
   records: loadRecords(),
   observer: null,
+  qnavObserver: null,
   onScroll: null,
 };
 
@@ -214,9 +215,13 @@ function setActiveTab(name) {
 
 function cleanupReader() {
   if (state.observer) { state.observer.disconnect(); state.observer = null; }
+  if (state.qnavObserver) { state.qnavObserver.disconnect(); state.qnavObserver = null; }
   if (state.onScroll) { window.removeEventListener('scroll', state.onScroll); state.onScroll = null; }
   const bar = el('readbar');
   if (bar) { bar.hidden = true; bar.style.width = '0'; }
+  const qnav = el('qnav');
+  if (qnav) { qnav.hidden = true; qnav.innerHTML = ''; }
+  document.body.classList.remove('has-qnav');
 }
 
 async function route() {
@@ -288,6 +293,7 @@ async function renderToday() {
     ${readerHTML(article, { back: null })}
   `;
   mountReader(article, meta);
+  mountQNav(article);
   view.hidden = false;
 }
 
@@ -487,6 +493,70 @@ function setupTOC() {
   }, { rootMargin: '-8% 0px -72% 0px', threshold: 0 });
   targets.forEach((t) => io.observe(t));
   state.observer = io;
+}
+
+/* ---------------- 左侧快捷栏（学习内容） ---------------- */
+
+function mountQNav(article) {
+  const nav = el('qnav');
+  if (!nav || !article || !article.sections || !article.sections.length) return;
+  const items = article.sections.map((s, i) => `
+    <li><button class="qnav__link" type="button" data-target="sec-${esc(s.key)}">
+      <span class="qnav__no">${String(i + 1).padStart(2, '0')}</span>
+      <span class="qnav__text">${esc(s.heading)}</span>
+    </button></li>`).join('');
+
+  nav.innerHTML = `
+    <p class="qnav__title">学习内容</p>
+    <ul class="qnav__list">${items}</ul>
+    <p class="qnav__foot">${article.sections.length} 节 · 约 ${article.readingMinutes} 分钟</p>
+    <button class="qnav__top" type="button" data-target="qnav-top">回到开头 ↑</button>`;
+  nav.hidden = false;
+  document.body.classList.add('has-qnav');
+  setupQNav();
+}
+
+function setupQNav() {
+  const links = [...document.querySelectorAll('.qnav__link')];
+  if (!links.length) return;
+  const targets = links.map((l) => document.getElementById(l.dataset.target)).filter(Boolean);
+  const setActive = (id) => {
+    links.forEach((l) => {
+      if (l.dataset.target === id) l.setAttribute('aria-current', 'true');
+      else l.removeAttribute('aria-current');
+    });
+  };
+  const jump = (id) => {
+    const t = document.getElementById(id);
+    if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  links.forEach((l) => l.addEventListener('click', () => {
+    jump(l.dataset.target);
+    setActive(l.dataset.target);
+  }));
+
+  const top = document.querySelector('.qnav__top');
+  if (top) {
+    top.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      setActive(null);
+    });
+  }
+
+  if (!('IntersectionObserver' in window) || !targets.length) return;
+
+  const visible = new Set();
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) visible.add(e.target.id);
+      else visible.delete(e.target.id);
+    });
+    const first = targets.find((t) => visible.has(t.id));
+    if (first) setActive(first.id);
+  }, { rootMargin: '-8% 0px -72% 0px', threshold: 0 });
+  targets.forEach((t) => io.observe(t));
+  state.qnavObserver = io;
 }
 
 function setupProgress() {
