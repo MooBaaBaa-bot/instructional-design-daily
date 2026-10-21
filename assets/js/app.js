@@ -213,6 +213,7 @@ function setActiveTab(name) {
 }
 
 function cleanupReader() {
+  state.tocUpdate = null;
   if (state.observer) { state.observer.disconnect(); state.observer = null; }
   if (state.onScroll) { window.removeEventListener('scroll', state.onScroll); state.onScroll = null; }
   const bar = el('readbar');
@@ -252,21 +253,38 @@ async function route() {
 
 /* ---------------- 期号条 ---------------- */
 
-function issueBar(article, stateText, stale) {
+function mastheadHTML(article, meta, opts = {}) {
   const total = totalPlanned();
   const ticks = Array.from({ length: total }, (_, i) => {
     const d = i + 1;
-    const cls = d < article.day ? 'is-on' : (d === article.day ? 'is-now' : '');
-    return `<span class="issue__tick ${cls}"></span>`;
+    const cls = d < article.day ? ' is-past' : (d === article.day ? ' is-now' : '');
+    return `<span class="series__tick${cls}"></span>`;
   }).join('');
+  const sources = meta && meta.sourceCount ? `${meta.sourceCount} 条来源` : '';
+  const stateText = opts.stateText || '';
 
-  return `<div class="issue">
-    <span class="issue__day">DAY <b>${String(article.day).padStart(2, '0')}</b> / ${total}</span>
-    <span class="issue__theme">${esc(article.theme)}</span>
-    <span class="issue__date">${esc(fmtDateCn(article.date))} · ${esc(weekdayCn(article.date))}</span>
-    <span class="issue__state ${stale ? 'issue__state--stale' : ''}"><span class="dot"></span>${esc(stateText)}</span>
-    <span class="issue__ticks" role="img" aria-label="第 ${article.day} 天，共 ${total} 天">${ticks}</span>
-  </div>`;
+  return `<header class="masthead">
+    <div class="masthead__top">
+      <span class="masthead__no">${String(article.day).padStart(2, '0')}</span>
+      <span class="masthead__of">DAY / ${total}</span>
+      <span class="masthead__rule" aria-hidden="true"></span>
+      <span class="masthead__theme">${esc(article.theme)}</span>
+      <span class="masthead__date">${esc(fmtDateCn(article.date))}<span class="masthead__weekday"> ${esc(weekdayCn(article.date))}</span></span>
+      ${stateText ? `<span class="masthead__state${opts.stale ? ' masthead__state--stale' : ''}"><i class="dot"></i>${esc(stateText)}</span>` : ''}
+    </div>
+    <h1 class="masthead__title">${esc(article.titleZh)}</h1>
+    <p class="masthead__en">${esc(article.titleEn)}</p>
+    <p class="masthead__standfirst">${esc(article.oneLiner)}</p>
+    <p class="masthead__meta">
+      <span>${esc(article.type)}</span>
+      <span class="masthead__meta-sep" aria-hidden="true">/</span>
+      <span>约 ${article.readingMinutes} 分钟</span>
+      <span class="masthead__meta-sep" aria-hidden="true">/</span>
+      <span>正文 ${article.wordCount || '—'} 字</span>
+      ${sources ? `<span class="masthead__meta-sep" aria-hidden="true">/</span><span>${sources}</span>` : ''}
+    </p>
+    <div class="masthead__series" role="img" aria-label="第 ${article.day} 天，共 ${total} 天">${ticks}</div>
+  </header>`;
 }
 
 /* ---------------- 今日 ---------------- */
@@ -298,11 +316,13 @@ async function renderToday() {
       页面不会把旧内容说成今天的更新。
     </div>`;
 
-  view.innerHTML = `
-    ${staleNote}
-    ${issueBar(article, publishedToday ? `今日 ${fmtClock(st.lastPublishedAt)} 发布` : `最近一期 ${fmtShort(article.date)}`, !publishedToday)}
-    ${readerHTML(article, { back: null })}
-  `;
+  view.innerHTML = readerHTML(article, {
+    back: null,
+    meta,
+    notice: staleNote,
+    stateText: publishedToday ? `今日 ${fmtClock(st.lastPublishedAt)} 发布` : `最近一期 ${fmtShort(article.date)}`,
+    stale: !publishedToday,
+  });
   mountReader(article, meta);
   mountQNav(article);
   view.hidden = false;
@@ -319,10 +339,12 @@ async function renderReader(id) {
     return;
   }
   const meta = state.index.articles.find((a) => a.id === id);
-  view.innerHTML = `
-    ${issueBar(article, '已发布', false)}
-    ${readerHTML(article, { back: '#/library' })}
-  `;
+  view.innerHTML = readerHTML(article, {
+    back: '#/library',
+    meta,
+    stateText: '已发布',
+    stale: false,
+  });
   mountReader(article, meta);
   mountQNav(article);
   window.scrollTo({ top: 0, behavior: 'auto' });
@@ -339,18 +361,8 @@ function readerHTML(article, opts = {}) {
   <div class="reader">
     <div class="reader__main">
       ${opts.back ? `<p class="eyebrow"><a href="${esc(opts.back)}">← 概念库</a></p>` : ''}
-      <header class="article-head">
-        <h1>${esc(article.titleZh)}</h1>
-        <p class="article-head__en">${esc(article.titleEn)}</p>
-        <p class="article-head__lead">${esc(article.oneLiner)}</p>
-        <div class="article-head__meta">
-          <span class="chip chip--theme">${esc(article.theme)}</span>
-          <span class="chip chip--type">${esc(article.type)}</span>
-          <span>${esc(fmtDateCn(article.date))}</span>
-          <span>约 ${article.readingMinutes} 分钟</span>
-          <span>正文 ${article.wordCount || '—'} 字</span>
-        </div>
-      </header>
+      ${opts.notice || ''}
+      ${mastheadHTML(article, opts.meta, opts)}
       <div class="article" id="article-body"></div>
       <div class="article-actions" id="article-actions"></div>
       <div class="note-editor" id="article-note"></div>
@@ -567,19 +579,24 @@ function setupTOC() {
       if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   });
-  if (!('IntersectionObserver' in window) || !targets.length) return;
+  if (!targets.length) return;
 
-  const visible = new Set();
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach((e) => {
-      if (e.isIntersecting) visible.add(e.target.id);
-      else visible.delete(e.target.id);
+  /* 以「越过视口上方 30%」为界判定当前小节，比可见性判断更贴合阅读位置 */
+  const updateActive = () => {
+    const line = window.innerHeight * 0.3;
+    const atEnd = window.scrollY > 0
+      && window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 8;
+    let current = targets[0];
+    targets.forEach((s) => {
+      if (s.getBoundingClientRect().top <= line) current = s;
     });
-    const first = targets.find((t) => visible.has(t.id));
-    if (first) setActive(first.id);
-  }, { rootMargin: '-8% 0px -72% 0px', threshold: 0 });
-  targets.forEach((t) => io.observe(t));
-  state.observer = io;
+    if (atEnd) current = targets[targets.length - 1];
+    if (current) setActive(current.id);
+  };
+  state.tocUpdate = updateActive;
+  updateActive();
+  /* 首屏渲染后布局才稳定，下一帧再校正一次 */
+  requestAnimationFrame(updateActive);
 }
 
 /* ---------------- 左侧快捷栏：概念筛选 ---------------- */
@@ -736,6 +753,7 @@ function setupProgress() {
     fill.style.width = pct;
     const rail = el('toc-rail');
     if (rail) rail.style.width = pct;
+    if (typeof state.tocUpdate === 'function') state.tocUpdate();
   };
   update();
   state.onScroll = update;
