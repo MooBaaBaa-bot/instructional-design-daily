@@ -1,8 +1,40 @@
 {
   "site": "教学设计 · 每日一概念",
-  "generatedAt": "2026-10-20T10:10:19+08:00",
-  "count": 2,
+  "generatedAt": "2026-10-21T10:07:32+08:00",
+  "count": 3,
   "articles": [
+    {
+      "id": "reinforcement",
+      "day": 3,
+      "date": "2026-10-21",
+      "titleZh": "强化与惩罚",
+      "titleEn": "Reinforcement and Punishment",
+      "theme": "学习理论",
+      "stageId": "s1",
+      "type": "原则",
+      "readingMinutes": 6,
+      "wordCount": 1159,
+      "oneLiner": "后果如何改变行为出现的概率，以及为什么“即时反馈”有时反而削弱学习。",
+      "keywords": [
+        "强化",
+        "reinforcement",
+        "惩罚",
+        "punishment",
+        "正强化",
+        "positive reinforcement",
+        "负强化",
+        "negative reinforcement",
+        "强化程序",
+        "schedules of reinforcement",
+        "操作性条件作用",
+        "operant conditioning",
+        "过度理由效应",
+        "overjustification effect"
+      ],
+      "file": "data/articles/reinforcement.json",
+      "sourceCount": 3,
+      "updatedAt": "2026-10-21T10:07:32+08:00"
+    },
     {
       "id": "behaviorism",
       "day": 2,

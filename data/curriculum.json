@@ -158,8 +158,8 @@
       "dependsOn": [
         "behaviorism"
       ],
-      "status": "planned",
-      "publishedDate": null
+      "status": "published",
+      "publishedDate": "2026-10-21"
     },
     {
       "id": "cognitivism",

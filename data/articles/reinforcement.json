@@ -1,0 +1,212 @@
+{
+  "id": "reinforcement",
+  "day": 3,
+  "date": "2026-10-21",
+  "titleZh": "强化与惩罚",
+  "titleEn": "Reinforcement and Punishment",
+  "theme": "学习理论",
+  "stageId": "s1",
+  "type": "原则",
+  "oneLiner": "后果如何改变行为出现的概率，以及为什么“即时反馈”有时反而削弱学习。",
+  "keywords": [
+    "强化",
+    "reinforcement",
+    "惩罚",
+    "punishment",
+    "正强化",
+    "positive reinforcement",
+    "负强化",
+    "negative reinforcement",
+    "强化程序",
+    "schedules of reinforcement",
+    "操作性条件作用",
+    "operant conditioning",
+    "过度理由效应",
+    "overjustification effect"
+  ],
+  "sections": [
+    {
+      "key": "concept",
+      "heading": "今日概念",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "强化（reinforcement）与惩罚（punishment）描述的是：某个后果出现之后，行为再次发生的概率如何变化。概率上升叫强化，下降叫惩罚。"
+        },
+        {
+          "type": "p",
+          "text": "“正”“负”指操作方向而非好坏：正为施加刺激，负为撤除刺激。故负强化不是惩罚，它与正强化一样让行为变多，这也是本条原则最易被误读处。"
+        }
+      ]
+    },
+    {
+      "key": "background",
+      "heading": "理论背景",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "桑代克（E. L. Thorndike）1927 年重述效果律（law of effect）时已不复早年乐观：他承认奖惩不对称，奖励比惩罚可靠，并把重心移向“确认反应”——行为之后的确认性反馈。"
+        },
+        {
+          "type": "p",
+          "text": "斯金纳（B. F. Skinner）把这条线索做成实验纲领：后果决定行为的未来频率。1957 年他与费斯特（C. B. Ferster）用累积记录仪刻画强化程序，说明“多久给一次”与“给不给”同样重要。"
+        }
+      ]
+    },
+    {
+      "key": "mechanism",
+      "heading": "核心机制",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "把“施加/撤除”与“增加/减少”交叉，得到四种基本形态。"
+        },
+        {
+          "type": "table",
+          "head": [
+            "",
+            "行为增加",
+            "行为减少"
+          ],
+          "rows": [
+            [
+              "施加刺激",
+              "正强化：答对加分",
+              "正惩罚：违规扣分"
+            ],
+            [
+              "撤除刺激",
+              "负强化：交齐作业免于重做",
+              "负惩罚：迟到即取消参赛资格"
+            ]
+          ],
+          "caption": "四类后果的操作定义"
+        },
+        {
+          "type": "p",
+          "text": "强化物（reinforcer）由效果定义，而非由“看起来是否愉快”定义：同一句表扬，对一个学生是强化，对另一个可能是难堪。"
+        },
+        {
+          "type": "p",
+          "text": "给予的节奏同样塑造行为。连续强化学得快、消退也快；间歇强化建立慢却更抗消退，称为部分强化效应（partial reinforcement extinction effect）。可变比率程序下反应率最高、最稳定。"
+        },
+        {
+          "type": "p",
+          "text": "惩罚的问题不在无效，而在只压制行为、不给替代行为；改变行为须同时安排一个可被强化的替代反应。"
+        }
+      ]
+    },
+    {
+      "key": "contrast",
+      "heading": "概念辨析",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "其一，负强化与惩罚。前者撤掉厌恶刺激以增加行为，后者施加厌恶刺激以减少行为，方向相反。把“负”读作“不好”，整张表都会错位。"
+        },
+        {
+          "type": "p",
+          "text": "其二，反馈与强化。反馈提供信息，强化改变概率。同一句“这一步推理不成立”，可能被当作线索，也可能被当作否定而回避这门课。"
+        },
+        {
+          "type": "p",
+          "text": "其三，外部奖励与内在动机。德西等人 1999 年的元分析显示，预期中的有形奖励会削弱内在动机，任务本身有趣时最明显；口头表扬与正反馈未见此效应。"
+        }
+      ]
+    },
+    {
+      "key": "scenario",
+      "heading": "教学情境示例",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "某高校《Python 程序设计》实验课有个常态：学生一遇报错就举手，等教师来改。教师把目标行为改写为“独立读报错信息、五分钟内至少尝试一次修改”。"
+        },
+        {
+          "type": "p",
+          "text": "自行修改后运行通过，判题系统立即显示通过的用例数（正强化）；教师不再第一时间给答案，求助捷径被撤除（撤掉负强化，而非施加惩罚）；复制同组代码则撤回本次加分（负惩罚）。两周后举手率下降。"
+        },
+        {
+          "type": "p",
+          "text": "局限也很直接：用例通过不等于代码可读，学生可能为过测试而硬编码。故须另设代码评阅，把“解释自己的修改思路”作为独立目标。"
+        }
+      ]
+    },
+    {
+      "key": "ai",
+      "heading": "与 AI 教育的连接",
+      "blocks": [
+        {
+          "type": "note",
+          "variant": "evidence",
+          "label": "已有研究支持",
+          "text": "自动判分、逐步提示与掌握学习式重试，本质是把“即时、频繁、小步”的强化条件工程化。库利克与弗莱彻 2016 年的元分析表明，智能导学系统在结构化技能与解题程序上有稳定收益，接近但不优于人类一对一辅导。"
+        },
+        {
+          "type": "note",
+          "variant": "design",
+          "label": "仍属设计设想",
+          "text": "把可变比率、连续打卡、徽章与排行榜接入学习系统是常见做法，但强化程序如何映射到长期动机缺少直接证据。大模型生成的“下一步提示”看似贴近塑造，粒度是否合适仍需按学科验证。"
+        },
+        {
+          "type": "note",
+          "variant": "caution",
+          "label": "使用不当的风险",
+          "text": "反馈过快会替代思考：学生把“看懂了提示”当成“会做了”。高频外部奖励叠加在本来有趣的任务上会压低内在动机；只优化正确率，则把教学目标压缩成机器能测的部分。"
+        }
+      ]
+    },
+    {
+      "key": "reflection",
+      "heading": "一分钟思考",
+      "question": "某学生平时作业次次满分，期末遇到没见过的题型却直接放弃。这是强化不足，还是强化错了对象？",
+      "answer": [
+        "强化对象错了：被强化的是“套用课内步骤、拿到分数”，而非“面对陌生问题的尝试”。",
+        "程序也有关：连续、高频的外部奖励让行为依赖明确提示，提示一旦撤除便迅速消退。",
+        "三步改法：把“尝试并说明思路”设为可观察目标并即时反馈；用变式题扩大刺激范围；评价从分数移向策略。"
+      ]
+    },
+    {
+      "key": "reading",
+      "heading": "延伸阅读",
+      "items": [
+        {
+          "authors": "Thorndike, E. L.",
+          "year": "1927",
+          "title": "The Law of Effect",
+          "source": "The American Journal of Psychology, 39(1/4), 212–222",
+          "link": "https://doi.org/10.2307/1415413",
+          "note": "效果律的修订版表述，可对照其早年主张，看奖惩不对称这一判断如何形成。",
+          "verified": "Crossref 元数据核对一致（作者、年份、卷期、起页）"
+        },
+        {
+          "authors": "Ferster, C. B., & Skinner, B. F.",
+          "year": "1957",
+          "title": "Schedules of Reinforcement",
+          "source": "Appleton-Century-Crofts",
+          "link": "https://doi.org/10.1037/10627-000",
+          "note": "四类基本强化程序的原始系统研究，是“给得频繁”与“给得不定”差别的出处。",
+          "verified": "Crossref 元数据核对一致（作者、年份、出版社）"
+        },
+        {
+          "authors": "Deci, E. L., Koestner, R., & Ryan, R. M.",
+          "year": "1999",
+          "title": "A meta-analytic review of experiments examining the effects of extrinsic rewards on intrinsic motivation",
+          "source": "Psychological Bulletin, 125(6), 627–668",
+          "link": "https://doi.org/10.1037/0033-2909.125.6.627",
+          "note": "关于外部奖励是否削弱内在动机最常被引用的元分析，注意其按奖励类型分层的结论。",
+          "verified": "Crossref 元数据核对一致（作者、年份、卷期、页码）"
+        }
+      ]
+    }
+  ],
+  "meta": {
+    "generatedBy": "WorkBuddy 每日自动化",
+    "sourcesChecked": "2026-10-21",
+    "wordCount": 1159,
+    "updatedAt": "2026-10-21T10:07:32+08:00",
+    "publishedAt": "2026-10-21T10:07:32+08:00"
+  },
+  "readingMinutes": 6,
+  "wordCount": 1159
+}
