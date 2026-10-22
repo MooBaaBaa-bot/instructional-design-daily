@@ -1,8 +1,40 @@
 {
   "site": "教学设计 · 每日一概念",
-  "generatedAt": "2026-10-21T10:07:32+08:00",
-  "count": 3,
+  "generatedAt": "2026-10-22T10:10:46+08:00",
+  "count": 4,
   "articles": [
+    {
+      "id": "cognitivism",
+      "day": 4,
+      "date": "2026-10-22",
+      "titleZh": "认知主义",
+      "titleEn": "Cognitivism",
+      "theme": "学习理论",
+      "stageId": "s1",
+      "type": "理论",
+      "readingMinutes": 6,
+      "wordCount": 1145,
+      "oneLiner": "学习不是行为频率的改变，而是学习者内部表征与知识结构的改变。",
+      "keywords": [
+        "认知主义",
+        "cognitivism",
+        "认知心理学",
+        "cognitive psychology",
+        "信息加工",
+        "information processing",
+        "图式",
+        "schema",
+        "表征",
+        "representation",
+        "加工深度",
+        "levels of processing",
+        "组块",
+        "chunking"
+      ],
+      "file": "data/articles/cognitivism.json",
+      "sourceCount": 3,
+      "updatedAt": "2026-10-22T10:10:46+08:00"
+    },
     {
       "id": "reinforcement",
       "day": 3,
