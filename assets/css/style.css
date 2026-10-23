@@ -2502,3 +2502,169 @@ mark.hl:focus-visible { outline: 2px solid var(--green-2); outline-offset: 1px; 
   #view-today { width: auto !important; max-width: none !important; padding-left: 0 !important; }
   .section { break-inside: auto; }
 }
+
+/* ============================================================
+   静读版式（Quiet book edition）
+   单一纸面、细线分隔、衬线正文、无投影与圆角，导航退到从属位置。
+   本段为屏幕端覆盖层：不改动上方基础规则，仅覆盖颜色、字号、
+   栏宽与组件外观；打印样式位于上文，不受影响。
+   ============================================================ */
+
+/* Quiet book edition: a single paper surface, restrained navigation, generous type. */
+@media screen {
+:root {
+ --bg:#faf8f3;--bg-deep:#f0ede5;--paper:#faf8f3;--paper-2:#f5f2eb;
+ --ink:#302e29;--ink-2:#57544d;--ink-3:#777166;
+ --green:#494f42;--green-2:#5c6453;--green-3:#757c6d;
+ --green-tint:#eeeee6;--green-line:#d5d8cc;
+ --gold:#776447;--gold-2:#9b896d;--gold-tint:#f4efe3;--gold-line:#ded3bf;
+ --clay:#805d4c;--clay-tint:#f5eee8;--clay-line:#ddcbbf;
+ --line:#dedad0;--line-soft:#e9e5dc;--line-strong:#c9c3b6;
+ --read:39rem;--aside:176px;--aside-gap:40px;--qnav-w:176px;--qnav-gap:40px;
+ --shell:1240px;--r:2px;--shadow-1:none;--shadow-2:none;--shadow-3:none;
+}
+body { background:var(--bg); }
+body::before { display:none; }
+.site-head,.site-head.is-compact { position:relative;background:transparent;backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:none;border-bottom:1px solid var(--line-soft); }
+.site-head__inner { min-height:88px; }
+.brand__seal { background:none;border:1px solid var(--line-strong);color:var(--ink-2);border-radius:0; }
+.brand__title { font-family:var(--serif);font-size:16px;font-weight:500;letter-spacing:.06em; }
+.brand__sub { font-size:9px;letter-spacing:.06em; }
+.tabs { gap:24px; }
+.tab { font-size:12px;color:var(--ink-3); }
+.tab[aria-current="page"] { color:var(--ink);font-weight:500; }
+.tab::after { height:1px;background:var(--ink-2); }
+.head-status { font-size:10px;color:var(--ink-3); }
+main { padding-top:56px;padding-bottom:100px; }
+.reader__main { background:none;border:0;padding:0;border-radius:0;box-shadow:none; }
+.notice { background:none;border:0;border-left:1px solid var(--line-strong);padding:0 0 0 14px;font-size:12px;line-height:1.85;color:var(--ink-3);margin-bottom:44px; }
+.notice strong { color:var(--ink-2);font-weight:500; }
+.masthead { margin-bottom:56px; }
+.masthead__top { border-bottom:0;padding-bottom:0;margin-bottom:32px;font-size:11px;gap:8px 12px; }
+.masthead__no { font-size:28px;color:var(--ink-2);font-weight:400; }
+.masthead__of { font-size:10px; }
+.masthead__rule { background:var(--line); }
+.masthead__theme { color:var(--ink-2); }
+.masthead__state,.masthead__state--stale { color:var(--ink-3); }
+.masthead__title { font-family:var(--serif);font-size:40px;font-weight:500;line-height:1.5;letter-spacing:.07em;margin-bottom:8px; }
+.masthead__en { font-family:Georgia,var(--serif);font-size:17px;letter-spacing:.02em;color:var(--ink-3);margin-bottom:28px; }
+.masthead__standfirst { border:0;padding:0;font-family:var(--serif);font-size:18px;line-height:1.95;color:var(--ink-2); }
+.masthead__meta { font-size:11px;margin-top:28px;color:var(--ink-3); }
+.masthead__series { margin-top:28px;gap:4px;opacity:.6; }
+.series__tick,.series__tick.is-now { height:1px;margin-top:0; }
+.article,.article[data-size="m"] { font-family:var(--serif);font-size:18px;line-height:2.05;letter-spacing:.025em; }
+.article[data-size="s"] { font-size:16px;line-height:2; }
+.article[data-size="l"] { font-size:21px;line-height:2.05; }
+.article p { margin-bottom:1.3em; }
+.section { margin-bottom:52px; }
+.section__head { gap:14px;margin-bottom:22px; }
+.section__head::after { display:none; }
+.section__no { font-size:11px;color:var(--ink-3);font-weight:400; }
+.section h2 { font-family:var(--serif);font-size:22px;font-weight:600;letter-spacing:.05em; }
+.callout,.callout--evidence,.callout--design,.callout--caution { background:none;border:0;border-left:2px solid var(--line-strong);padding:2px 0 2px 20px;margin:28px 0; }
+.callout__label,.callout--evidence .callout__label,.callout--design .callout__label,.callout--caution .callout__label { color:var(--ink-2);font-size:12px; }
+.reflection { background:var(--paper-2);border:0;padding:26px 28px; }
+.table-wrap { border:0;border-top:1px solid var(--line-strong);border-bottom:1px solid var(--line-strong);border-radius:0; }
+th { background:var(--paper-2); }
+.flow__node { background:none;border-color:var(--line);border-radius:0; }
+.qnav { background:none;border:0; }
+.qnav__title,.toc__label { font-weight:500;font-size:11px;color:var(--ink-3); }
+.qnav__link { min-height:40px; }
+.qnav__link:hover { background:var(--paper-2);padding-left:8px; }
+.qnav__link[aria-current="true"],.toc__link[aria-current="true"] { background:var(--paper-2);color:var(--ink);border-left-color:var(--line-strong); }
+.qnav__link--plan { opacity:1;color:var(--ink-3); }
+.toc { border-left:0; }
+.toc__link { min-height:44px;font-size:12px; }
+.toc__expand,.qnav__expand { border:0;background:none;font-size:11px;letter-spacing:.12em;color:var(--ink-3); }
+.toc__expand:hover,.qnav__expand:hover { background:var(--paper-2);color:var(--ink); }
+.toc__collapse,.qnav__collapse,.qnav__close { min-width:44px;min-height:44px; }
+.btn,.fontctl button,.segmented button,input[type="search"],select { min-height:44px;border-radius:2px;box-shadow:none; }
+.btn:hover { transform:none;box-shadow:none; }
+.btn--primary { background:var(--green); }
+.fontctl button { min-width:44px; }
+button,a,input,textarea,select { touch-action:manipulation; }
+button { transition:color .18s,background .18s,border-color .18s; }
+:focus-visible { outline:2px solid var(--green);outline-offset:4px; }
+.note-editor textarea { font-family:var(--serif);font-size:17px;line-height:1.9;background:transparent;border-radius:0;padding:16px; }
+.article-actions { margin-top:40px;padding-top:24px; }
+.pager { margin-top:40px;padding-top:28px;border-top:1px solid var(--line); }
+.page-head h1 { font-size:32px;font-weight:500;letter-spacing:.06em; }
+.page-head p { font-family:var(--serif);font-size:17px;line-height:1.95; }
+.toolbar { background:none;border:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:24px 0; }
+input[type="search"],select { background:transparent; }
+.progress-block { background:none;border:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:24px 0; }
+.stage,.stage--current { background:none;border:0;border-top:1px solid var(--line);border-radius:0;padding:28px 0;box-shadow:none; }
+.plan__row--live { background:var(--paper-2); }
+.plan__row { padding-top:12px;padding-bottom:12px; }
+.lib-item { background:none;padding-top:24px;padding-bottom:24px; }
+.lib-item:hover { background:var(--paper-2); }
+.lib-item__title { font-size:21px;font-weight:500; }
+.lib-item__one { font-family:var(--serif);font-size:16px;line-height:1.9; }
+.stats>div { background:none;border:0;border-left:1px solid var(--line);border-radius:0; }
+.stat__num { font-family:var(--serif);font-weight:400;color:var(--ink); }
+.panel { background:none;border:0;border-radius:0; }
+.site-foot { background:none;border-top:1px solid var(--line-soft); }
+.site-foot p { font-size:11px; }
+.demo-note__btn { min-height:44px;background:var(--bg);border-color:var(--line);border-radius:2px;box-shadow:none; }
+.qnav-toggle,.to-top { min-height:44px;border-radius:2px;background:var(--bg);box-shadow:none; }
+.to-top { min-width:44px; }
+.toast { max-width:calc(100vw - 32px); }
+.view:not([hidden]) { animation:none; }
+@media(min-width:1280px) { .qnav { top:145px; } }
+@media(max-width:1279px) { .qnav { background:var(--bg);border-right:1px solid var(--line); } .qnav__link { min-height:44px; } }
+@media(max-width:1080px) { .site-head__inner { min-height:0; } }
+@media(max-width:640px) {
+main { padding:32px 24px 96px; }
+.site-head__inner { padding:18px 24px 0; }
+.brand__title { font-size:15px; }
+.tabs { gap:0;justify-content:space-between; }
+.tab { font-size:12px;min-height:48px; }
+.masthead { margin-bottom:40px; }
+.masthead__top { margin-bottom:24px; }
+.masthead__title { font-size:32px; }
+.masthead__en { font-size:15px;margin-bottom:22px; }
+.masthead__standfirst { font-size:17px; }
+.article,.article[data-size="m"] { font-size:17px;line-height:2; }
+.article[data-size="s"] { font-size:16px; }
+.article[data-size="l"] { font-size:20px; }
+.notice { margin-bottom:32px;font-size:12px; }
+.section { margin-bottom:40px; }
+.section h2 { font-size:20px; }
+.reflection { padding:20px; }
+input[type="search"],select { font-size:16px; }
+.pager__item--next { padding-left:0; }
+.pager__item--prev { border-right:0; }
+.demo-note { bottom:76px; }
+}
+@media(prefers-reduced-motion:reduce) { *,*::before,*::after { animation:none!important;transition:none!important;scroll-behavior:auto!important; } }
+}
+
+/* ---------- 静读版式补全：渐变、胶囊与说明文字的收口 ---------- */
+@media screen {
+  /* 说明性段落改用衬线，与正文同源；元信息仍用无衬线小字 */
+  .path-note { font-family: var(--serif); font-size: 16px; line-height: 1.95; color: var(--ink-2); letter-spacing: 0.01em; }
+  .path-note p:last-child { font-family: var(--sans); font-size: 12px; color: var(--ink-3); }
+  .stage__desc { font-family: var(--serif); font-size: 15.5px; line-height: 1.9; }
+  .page-head__note { font-family: var(--serif); font-size: 14.5px; line-height: 1.9; border-left-width: 1px; }
+
+  /* 图例由卡片改为上下细线 */
+  .legend { padding: 22px 0; background: none; border: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); border-radius: 0; }
+
+  /* 进度与阶段状态：去渐变、去胶囊，只用墨色与细线 */
+  .track__seg { height: 4px; background: var(--line-soft); }
+  .track__fill, .stage__bar-fill { background: var(--ink-2); }
+  .stage__badge { padding: 0; background: none; border: 0; color: var(--ink-3); letter-spacing: 0.14em; }
+  .plan__row:hover { background: var(--paper-2); }
+  .plan__row--live { background: none; }
+  .plan__row--live .plan__title { font-weight: 500; }
+
+  /* 划线浮条：方角纸片，与正文同一表面 */
+  .hlbar { background: var(--bg); border-radius: 2px; }
+  .hlbar__dot { border-radius: 1px; }
+  .hlbar__btn:hover { background: var(--paper-2); color: var(--ink); }
+
+  /* 页头不再吸顶，滚动后左栏随之上移，避免顶部留出一段空白 */
+  @media (min-width: 1280px) {
+    body:has(#site-head.is-compact) .qnav { top: 24px; }
+  }
+}
