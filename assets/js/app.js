@@ -261,12 +261,6 @@ async function route() {
 
 function mastheadHTML(article, meta, opts = {}) {
   const total = totalPlanned();
-  const ticks = Array.from({ length: total }, (_, i) => {
-    const d = i + 1;
-    const cls = d < article.day ? ' is-past' : (d === article.day ? ' is-now' : '');
-    return `<span class="series__tick${cls}"></span>`;
-  }).join('');
-  const sources = meta && meta.sourceCount ? `${meta.sourceCount} 条来源` : '';
   const stateText = opts.stateText || '';
 
   return `<header class="masthead">
@@ -281,15 +275,6 @@ function mastheadHTML(article, meta, opts = {}) {
     <h1 class="masthead__title">${esc(article.titleZh)}</h1>
     <p class="masthead__en">${esc(article.titleEn)}</p>
     <p class="masthead__standfirst">${esc(article.oneLiner)}</p>
-    <p class="masthead__meta">
-      <span>${esc(article.type)}</span>
-      <span class="masthead__meta-sep" aria-hidden="true">/</span>
-      <span>约 ${article.readingMinutes} 分钟</span>
-      <span class="masthead__meta-sep" aria-hidden="true">/</span>
-      <span>正文 ${article.wordCount || '—'} 字</span>
-      ${sources ? `<span class="masthead__meta-sep" aria-hidden="true">/</span><span>${sources}</span>` : ''}
-    </p>
-    <div class="masthead__series" role="img" aria-label="第 ${article.day} 天，共 ${total} 天">${ticks}</div>
   </header>`;
 }
 
