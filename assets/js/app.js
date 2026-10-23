@@ -97,7 +97,7 @@ function totalPlanned() {
 /* ---------------- 本地学习记录 ---------------- */
 
 function emptyRecords() {
-  return { version: 1, read: {}, fav: {}, notes: {}, updatedAt: null };
+  return { version: 1, read: {}, fav: {}, notes: {}, marks: {}, updatedAt: null };
 }
 
 function loadRecords() {
@@ -110,6 +110,7 @@ function loadRecords() {
       read: parsed.read && typeof parsed.read === 'object' ? parsed.read : {},
       fav: parsed.fav && typeof parsed.fav === 'object' ? parsed.fav : {},
       notes: parsed.notes && typeof parsed.notes === 'object' ? parsed.notes : {},
+      marks: parsed.marks && typeof parsed.marks === 'object' ? parsed.marks : {},
       updatedAt: parsed.updatedAt || null,
     };
   } catch (err) {
@@ -214,6 +215,11 @@ function setActiveTab(name) {
 
 function cleanupReader() {
   state.tocUpdate = null;
+  state.pendingSel = null;
+  hideHighlightBar();
+  /* 先关备注框（会顺带保存未提交的文字），再清空当前文章引用 */
+  closeMarkPopover(true);
+  state.article = null;
   if (state.observer) { state.observer.disconnect(); state.observer = null; }
   if (state.onScroll) { window.removeEventListener('scroll', state.onScroll); state.onScroll = null; }
   const bar = el('readbar');
@@ -365,6 +371,7 @@ function readerHTML(article, opts = {}) {
       ${mastheadHTML(article, opts.meta, opts)}
       <div class="article" id="article-body"></div>
       <div class="article-actions" id="article-actions"></div>
+      <div class="marks" id="article-marks"></div>
       <div class="note-editor" id="article-note"></div>
       ${pagerHTML(article.day)}
     </div>
@@ -384,13 +391,21 @@ function readerHTML(article, opts = {}) {
 }
 
 function mountReader(article, meta) {
+  state.article = article;
   el('article-body').innerHTML = renderSections(article);
   applyFontSize();
+  paintMarks(article);
+  bindMarkList(article);
   mountActions(el('article-actions'), el('article-note'), article);
   setupTOC();
   setupProgress();
   bindPanelButtons(document.querySelector('.reader__aside'));
   renderTabs();
+  if (state.pendingMark) {
+    const mid = state.pendingMark;
+    state.pendingMark = null;
+    requestAnimationFrame(() => revealMark(mid));
+  }
   if (meta) { /* 元信息已在页头展示，无需重复 */ }
 }
 
@@ -900,6 +915,471 @@ function mountActions(actionsEl, noteEl, article) {
   });
 }
 
+/* ---------------- 划线高亮与备注 ----------------
+   划线以「正文纯文本的字符区间」定位：文章发布后不再改动，
+   因此 start/end 不会漂移；写入 quote 作为校验，万一不匹配再按文本回退查找。
+   数据只存本机 localStorage，随「导出记录」一并备份。 */
+
+const MARK_META = {
+  gold: { label: '重点', title: '黄色：重点句' },
+  green: { label: '可用', title: '绿色：可迁移、可借鉴' },
+  clay: { label: '疑问', title: '红色：存疑、待查' },
+};
+const MARK_COLORS = Object.keys(MARK_META);
+
+function marksOf(articleId) {
+  if (!state.records.marks[articleId]) state.records.marks[articleId] = [];
+  return state.records.marks[articleId];
+}
+
+function newMarkId() {
+  return `m${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`;
+}
+
+/* 正文文本索引：把 DOM 里的文本节点按顺序拼成一条字符串，记录每个节点的起点 */
+function textIndex(root) {
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null);
+  const nodes = [];
+  let text = '';
+  let node = walker.nextNode();
+  while (node) {
+    nodes.push({ node, start: text.length });
+    text += node.nodeValue;
+    node = walker.nextNode();
+  }
+  return { text, nodes };
+}
+
+function textOffset(root, container, offset) {
+  if (!root.contains(container)) return -1;
+  const r = document.createRange();
+  try {
+    r.selectNodeContents(root);
+    r.setEnd(container, offset);
+  } catch (err) {
+    return -1;
+  }
+  return r.toString().length;
+}
+
+function rangeToOffsets(range, root) {
+  const start = textOffset(root, range.startContainer, range.startOffset);
+  const end = textOffset(root, range.endContainer, range.endOffset);
+  if (start < 0 || end <= start) return null;
+  const { text } = textIndex(root);
+  if (end > text.length) return null;
+  return { start, end, quote: text.slice(start, end) };
+}
+
+function unwrapHighlights(root) {
+  root.querySelectorAll('mark.hl').forEach((m) => {
+    const parent = m.parentNode;
+    if (!parent) return;
+    while (m.firstChild) parent.insertBefore(m.firstChild, m);
+    parent.removeChild(m);
+    parent.normalize();
+  });
+}
+
+function wrapRange(root, mk) {
+  const { text, nodes } = textIndex(root);
+  if (typeof mk.start !== 'number' || typeof mk.end !== 'number') return;
+  if (mk.start < 0 || mk.end > text.length || mk.end <= mk.start) return;
+  const color = MARK_COLORS.includes(mk.color) ? mk.color : 'gold';
+  const label = String(mk.quote || '').replace(/\s+/g, ' ').trim().slice(0, 42);
+
+  nodes.forEach(({ node, start }) => {
+    const len = node.nodeValue.length;
+    if (start >= mk.end || start + len <= mk.start) return;
+    const from = Math.max(0, mk.start - start);
+    const to = Math.min(len, mk.end - start);
+    if (to <= from) return;
+    let target = node;
+    if (from > 0) target = target.splitText(from);
+    if (to - from < target.nodeValue.length) target.splitText(to - from);
+    if (!target.nodeValue) return;
+    const mark = document.createElement('mark');
+    mark.className = `hl hl--${color}${mk.note ? ' hl--noted' : ''}`;
+    mark.dataset.markId = mk.id;
+    mark.tabIndex = 0;
+    mark.setAttribute('role', 'button');
+    mark.setAttribute('aria-label', `划线「${label}」${mk.note ? '，含备注' : ''}，按回车可写备注`);
+    if (mk.note) mark.title = mk.note;
+    target.parentNode.insertBefore(mark, target);
+    mark.appendChild(target);
+  });
+}
+
+function paintMarks(article) {
+  const body = el('article-body');
+  if (!body || !article) return;
+  unwrapHighlights(body);
+  const list = marksOf(article.id);
+  const { text } = textIndex(body);
+  let moved = false;
+
+  list.forEach((mk) => {
+    if (!mk || !mk.id || typeof mk.start !== 'number' || typeof mk.end !== 'number') return;
+    if (text.slice(mk.start, mk.end) !== mk.quote) {
+      const at = mk.quote ? text.indexOf(mk.quote) : -1;
+      if (at < 0) { mk.orphan = true; return; }
+      mk.start = at;
+      mk.end = at + mk.quote.length;
+      mk.orphan = false;
+      moved = true;
+    } else {
+      mk.orphan = false;
+    }
+    wrapRange(body, mk);
+  });
+
+  if (moved) saveRecords();
+  renderMarkList(article);
+}
+
+/* ---- 选中文字后的浮动工具条 ---- */
+
+function ensureHighlightUI() {
+  if (el('hlbar')) return;
+
+  const bar = document.createElement('div');
+  bar.className = 'hlbar';
+  bar.id = 'hlbar';
+  bar.hidden = true;
+  bar.setAttribute('role', 'toolbar');
+  bar.setAttribute('aria-label', '划线工具');
+  bar.innerHTML = `
+    <span class="hlbar__label">划线</span>
+    ${MARK_COLORS.map((c) => `<button class="hlbar__dot hlbar__dot--${c}" type="button" data-color="${c}" title="${esc(MARK_META[c].title)}" aria-label="${esc(MARK_META[c].title)}"></button>`).join('')}
+    <span class="hlbar__sep" aria-hidden="true"></span>
+    <button class="hlbar__btn" type="button" data-act="note">＋备注</button>
+    <button class="hlbar__btn hlbar__btn--x" type="button" data-act="close" aria-label="取消划线">×</button>`;
+  document.body.appendChild(bar);
+
+  /* 按下时不抢焦点，否则选区会先被清掉 */
+  bar.addEventListener('mousedown', (e) => e.preventDefault());
+  bar.addEventListener('click', (e) => {
+    const colorBtn = e.target.closest('[data-color]');
+    if (colorBtn) {
+      createMarkFromSelection(colorBtn.dataset.color, false);
+      return;
+    }
+    const act = e.target.closest('[data-act]');
+    if (!act) return;
+    if (act.dataset.act === 'note') createMarkFromSelection('gold', true);
+    if (act.dataset.act === 'close') { hideHighlightBar(); clearSelection(); }
+  });
+
+  const pop = document.createElement('div');
+  pop.className = 'hlpop';
+  pop.id = 'hlpop';
+  pop.hidden = true;
+  pop.setAttribute('role', 'dialog');
+  pop.setAttribute('aria-label', '划线备注');
+  pop.innerHTML = `
+    <p class="hlpop__quote"></p>
+    <label class="hlpop__sr" for="hlpop-text">备注</label>
+    <textarea id="hlpop-text" rows="3" placeholder="写一句备注：为什么划这句？能用到哪门课？"></textarea>
+    <p class="hlpop__hint"></p>
+    <div class="hlpop__foot">
+      <button class="btn btn--primary" type="button" data-act="save">保存</button>
+      <button class="btn" type="button" data-act="del">删除划线</button>
+      <button class="btn btn--quiet" type="button" data-act="close">关闭</button>
+    </div>`;
+  document.body.appendChild(pop);
+
+  pop.addEventListener('click', (e) => {
+    const act = e.target.closest('[data-act]');
+    if (!act) return;
+    if (act.dataset.act === 'save') {
+      if (savePopoverNote()) toast('备注已保存');
+      else toast('备注没有变化');
+      closeMarkPopover(false);
+    }
+    if (act.dataset.act === 'del') deleteMark(state.popMarkId);
+    if (act.dataset.act === 'close') closeMarkPopover(true);
+  });
+}
+
+function showHighlightBar(rect) {
+  const bar = el('hlbar');
+  if (!bar) return;
+  bar.hidden = false;
+  const w = bar.offsetWidth;
+  const h = bar.offsetHeight;
+  const left = Math.min(Math.max(10, rect.left + rect.width / 2 - w / 2), window.innerWidth - w - 10);
+  let top = rect.top - h - 10;
+  if (top < 8) top = rect.bottom + 10;
+  /* 选区在视口外（程序化选中、键盘选择）时，把工具条拉回可见范围 */
+  top = Math.min(Math.max(8, top), Math.max(8, window.innerHeight - h - 8));
+  bar.style.left = `${Math.round(left)}px`;
+  bar.style.top = `${Math.round(top)}px`;
+}
+
+function hideHighlightBar() {
+  const bar = el('hlbar');
+  if (bar) bar.hidden = true;
+}
+
+function clearSelection() {
+  const sel = window.getSelection();
+  if (sel) sel.removeAllRanges();
+}
+
+function setupHighlighting() {
+  ensureHighlightUI();
+  let timer = null;
+  const refresh = () => {
+    const body = el('article-body');
+    const sel = window.getSelection();
+    if (!body || !sel || sel.rangeCount === 0 || sel.isCollapsed) { hideHighlightBar(); return; }
+    const range = sel.getRangeAt(0);
+    if (!body.contains(range.startContainer) || !body.contains(range.endContainer)) { hideHighlightBar(); return; }
+    const off = rangeToOffsets(range, body);
+    if (!off) { hideHighlightBar(); return; }
+    if (off.quote.replace(/\s+/g, ' ').trim().length < 2) { hideHighlightBar(); return; }
+    if (off.quote.length > 800) { hideHighlightBar(); return; }
+    state.pendingSel = off;
+    showHighlightBar(range.getBoundingClientRect());
+  };
+
+  document.addEventListener('selectionchange', () => {
+    clearTimeout(timer);
+    timer = setTimeout(refresh, 180);
+  });
+  /* 鼠标与触屏分别补一次，移动端拖动手柄时 selectionchange 会抖动 */
+  document.addEventListener('mouseup', () => {
+    clearTimeout(timer);
+    timer = setTimeout(refresh, 10);
+  });
+  document.addEventListener('touchend', () => {
+    clearTimeout(timer);
+    timer = setTimeout(refresh, 260);
+  });
+  document.addEventListener('mousedown', (e) => {
+    if (e.target.closest('.hlbar, .hlpop')) return;
+    hideHighlightBar();
+  });
+  window.addEventListener('scroll', () => { hideHighlightBar(); repositionPopover(); }, { passive: true });
+  window.addEventListener('resize', () => { hideHighlightBar(); repositionPopover(); });
+}
+
+function createMarkFromSelection(color, withNote) {
+  const article = state.article;
+  const sel = state.pendingSel;
+  if (!article || !sel) return;
+  const list = marksOf(article.id);
+  const overlap = list.filter((m) => m.start < sel.end && m.end > sel.start);
+
+  /* 只有一处重叠且已写过备注：延长原划线，别把备注弄丢 */
+  if (overlap.length === 1 && overlap[0].note) {
+    const base = overlap[0];
+    const body = el('article-body');
+    base.start = Math.min(base.start, sel.start);
+    base.end = Math.max(base.end, sel.end);
+    base.quote = textIndex(body).text.slice(base.start, base.end);
+    base.color = color;
+    base.updatedAt = new Date().toISOString();
+    saveRecords();
+    hideHighlightBar();
+    clearSelection();
+    state.pendingSel = null;
+    paintMarks(article);
+    toast('已在原划线基础上延长，备注保留');
+    return;
+  }
+
+  if (overlap.length) {
+    state.records.marks[article.id] = list.filter((m) => !overlap.includes(m));
+  }
+  const mk = {
+    id: newMarkId(),
+    start: sel.start,
+    end: sel.end,
+    quote: sel.quote,
+    color,
+    note: '',
+    createdAt: new Date().toISOString(),
+  };
+  marksOf(article.id).push(mk);
+  saveRecords();
+  hideHighlightBar();
+  clearSelection();
+  state.pendingSel = null;
+  paintMarks(article);
+  if (withNote) {
+    const node = document.querySelector(`mark.hl[data-mark-id="${mk.id}"]`);
+    openMarkEditor(mk, node || el('article-marks'), true);
+  } else {
+    toast(overlap.length ? '已划线，并替换了重叠的旧划线' : '已划线，点高亮处可写备注');
+  }
+}
+
+/* ---- 备注弹层 ---- */
+
+function positionPopover() {
+  const pop = el('hlpop');
+  const anchor = state.popAnchor;
+  if (!pop || pop.hidden || !anchor || !document.contains(anchor)) return;
+  const r = anchor.getBoundingClientRect();
+  const w = pop.offsetWidth;
+  const h = pop.offsetHeight;
+  const left = Math.min(Math.max(12, r.left), window.innerWidth - w - 12);
+  let top = r.bottom + 10;
+  if (top + h > window.innerHeight - 12) top = Math.max(12, r.top - h - 10);
+  pop.style.left = `${Math.round(left)}px`;
+  pop.style.top = `${Math.round(top)}px`;
+}
+
+function repositionPopover() {
+  const pop = el('hlpop');
+  if (pop && !pop.hidden) positionPopover();
+}
+
+function openMarkEditor(mk, anchor, isNew) {
+  ensureHighlightUI();
+  const pop = el('hlpop');
+  if (!pop || !mk) return;
+  closeMarkPopover(true);
+  state.popMarkId = mk.id;
+  state.popAnchor = anchor || null;
+  pop.querySelector('.hlpop__quote').textContent = `“${String(mk.quote).replace(/\s+/g, ' ').trim()}”`;
+  const ta = pop.querySelector('textarea');
+  ta.value = mk.note || '';
+  pop.querySelector('.hlpop__hint').textContent = isNew
+    ? '关闭时会自动保存，也可以留空只做高亮。'
+    : '修改后点保存；直接关闭也会自动保存。';
+  pop.hidden = false;
+  positionPopover();
+  ta.focus({ preventScroll: true });
+}
+
+function savePopoverNote() {
+  const article = state.article;
+  const id = state.popMarkId;
+  if (!article || !id) return false;
+  const pop = el('hlpop');
+  const mk = marksOf(article.id).find((m) => m.id === id);
+  if (!pop || !mk) return false;
+  const next = pop.querySelector('textarea').value.trim();
+  if (next === (mk.note || '')) return false;
+  mk.note = next;
+  mk.updatedAt = new Date().toISOString();
+  saveRecords();
+  paintMarks(article);
+  const node = document.querySelector(`mark.hl[data-mark-id="${id}"]`);
+  if (node) state.popAnchor = node;
+  repositionPopover();
+  return true;
+}
+
+function closeMarkPopover(autoSave) {
+  const pop = el('hlpop');
+  if (!pop || pop.hidden) return;
+  if (autoSave) savePopoverNote();
+  pop.hidden = true;
+  state.popMarkId = null;
+  state.popAnchor = null;
+}
+
+function deleteMark(id) {
+  const article = state.article;
+  if (!article || !id) return;
+  state.records.marks[article.id] = marksOf(article.id).filter((m) => m.id !== id);
+  saveRecords();
+  closeMarkPopover(false);
+  paintMarks(article);
+  toast('划线已删除');
+}
+
+function revealMark(id) {
+  const node = document.querySelector(`mark.hl[data-mark-id="${id}"]`);
+  if (!node) return;
+  node.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  node.classList.add('is-flash');
+  setTimeout(() => node.classList.remove('is-flash'), 1400);
+}
+
+function jumpToMark(articleId, markId) {
+  if (state.article && state.article.id === articleId) {
+    revealMark(markId);
+    return;
+  }
+  state.pendingMark = markId;
+  window.location.hash = `#/read/${articleId}`;
+}
+
+/* ---- 文末的划线清单 ---- */
+
+function renderMarkList(article) {
+  const box = el('article-marks');
+  if (!box) return;
+  const list = marksOf(article.id)
+    .filter((m) => m && !m.orphan && m.quote)
+    .sort((a, b) => a.start - b.start);
+
+  const head = `<div class="marks__head">
+      <h2>本篇划线 <span class="marks__num">${list.length}</span></h2>
+      <p class="marks__hint">选中正文任意片段即可高亮；点高亮处能写备注。划线只保存在本机浏览器。</p>
+    </div>`;
+
+  if (!list.length) {
+    box.innerHTML = head;
+    return;
+  }
+
+  const items = list.map((m, i) => `
+    <li class="mark-item" data-mark-id="${esc(m.id)}">
+      <button class="mark-item__quote" type="button" data-jump="${esc(m.id)}">
+        <span class="mark-item__no">${String(i + 1).padStart(2, '0')}</span>
+        <span class="mark-item__text">${esc(String(m.quote).replace(/\s+/g, ' ').trim())}</span>
+      </button>
+      <p class="mark-item__note">${m.note ? esc(m.note) : '<span class="mark-item__none">未写备注</span>'}</p>
+      <div class="mark-item__act">
+        <button type="button" data-edit="${esc(m.id)}">${m.note ? '改备注' : '加备注'}</button>
+        <button type="button" data-del="${esc(m.id)}">删除</button>
+      </div>
+    </li>`).join('');
+
+  box.innerHTML = `${head}<ol class="marks__list">${items}</ol>`;
+}
+
+function bindMarkList(article) {
+  const box = el('article-marks');
+  if (!box) return;
+  box.addEventListener('click', (e) => {
+    const jump = e.target.closest('[data-jump]');
+    const edit = e.target.closest('[data-edit]');
+    const del = e.target.closest('[data-del]');
+    const id = jump ? jump.dataset.jump : (edit ? edit.dataset.edit : (del ? del.dataset.del : null));
+    if (!id) return;
+    if (del) { deleteMark(id); return; }
+    const mk = marksOf(article.id).find((m) => m.id === id);
+    if (!mk) return;
+    if (jump) { revealMark(id); return; }
+    const node = document.querySelector(`mark.hl[data-mark-id="${id}"]`);
+    openMarkEditor(mk, node || box);
+  });
+
+  const body = el('article-body');
+  if (body) {
+    body.addEventListener('click', (e) => {
+      const mark = e.target.closest('mark.hl');
+      if (!mark) return;
+      const mk = marksOf(article.id).find((m) => m.id === mark.dataset.markId);
+      if (mk) openMarkEditor(mk, mark);
+    });
+    body.addEventListener('keydown', (e) => {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      const mark = e.target.closest('mark.hl');
+      if (!mark) return;
+      e.preventDefault();
+      const mk = marksOf(article.id).find((m) => m.id === mark.dataset.markId);
+      if (mk) openMarkEditor(mk, mark);
+    });
+  }
+}
+
 /* ---------------- 学习路径 ---------------- */
 
 function renderPath() {
@@ -1175,6 +1655,17 @@ function renderMine() {
   const favIds = Object.keys(rec.fav).filter((id) => byId.has(id));
   const noteIds = Object.keys(rec.notes).filter((id) => byId.has(id) && rec.notes[id].trim());
 
+  const markEntries = [];
+  Object.entries(rec.marks).forEach(([aid, arr]) => {
+    const a = byId.get(aid);
+    if (!a || !Array.isArray(arr)) return;
+    arr.forEach((m) => {
+      if (m && m.quote) markEntries.push({ ...m, articleId: aid, article: a });
+    });
+  });
+  markEntries.sort((a, b) => String(b.createdAt || '').localeCompare(String(a.createdAt || '')));
+  const notedCount = markEntries.filter((m) => m.note).length;
+
   const st = state.status;
   const today = shanghaiDate();
   const publishedToday = st.lastPublishedDate === today;
@@ -1200,13 +1691,14 @@ function renderMine() {
     <div class="page-head">
       <p class="eyebrow">My Learning</p>
       <h1>我的记录</h1>
-      <p>已读、收藏与笔记只保存在当前浏览器（localStorage）。换设备、换浏览器或清理浏览数据都会丢失，建议定期导出备份。</p>
+      <p>已读、收藏、笔记与划线备注都只保存在当前浏览器（localStorage）。换设备、换浏览器或清理浏览数据都会丢失，建议定期导出备份。</p>
     </div>
 
     <div class="stats">
       <div><span class="stat__num">${readIds.length}</span><span class="stat__label">已读</span></div>
       <div><span class="stat__num">${favIds.length}</span><span class="stat__label">收藏</span></div>
-      <div><span class="stat__num">${noteIds.length}</span><span class="stat__label">有笔记</span></div>
+      <div><span class="stat__num">${markEntries.length}</span><span class="stat__label">划线</span></div>
+      <div><span class="stat__num">${notedCount}</span><span class="stat__label">划线备注</span></div>
       <div><span class="stat__num">${all.length}</span><span class="stat__label">已发布概念</span></div>
     </div>
 
@@ -1245,6 +1737,23 @@ function renderMine() {
       </div>
 
       <div>
+        <section class="panel">
+          <h2>划线标注 <span class="panel__num">${markEntries.length}</span></h2>
+          <p class="panel__hint">点划线回到原文位置，按时间倒序排列；黄色为重点、绿色为可用、红色为疑问。</p>
+          <div class="mark-cards">${
+            markEntries.length
+              ? markEntries.map((m) => `<div class="mark-card">
+                  <div class="mark-card__head">
+                    <strong><button type="button" class="mark-card__link" data-goto="${esc(m.articleId)}" data-mark="${esc(m.id)}">${esc(m.article.titleZh)}</button></strong>
+                    <span>${esc(fmtShort(m.article.date))}</span>
+                  </div>
+                  <p class="mark-card__quote">“${esc(String(m.quote).replace(/\s+/g, ' ').trim())}”</p>
+                  ${m.note ? `<p class="mark-card__note">${esc(m.note)}</p>` : ''}
+                </div>`).join('')
+              : '<p class="empty" style="padding:22px 0">还没有划线。在正文里选中一句话，就会浮出划线工具。</p>'
+          }</div>
+        </section>
+
         <section class="panel">
           <h2>我的笔记 <span class="panel__num">${noteIds.length}</span></h2>
           <p class="panel__hint">点击标题回到原文继续修改。</p>
@@ -1299,6 +1808,10 @@ function renderMine() {
 
   el('export-btn').addEventListener('click', exportRecords);
   el('import-file').addEventListener('change', importRecords);
+
+  view.querySelectorAll('.mark-card__link').forEach((btn) => {
+    btn.addEventListener('click', () => jumpToMark(btn.dataset.goto, btn.dataset.mark));
+  });
 }
 
 function exportRecords() {
@@ -1345,6 +1858,19 @@ async function importRecords(e) {
         }
       }
     }
+    /* 划线按 id 去重合并，避免同一句被重复导入 */
+    for (const [aid, arr] of Object.entries(rec.marks || {})) {
+      if (!Array.isArray(arr)) continue;
+      if (!state.records.marks[aid]) state.records.marks[aid] = [];
+      const exist = new Set(state.records.marks[aid].map((m) => m && m.id));
+      arr.forEach((m) => {
+        if (m && m.id && m.quote && !exist.has(m.id)) {
+          state.records.marks[aid].push(m);
+          exist.add(m.id);
+          merged += 1;
+        }
+      });
+    }
     saveRecords();
     hint.textContent = `导入完成，新增 ${merged} 条记录（原有记录已保留）。`;
     renderTabs();
@@ -1363,8 +1889,20 @@ async function importRecords(e) {
 window.addEventListener('hashchange', route);
 
 document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    const pop = el('hlpop');
+    if (pop && !pop.hidden) { closeMarkPopover(true); return; }
+    const bar = el('hlbar');
+    if (bar && !bar.hidden) { hideHighlightBar(); return; }
+  }
   if (e.key === 'Escape' && document.body.classList.contains('qnav-open')) {
     closeQNav();
+    return;
+  }
+  /* Alt+H：把当前选中的文字直接标为黄色重点 */
+  if (e.altKey && (e.code === 'KeyH' || e.key === 'h') && state.pendingSel) {
+    e.preventDefault();
+    createMarkFromSelection('gold', false);
     return;
   }
   const tag = (e.target.tagName || '').toLowerCase();
@@ -1389,4 +1927,5 @@ document.addEventListener('keydown', (e) => {
 
 paintPanels();
 setupChrome();
+setupHighlighting();
 bootstrap();

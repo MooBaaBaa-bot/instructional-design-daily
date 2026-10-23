@@ -1812,7 +1812,7 @@ mark { background: #f4e8c4; color: inherit; padding: 0 1px; border-radius: 1px; 
 
 .stats {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(112px, 1fr));
   gap: 12px;
   margin: 0 0 32px;
 }
@@ -2031,6 +2031,282 @@ mark { background: #f4e8c4; color: inherit; padding: 0 1px; border-radius: 1px; 
 }
 .to-top.is-on { opacity: 1; transform: none; pointer-events: auto; }
 .to-top:hover { border-color: var(--green-3); color: var(--green); transform: translateY(-2px); }
+
+/* ---------- 划线高亮与备注 ---------- */
+
+mark.hl {
+  background: #f6e6b8;
+  color: inherit;
+  padding: 0.08em 0;
+  border-radius: 2px;
+  cursor: pointer;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  transition: background 0.16s var(--ease), box-shadow 0.16s var(--ease);
+}
+mark.hl--gold { background: #f6e6b8; }
+mark.hl--green { background: #dbe8d5; }
+mark.hl--clay { background: #f4dcd0; }
+/* 带备注的划线多一道下缘线，阅读时能看出哪句写过东西 */
+mark.hl--noted { box-shadow: inset 0 -1px 0 rgba(147, 112, 43, 0.5); }
+mark.hl:hover { background: #efd99b; }
+mark.hl--green:hover { background: #cbe0c3; }
+mark.hl--clay:hover { background: #eecab9; }
+mark.hl.is-flash { animation: hl-flash 1.3s var(--ease); }
+mark.hl:focus-visible { outline: 2px solid var(--green-2); outline-offset: 1px; }
+@keyframes hl-flash {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(147, 112, 43, 0); }
+  25%, 65% { box-shadow: 0 0 0 3px rgba(147, 112, 43, 0.26); }
+}
+
+/* 选中文字后浮出的工具条 */
+.hlbar {
+  position: fixed;
+  z-index: 92;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 8px 6px 10px;
+  background: rgba(255, 253, 248, 0.98);
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  box-shadow: var(--shadow-3);
+  font-family: var(--sans);
+  animation: hlbar-in 0.14s var(--ease);
+}
+.hlbar[hidden] { display: none; }
+@keyframes hlbar-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: none; }
+}
+.hlbar__label {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  color: var(--ink-3);
+  margin-right: 2px;
+}
+.hlbar__dot {
+  width: 19px;
+  height: 19px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(28, 26, 22, 0.14);
+  cursor: pointer;
+  transition: transform 0.14s var(--ease), box-shadow 0.14s var(--ease);
+}
+.hlbar__dot:hover { transform: translateY(-1px); box-shadow: 0 3px 9px -3px rgba(28, 26, 22, 0.4); }
+.hlbar__dot--gold { background: #f6e6b8; }
+.hlbar__dot--green { background: #dbe8d5; }
+.hlbar__dot--clay { background: #f4dcd0; }
+.hlbar__sep { width: 1px; height: 16px; background: var(--line); margin: 0 3px; }
+.hlbar__btn {
+  border: 0;
+  background: none;
+  padding: 3px 6px;
+  border-radius: var(--r);
+  font-family: var(--sans);
+  font-size: 12px;
+  color: var(--ink-2);
+  cursor: pointer;
+}
+.hlbar__btn:hover { color: var(--green); background: var(--green-tint); }
+.hlbar__btn--x { font-size: 14px; color: var(--ink-3); padding: 2px 7px; }
+
+/* 备注弹层 */
+.hlpop {
+  position: fixed;
+  z-index: 95;
+  width: min(340px, calc(100vw - 24px));
+  padding: 13px 14px 11px;
+  background: var(--paper);
+  border: 1px solid var(--line-strong);
+  border-top: 2px solid var(--gold-2);
+  border-radius: var(--r);
+  box-shadow: var(--shadow-3);
+  font-family: var(--sans);
+}
+.hlpop[hidden] { display: none; }
+.hlpop__quote {
+  margin: 0 0 10px;
+  padding-left: 9px;
+  border-left: 2px solid var(--gold-line);
+  font-family: var(--serif);
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--ink-2);
+  max-height: 5.6em;
+  overflow-y: auto;
+}
+.hlpop__sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+.hlpop textarea {
+  width: 100%;
+  min-height: 74px;
+  padding: 9px 11px;
+  font-family: var(--sans);
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--ink);
+  background: var(--paper-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  resize: vertical;
+}
+.hlpop textarea:focus {
+  outline: none;
+  border-color: var(--green-2);
+  box-shadow: 0 0 0 3px rgba(42, 99, 80, 0.1);
+}
+.hlpop__hint { font-size: 10.5px; color: var(--ink-3); margin: 7px 0 0; }
+.hlpop__foot { display: flex; align-items: center; gap: 7px; margin-top: 9px; }
+.hlpop__foot .btn { padding: 6px 11px; font-size: 12px; }
+.hlpop__foot .btn--quiet { margin-left: auto; padding: 6px 2px; }
+
+/* 文末划线清单 */
+.marks {
+  margin: 34px 0 0;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+  font-family: var(--sans);
+}
+.marks__head {
+  display: flex;
+  align-items: baseline;
+  gap: 8px 12px;
+  flex-wrap: wrap;
+  margin: 0 0 4px;
+}
+.marks__head h2 {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.marks__num { font-family: var(--mono); font-size: 10px; color: var(--gold); margin-left: 4px; }
+.marks__hint { flex: 1 1 100%; margin: 2px 0 0; font-size: 11.5px; line-height: 1.6; color: var(--ink-3); }
+.marks__list { list-style: none; margin: 10px 0 0; padding: 0; }
+.mark-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: 14px;
+  padding: 11px 0 12px;
+  border-bottom: 1px solid var(--line-soft);
+}
+.mark-item:last-child { border-bottom: 0; }
+.mark-item__quote {
+  display: flex;
+  gap: 9px;
+  grid-column: 1 / 2;
+  padding: 0;
+  border: 0;
+  background: none;
+  text-align: left;
+  font-family: var(--serif);
+  font-size: 13.5px;
+  line-height: 1.72;
+  color: var(--ink);
+  cursor: pointer;
+}
+.mark-item__quote:hover .mark-item__text { color: var(--green-2); text-decoration: underline; text-underline-offset: 3px; }
+.mark-item__no {
+  flex: 0 0 auto;
+  padding-top: 3px;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.06em;
+  color: var(--gold);
+}
+.mark-item__text {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.mark-item__note {
+  grid-column: 1 / 2;
+  margin: 5px 0 0 24px;
+  font-size: 12.5px;
+  line-height: 1.7;
+  color: var(--ink-2);
+}
+.mark-item__none { color: var(--ink-3); }
+.mark-item__act {
+  display: flex;
+  grid-column: 2 / 3;
+  grid-row: 1 / span 2;
+  align-self: start;
+  gap: 9px;
+  padding-top: 2px;
+}
+.mark-item__act button {
+  padding: 0;
+  border: 0;
+  background: none;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  color: var(--ink-3);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.mark-item__act button:hover { color: var(--green); }
+
+/* 我的记录里的划线卡片 */
+.mark-cards { margin-top: 4px; }
+.mark-card { padding: 12px 0; border-bottom: 1px solid var(--line-soft); }
+.mark-card:last-child { border-bottom: 0; }
+.mark-card__head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.mark-card__head strong { font-size: 13px; font-weight: 600; }
+.mark-card__link {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+}
+.mark-card__link:hover { color: var(--green); text-decoration: underline; text-underline-offset: 3px; }
+.mark-card__head span {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  color: var(--ink-3);
+  white-space: nowrap;
+}
+.mark-card__quote {
+  margin: 6px 0 0;
+  font-family: var(--serif);
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--ink-2);
+}
+.mark-card__note {
+  margin: 5px 0 0;
+  padding-left: 9px;
+  border-left: 2px solid var(--gold-line);
+  font-size: 12.5px;
+  line-height: 1.7;
+  color: var(--ink-2);
+}
+
+@media (max-width: 720px) {
+  .hlbar { padding: 6px 8px 6px 10px; gap: 6px; }
+  .hlbar__label { display: none; }
+  .hlbar__dot { width: 24px; height: 24px; }
+  .hlbar__btn { font-size: 13px; padding: 4px 7px; }
+  .mark-item { grid-template-columns: minmax(0, 1fr); }
+  .mark-item__act { grid-column: 1 / 2; grid-row: auto; padding-top: 7px; }
+}
 
 /* ---------- 响应式 ---------- */
 
