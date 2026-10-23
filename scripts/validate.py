@@ -67,6 +67,62 @@ def body_char_count(article: dict) -> int:
     return total
 
 
+def validate_visual(visual: dict) -> tuple[list[str], list[str]]:
+    """校验可选的「图解与迁移」插页：概念图、经典模型、应用案例。"""
+    errors: list[str] = []
+    warnings: list[str] = []
+    if not isinstance(visual, dict):
+        return ["visual 必须是对象"], warnings
+
+    mind = visual.get("mind")
+    model = visual.get("model")
+    cases = visual.get("cases") or []
+    if not mind and not model and not cases:
+        warnings.append("visual 未包含概念图、模型或案例，插页不会显示")
+
+    if mind:
+        if not mind.get("core"):
+            errors.append("visual.mind 缺少 core")
+        branches = mind.get("branches") or []
+        if not 3 <= len(branches) <= 5:
+            errors.append(f"visual.mind.branches 需 3–5 支，当前 {len(branches)} 支")
+        for i, branch in enumerate(branches, 1):
+            if not branch.get("label"):
+                errors.append(f"概念图第 {i} 支缺少 label")
+            items = branch.get("items") or []
+            if not 1 <= len(items) <= 3:
+                errors.append(f"概念图第 {i} 支 items 需 1–3 条，当前 {len(items)} 条")
+
+    if model:
+        if not model.get("name"):
+            errors.append("visual.model 缺少 name")
+        steps = model.get("steps") or []
+        if not 3 <= len(steps) <= 9:
+            errors.append(f"经典模型需 3–9 步，当前 {len(steps)} 步")
+        if not model.get("source"):
+            warnings.append("经典模型没有注明出处（作者与年份）")
+
+    if cases:
+        if len(cases) > 3:
+            errors.append(f"应用案例最多 3 条，当前 {len(cases)} 条")
+        for i, case in enumerate(cases, 1):
+            for field in ("name", "text", "source"):
+                if not case.get(field):
+                    errors.append(f"应用案例第 {i} 条缺少 {field}")
+            link = case.get("link")
+            if link and not re.fullmatch(r"https?://\S+", link):
+                errors.append(f"应用案例第 {i} 条 link 不是有效 URL")
+            if case.get("tag") and case["tag"] not in ("研究证据", "历史案例", "课堂设计", "机构实践"):
+                warnings.append(f"应用案例第 {i} 条 tag「{case['tag']}」不在常用标签内")
+
+    blob = json.dumps(visual, ensure_ascii=False)
+    for token in PLACEHOLDERS:
+        if token in blob:
+            errors.append(f"visual 含占位文本：{token}")
+
+    return errors, warnings
+
+
 def validate(article: dict, known_ids: set[str] | None = None) -> tuple[list[str], list[str]]:
     errors: list[str] = []
     warnings: list[str] = []
@@ -100,6 +156,12 @@ def validate(article: dict, known_ids: set[str] | None = None) -> tuple[list[str
         for token in PLACEHOLDERS:
             if token in plain:
                 errors.append(f"plainTalk 含占位文本：{token}")
+
+    visual = article.get("visual")
+    if visual is not None:
+        visual_errors, visual_warnings = validate_visual(visual)
+        errors.extend(visual_errors)
+        warnings.extend(visual_warnings)
 
     keys = [s.get("key") for s in article["sections"]]
     expected = [k for k, _ in REQUIRED_SECTIONS]
@@ -175,6 +237,15 @@ def main(argv: list[str]) -> int:
     print(f"文件：{path}")
     print(f"概念：{article.get('titleZh')}（{article.get('titleEn')}） · 第 {article.get('day')} 天")
     print(f"正文中文字数：{chars}（要求 {MIN_CHARS}–{MAX_CHARS}，不含参考文献）")
+    visual = article.get("visual") or {}
+    if visual:
+        print(
+            "图解插页：{0} 支概念图 · {1} 步模型 · {2} 条案例".format(
+                len((visual.get("mind") or {}).get("branches") or []),
+                len((visual.get("model") or {}).get("steps") or []),
+                len(visual.get("cases") or []),
+            )
+        )
     for w in warnings:
         print(f"  [警告] {w}")
     for e in errors:

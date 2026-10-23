@@ -2720,3 +2720,255 @@ input[type="search"],select { font-size:16px; }
     .plain__hint { margin-top: 13px; }
   }
 }
+
+/* ---------- 图解与迁移：概念图、经典模型、应用案例 ---------- */
+@media screen {
+  .plate {
+    margin: 60px 0 58px;
+    padding: 38px 0 10px;
+    border-top: 1px solid var(--line-strong);
+    border-bottom: 1px solid var(--line-strong);
+    scroll-margin-top: 40px;
+  }
+  .plate__head { margin: 0 0 36px; }
+  .plate__kicker {
+    margin: 0 0 12px;
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--ink-3);
+  }
+  .plate__head h2 {
+    margin: 0;
+    font-family: var(--serif);
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 1.6;
+    letter-spacing: 0.05em;
+    color: var(--ink);
+  }
+  .plate__lead {
+    margin: 12px 0 0;
+    font-family: var(--serif);
+    font-size: 15px;
+    line-height: 1.95;
+    color: var(--ink-3);
+  }
+  .plate__label {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 0 0 16px;
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: var(--ink-3);
+  }
+  .plate__label::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--line-soft);
+  }
+
+  /* 概念图：左侧概念名作脊线，右侧四支展开 */
+  .mind {
+    display: grid;
+    grid-template-columns: 168px minmax(0, 1fr);
+    margin: 0 0 50px;
+  }
+  .mind__core {
+    margin: 0;
+    padding: 2px 26px 0 0;
+    border-right: 1px solid var(--line-strong);
+    font-family: var(--serif);
+    font-size: 25px;
+    line-height: 1.45;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+  }
+  .mind__core span {
+    display: block;
+    margin-top: 9px;
+    font-family: Georgia, var(--serif);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    color: var(--ink-3);
+  }
+  .mind__branches {
+    list-style: none;
+    margin: 0;
+    padding: 0 0 0 28px;
+  }
+  .mind__branch {
+    position: relative;
+    padding: 17px 0;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .mind__branch:first-child { padding-top: 0; }
+  .mind__branch:last-child { padding-bottom: 0; border-bottom: 0; }
+  .mind__branch::before {
+    content: "";
+    position: absolute;
+    left: -28px;
+    top: 27px;
+    width: 19px;
+    height: 1px;
+    background: var(--line-strong);
+  }
+  .mind__branch:first-child::before { top: 11px; }
+  .mind__label {
+    margin: 0 0 7px;
+    font-family: var(--sans);
+    font-size: 12.5px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    color: var(--ink-2);
+  }
+  .mind__items {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .mind__items li {
+    position: relative;
+    padding-left: 15px;
+    font-family: var(--serif);
+    font-size: 15.5px;
+    line-height: 1.9;
+    color: var(--ink-2);
+  }
+  .mind__items li::before {
+    content: "·";
+    position: absolute;
+    left: 3px;
+    color: var(--ink-3);
+  }
+
+  /* 经典模型：编号格子，可横向扫读 */
+  .model { margin: 0 0 50px; }
+  .model__name {
+    margin: 0 0 20px;
+    font-family: var(--serif);
+    font-size: 19px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    color: var(--ink);
+  }
+  .model__name span {
+    margin-left: 10px;
+    font-family: var(--sans);
+    font-size: 11.5px;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    color: var(--ink-3);
+  }
+  .model__steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0 20px;
+  }
+  .model__steps li {
+    display: flex;
+    gap: 9px;
+    padding: 12px 0;
+    border-top: 1px solid var(--line-soft);
+  }
+  .model__steps b {
+    flex: none;
+    padding-top: 2px;
+    font-family: var(--sans);
+    font-size: 10.5px;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    color: var(--ink-3);
+  }
+  .model__steps span {
+    font-family: var(--serif);
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--ink-2);
+  }
+  .model__use {
+    margin: 20px 0 0;
+    padding-left: 15px;
+    border-left: 1px solid var(--line-strong);
+    font-family: var(--serif);
+    font-size: 14.5px;
+    line-height: 1.95;
+    color: var(--ink-3);
+  }
+
+  /* 应用案例 */
+  .cases__list { list-style: none; margin: 0; padding: 0; }
+  .case { padding: 18px 0; border-top: 1px solid var(--line-soft); }
+  .case:last-child { border-bottom: 1px solid var(--line-soft); }
+  .case__head {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 0 0 9px;
+  }
+  .case__head b {
+    font-family: var(--serif);
+    font-size: 16.5px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+  }
+  .case__tag {
+    padding: 2px 7px;
+    border: 1px solid var(--line);
+    font-family: var(--sans);
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    color: var(--ink-3);
+  }
+  .case__text {
+    margin: 0 0 9px;
+    font-family: var(--serif);
+    font-size: 15.5px;
+    line-height: 1.95;
+    color: var(--ink-2);
+  }
+  .case__src {
+    margin: 0;
+    font-family: var(--sans);
+    font-size: 11.5px;
+    line-height: 1.8;
+    color: var(--ink-3);
+  }
+  .case__src a {
+    color: var(--ink-2);
+    text-decoration: none;
+    border-bottom: 1px solid var(--line-strong);
+  }
+  .case__src a:hover { color: var(--ink); border-bottom-color: var(--ink-2); }
+
+  .toc__link--plate .toc__no { color: var(--ink-3); }
+
+  @media (max-width: 900px) {
+    .model__steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 640px) {
+    .plate { margin: 44px 0; padding: 30px 0 8px; }
+    .plate__head { margin-bottom: 28px; }
+    .plate__head h2 { font-size: 21px; }
+    .mind { grid-template-columns: minmax(0, 1fr); margin-bottom: 40px; }
+    .mind__core {
+      padding: 0 0 16px;
+      margin-bottom: 20px;
+      border-right: 0;
+      border-bottom: 1px solid var(--line-strong);
+      font-size: 22px;
+    }
+    .mind__branches { padding-left: 0; }
+    .mind__branch::before { display: none; }
+    .model__steps { grid-template-columns: minmax(0, 1fr); }
+    .model__use { font-size: 14px; }
+  }
+}

@@ -370,12 +370,85 @@ function plainHTML(article) {
     </aside>`;
 }
 
+/* 图解与迁移：概念图 + 经典模型 + 应用案例。
+   只在文章带 visual 字段时出现，插在「概念辨析」之后、教学情境之前。 */
+function hasPlate(article) {
+  const v = article && article.visual;
+  if (!v) return false;
+  const mind = v.mind && Array.isArray(v.mind.branches) && v.mind.branches.length;
+  const model = v.model && v.model.name && (v.model.steps || []).length;
+  const cases = Array.isArray(v.cases) && v.cases.length;
+  return Boolean(mind || model || cases);
+}
+
+function plateHTML(article, v) {
+  const mind = v.mind || {};
+  const branches = (mind.branches || []).filter((b) => b && b.label && (b.items || []).length);
+  const model = v.model && v.model.name ? v.model : null;
+  const cases = (v.cases || []).filter((c) => c && c.name);
+
+  const mindHTML = branches.length ? `
+    <div class="mind">
+      <p class="mind__core">${esc(mind.core || article.titleZh)}<span>${esc(mind.en || article.titleEn)}</span></p>
+      <ul class="mind__branches">
+        ${branches.map((b) => `<li class="mind__branch">
+          <p class="mind__label">${esc(b.label)}</p>
+          <ul class="mind__items">${(b.items || []).map((t) => `<li>${esc(t)}</li>`).join('')}</ul>
+        </li>`).join('')}
+      </ul>
+    </div>` : '';
+
+  const modelHTML = model ? `
+    <div class="model">
+      <p class="plate__label">经典模型</p>
+      <h3 class="model__name">${esc(model.name)}${model.source ? `<span>${esc(model.source)}</span>` : ''}</h3>
+      <ol class="model__steps">${(model.steps || []).map((s, i) => `<li>
+        <b>${String(i + 1).padStart(2, '0')}</b><span>${esc(s)}</span></li>`).join('')}</ol>
+      ${model.use ? `<p class="model__use">${esc(model.use)}</p>` : ''}
+    </div>` : '';
+
+  const casesHTML = cases.length ? `
+    <div class="cases">
+      <p class="plate__label">应用案例</p>
+      <ul class="cases__list">${cases.map((c) => `<li class="case">
+        <p class="case__head"><b>${esc(c.name)}</b>${c.tag ? `<span class="case__tag">${esc(c.tag)}</span>` : ''}</p>
+        <p class="case__text">${esc(c.text)}</p>
+        ${(c.source || c.link) ? `<p class="case__src">${esc(c.source || '')}${c.link
+          ? `${c.source ? ' · ' : ''}<a href="${esc(c.link)}" target="_blank" rel="noopener">${esc(c.linkLabel || '来源')}</a>` : ''}</p>` : ''}
+      </li>`).join('')}</ul>
+    </div>` : '';
+
+  if (!mindHTML && !modelHTML && !casesHTML) return '';
+
+  return `
+    <section class="plate" id="sec-visual" aria-labelledby="sec-visual-h">
+      <div class="plate__head">
+        <p class="plate__kicker">图解与迁移</p>
+        <h2 id="sec-visual-h">${esc(v.title || `一张图看懂「${article.titleZh}」`)}</h2>
+        ${v.lead ? `<p class="plate__lead">${esc(v.lead)}</p>` : ''}
+      </div>
+      ${mindHTML}
+      ${modelHTML}
+      ${casesHTML}
+    </section>`;
+}
+
 function readerHTML(article, opts = {}) {
   const n = article.sections.length;
-  const toc = article.sections.map((s, i) => `
+  const tocItems = [];
+  article.sections.forEach((s, i) => {
+    tocItems.push(`
     <li><button class="toc__link" type="button" data-target="sec-${esc(s.key)}">
       <span class="toc__no">${String(i + 1).padStart(2, '0')}</span>${esc(s.heading)}
-    </button></li>`).join('');
+    </button></li>`);
+    if (s.key === 'contrast' && hasPlate(article)) {
+      tocItems.push(`
+    <li><button class="toc__link toc__link--plate" type="button" data-target="sec-visual">
+      <span class="toc__no">·</span>图解与迁移
+    </button></li>`);
+    }
+  });
+  const toc = tocItems.join('');
 
   return `
   <div class="reader">
@@ -399,7 +472,7 @@ function readerHTML(article, opts = {}) {
         <button class="toc__expand" type="button" aria-label="展开目录" title="展开目录（Alt+2）">本篇目录</button>
         <ul class="toc__list">${toc}</ul>
         <div class="toc__rail" aria-hidden="true"><span class="toc__rail-fill" id="toc-rail"></span></div>
-        <p class="toc__foot">${n} 节 · 约 ${article.readingMinutes} 分钟<br>正文 ${article.wordCount || '—'} 字</p>
+        <p class="toc__foot">${n} 节${hasPlate(article) ? ' + 图解' : ''} · 约 ${article.readingMinutes} 分钟<br>正文 ${article.wordCount || '—'} 字</p>
       </nav>
     </aside>
   </div>`;
@@ -520,7 +593,8 @@ function pagerHTML(day) {
 /* ---------------- 文章渲染 ---------------- */
 
 function renderSections(article) {
-  return article.sections.map((section, i) => {
+  const parts = [];
+  article.sections.forEach((section, i) => {
     const no = String(i + 1).padStart(2, '0');
     let body = '';
     if (section.key === 'reflection') {
@@ -537,15 +611,19 @@ function renderSections(article) {
     } else {
       body = (section.blocks || []).map(renderBlock).join('');
     }
-    return `
+    parts.push(`
       <section class="section" id="sec-${esc(section.key)}" aria-labelledby="sec-${esc(section.key)}-h">
         <div class="section__head">
           <span class="section__no">${no}</span>
           <h2 id="sec-${esc(section.key)}-h">${esc(section.heading)}</h2>
         </div>
         ${body}
-      </section>`;
-  }).join('');
+      </section>`);
+    if (section.key === 'contrast' && hasPlate(article)) {
+      parts.push(plateHTML(article, article.visual));
+    }
+  });
+  return parts.join('');
 }
 
 function renderBlock(block) {
