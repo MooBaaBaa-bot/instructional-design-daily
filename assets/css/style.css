@@ -2668,3 +2668,55 @@ input[type="search"],select { font-size:16px; }
     body:has(#site-head.is-compact) .qnav { top: 24px; }
   }
 }
+
+/* ---------- 一句话讲明白：正文之前的白话入口 ---------- */
+@media screen {
+  .plain {
+    margin: 0 0 50px;
+    padding: 26px 0 28px;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .plain__label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 15px;
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: var(--ink-3);
+  }
+  .plain__label::before {
+    content: "";
+    flex: none;
+    width: 18px;
+    height: 1px;
+    background: var(--line-strong);
+  }
+  .plain__text {
+    margin: 0;
+    font-family: var(--serif);
+    font-size: 21px;
+    line-height: 1.9;
+    letter-spacing: 0.03em;
+    color: var(--ink);
+    text-wrap: pretty;
+  }
+  .plain__hint {
+    margin: 15px 0 0;
+    font-family: var(--sans);
+    font-size: 11.5px;
+    line-height: 1.8;
+    color: var(--ink-3);
+  }
+
+  @media (max-width: 1079.98px) {
+    .plain__text { font-size: 19px; }
+  }
+  @media (max-width: 640px) {
+    .plain { margin-bottom: 38px; padding: 22px 0 24px; }
+    .plain__text { font-size: 18px; line-height: 1.85; }
+    .plain__hint { margin-top: 13px; }
+  }
+}

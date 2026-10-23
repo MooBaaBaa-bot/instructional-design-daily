@@ -356,6 +356,20 @@ async function renderReader(id) {
   window.scrollTo({ top: 0, behavior: 'auto' });
 }
 
+/* 一句话讲明白：给完全不了解这个学科的人听的白话入口。
+   放在 #article-body 之外，避免改变正文纯文本的字符偏移，
+   已保存的划线定位不受影响。 */
+function plainHTML(article) {
+  const text = typeof article.plainTalk === 'string' ? article.plainTalk.trim() : '';
+  if (!text) return '';
+  return `
+    <aside class="plain" aria-label="一句话讲明白这个概念">
+      <p class="plain__label">一句话讲明白</p>
+      <p class="plain__text">${esc(text)}</p>
+      <p class="plain__hint">说给完全不了解这个学科的人听，他也能跟上。</p>
+    </aside>`;
+}
+
 function readerHTML(article, opts = {}) {
   const n = article.sections.length;
   const toc = article.sections.map((s, i) => `
@@ -369,6 +383,7 @@ function readerHTML(article, opts = {}) {
       ${opts.back ? `<p class="eyebrow"><a href="${esc(opts.back)}">← 概念库</a></p>` : ''}
       ${opts.notice || ''}
       ${mastheadHTML(article, opts.meta, opts)}
+      ${plainHTML(article)}
       <div class="article" id="article-body"></div>
       <div class="article-actions" id="article-actions"></div>
       <div class="marks" id="article-marks"></div>

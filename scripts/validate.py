@@ -86,6 +86,21 @@ def validate(article: dict, known_ids: set[str] | None = None) -> tuple[list[str
     if not isinstance(article["keywords"], list) or len(article["keywords"]) < 3:
         errors.append("keywords 至少 3 个，用于站内搜索")
 
+    plain = article.get("plainTalk")
+    if plain is None:
+        warnings.append("缺少 plainTalk（一句话讲明白）：页首白话入口将不显示")
+    elif not isinstance(plain, str) or not plain.strip():
+        errors.append("plainTalk 必须是非空字符串")
+    else:
+        n = count_cjk(plain)
+        if n < 20:
+            warnings.append(f"plainTalk 仅 {n} 字，过短，恐难让外行听懂")
+        elif n > 90:
+            warnings.append(f"plainTalk 有 {n} 字，超出「一句话」的篇幅")
+        for token in PLACEHOLDERS:
+            if token in plain:
+                errors.append(f"plainTalk 含占位文本：{token}")
+
     keys = [s.get("key") for s in article["sections"]]
     expected = [k for k, _ in REQUIRED_SECTIONS]
     if keys != expected:
