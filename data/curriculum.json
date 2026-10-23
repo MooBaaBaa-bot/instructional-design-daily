@@ -189,8 +189,8 @@
       "dependsOn": [
         "cognitivism"
       ],
-      "status": "planned",
-      "publishedDate": null
+      "status": "published",
+      "publishedDate": "2026-10-23"
     },
     {
       "id": "constructivism",

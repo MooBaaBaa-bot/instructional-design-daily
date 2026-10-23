@@ -1,0 +1,226 @@
+{
+  "id": "information-processing",
+  "day": 5,
+  "date": "2026-10-23",
+  "titleZh": "信息加工模型",
+  "titleEn": "Information Processing Model",
+  "theme": "学习理论",
+  "stageId": "s1",
+  "type": "模型",
+  "oneLiner": "用感觉登记、工作记忆与长时记忆描述信息如何被选择、加工和保存。",
+  "keywords": [
+    "信息加工模型",
+    "information processing model",
+    "感觉登记",
+    "sensory register",
+    "工作记忆",
+    "working memory",
+    "长时记忆",
+    "long-term memory",
+    "编码",
+    "encoding",
+    "提取",
+    "retrieval",
+    "控制过程",
+    "control processes",
+    "组块",
+    "chunking"
+  ],
+  "sections": [
+    {
+      "key": "concept",
+      "heading": "今日概念",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "信息加工模型（information processing model）把学习拆成一条流水线：刺激先落进感觉登记（sensory register），被注意选中的一小部分进入工作记忆（working memory），经编码（encoding）存入长时记忆，用时再提取（retrieval）。"
+        },
+        {
+          "type": "p",
+          "text": "它不问「学生有没有反应」，只问「信息在哪一环丢了」——教学诊断从此有了可指认的节点。"
+        }
+      ]
+    },
+    {
+      "key": "background",
+      "heading": "理论背景",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "1960 年代，信息论与计算机程序进入心理学，人被当作处理符号的系统来建模，记忆被写成有结构、有容量的存储装置。"
+        },
+        {
+          "type": "p",
+          "text": "1968 年，阿特金森（R. C. Atkinson）与希夫林（R. M. Shiffrin）提出三段式框图，并区分两类过程：结构（structure）固定，控制过程（control processes）可变——注意、复述、编码、检索策略都属后者。教学能改造的正是后者。"
+        }
+      ]
+    },
+    {
+      "key": "mechanism",
+      "heading": "核心机制",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "它可以读成一张流水线图：三个仓，一道闸。"
+        },
+        {
+          "type": "flow",
+          "items": [
+            {
+              "label": "感觉登记",
+              "desc": "原始形式短暂停留，容量大而时间极短。"
+            },
+            {
+              "label": "注意",
+              "desc": "决定谁进入下一环，其余迅速消退。"
+            },
+            {
+              "label": "工作记忆",
+              "desc": "同时保持并操作少量信息，是瓶颈。"
+            },
+            {
+              "label": "编码",
+              "desc": "把信息组织成结构，存入长时记忆。"
+            },
+            {
+              "label": "长时记忆",
+              "desc": "容量近乎无限，取出看线索。"
+            },
+            {
+              "label": "提取",
+              "desc": "借线索召回，用于解题。"
+            }
+          ]
+        },
+        {
+          "type": "p",
+          "text": "瓶颈在工作记忆。米勒（G. A. Miller）1956 年给出「七加减二」，考恩（N. Cowan）2001 年复核后认为，无组块辅助时纯容量约四个。数字仍有争议，结论一致：同时处理的新元素少得可怜。"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "闸门在先：没被注意的内容，讲多少遍也进不了加工。",
+            "瓶颈在中：一次只放少量新元素，其余交给已有结构。",
+            "编码定取出：存法决定取法，组织过的自带线索。"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "控制过程最像技能，也最可教：划线、提问、画结构图、间隔复述，都是给学生加装的操作件。"
+        }
+      ]
+    },
+    {
+      "key": "contrast",
+      "heading": "概念辨析",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "与认知主义：认知主义是立场——学习改变内部表征；本模型是该立场下的一种建模。立场不易被推翻，模型常被修订。"
+        },
+        {
+          "type": "p",
+          "text": "与工作记忆模型：1974 年巴德利（A. D. Baddeley）与希奇（G. Hitch）以多成分的工作记忆取代单一短时存储，分出语音回路、视空间画板与中央执行。仓库被改写，但「容量有限、须经编码」未变。"
+        },
+        {
+          "type": "p",
+          "text": "与认知负荷理论：负荷理论不描述结构，只算账——把任务对新元素的需求与容量相比。模型是地图，负荷是限重牌。"
+        }
+      ]
+    },
+    {
+      "key": "scenario",
+      "heading": "教学情境示例",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "某高校《中国法制史》讲唐律「十恶」。教师投影《唐律疏议》原文逐句串讲，学生当堂点头，两周后只记得「谋反」二字。"
+        },
+        {
+          "type": "p",
+          "text": "改造后先发一张空白表：横轴是侵害对象（君权、父权、伦常、生命），请学生把十个罪名填进去；原文改为课后材料，课上只处理三组。填表必须先调出「礼法合一」这条线索，再用它归类。"
+        },
+        {
+          "type": "p",
+          "text": "变化在流水线上：原文分批通过工作记忆，归类本身就是编码，还造出了提取线索——先想四类对象，再想罪名。此系课堂观察，未设对照。"
+        }
+      ]
+    },
+    {
+      "key": "ai",
+      "heading": "与 AI 教育的连接",
+      "blocks": [
+        {
+          "type": "note",
+          "variant": "evidence",
+          "label": "已有研究支持",
+          "text": "证据基础在容量一侧：工作记忆同时处理的新元素有限，有实验支持（米勒 1956、考恩 2001）。由此推出的约束很稳：分段进入，先给结构再给细节，去掉无关装饰。"
+        },
+        {
+          "type": "note",
+          "variant": "design",
+          "label": "仍属设计设想",
+          "text": "把大模型当编码环节的结构化助手是合理设想：模型先出粗糙的概念图，再由学生改错补漏，编码就发生在修改动作里。若模型直接给摘要、学生只勾选，等于替学生完成组织，效果尚无课堂证据。"
+        },
+        {
+          "type": "note",
+          "variant": "caution",
+          "label": "使用不当的风险",
+          "text": "一是卸载过头：生成式工具让「读完即有结论」变得便宜，学生跳过复述与组织，留存下滑，而流畅常被误当掌握。二是把「七个组块」当配额，按字数机械切分内容，只会切出碎片。"
+        }
+      ]
+    },
+    {
+      "key": "reflection",
+      "heading": "一分钟思考",
+      "question": "同一份材料，A 班读完直接讨论，B 班先花五分钟自己画结构图再讨论。一周后哪班记得多？为什么？",
+      "answer": [
+        "多半是 B 班，但原因不在多花五分钟，而在那五分钟做的是编码：压成结构，等于造了一套提取线索。",
+        "也可能反过来——画图占满工作记忆，学生只顾抄标题，反而没加工。优势取决于图是否由他自己组织。",
+        "判断办法是一周后给一个必须调用该结构的新问题。调得出说明编码成功；调不出，说明只过了一遍感觉登记。"
+      ]
+    },
+    {
+      "key": "reading",
+      "heading": "延伸阅读",
+      "items": [
+        {
+          "authors": "Atkinson, R. C., & Shiffrin, R. M.",
+          "year": "1968",
+          "title": "Human memory: A proposed system and its control processes",
+          "source": "Psychology of Learning and Motivation, Vol. 2, 89–195",
+          "link": "https://doi.org/10.1016/S0079-7421(08)60422-3",
+          "note": "三段式模型的原始出处。重点看「控制过程」一节，它把可教的部分从固定结构里切了出来，是全篇最有教学价值的地方。",
+          "verified": "Crossref 核对：DOI、作者（Atkinson / Shiffrin）、年份 1968、页码 89–195、类型 book-chapter 一致；Crossref 未返回卷号，卷次 2 依丛书序列补注"
+        },
+        {
+          "authors": "Baddeley, A. D., & Hitch, G.",
+          "year": "1974",
+          "title": "Working memory",
+          "source": "Psychology of Learning and Motivation, Vol. 8, 47–89",
+          "link": "https://doi.org/10.1016/S0079-7421(08)60452-1",
+          "note": "用多成分的工作记忆替换单一短时存储。它解释了为什么「同时做两件事」有时互不干扰、有时彼此打架。",
+          "verified": "Crossref 核对：DOI、作者（Baddeley / Hitch）、年份 1974、页码 47–89、类型 book-chapter 一致；卷号同样未返回，卷次 8 依丛书序列补注"
+        },
+        {
+          "authors": "Cowan, N.",
+          "year": "2001",
+          "title": "The magical number 4 in short-term memory: A reconsideration of mental storage capacity",
+          "source": "Behavioral and Brain Sciences, 24(1), 87–114",
+          "link": "https://doi.org/10.1017/S0140525X01003922",
+          "note": "对「七加减二」的系统复核，把纯容量估到四个左右。附带大量同行评论与作者回应，适合看一个数字如何在争论中被修正。",
+          "verified": "Crossref 核对：DOI、作者（Cowan）、年份 2001、卷 24 期 1、页码 87–114、类型 journal-article 一致"
+        }
+      ]
+    }
+  ],
+  "meta": {
+    "generatedBy": "WorkBuddy 每日自动化",
+    "sourcesChecked": "2026-10-23",
+    "updatedAt": "2026-10-23T10:15:25+08:00",
+    "wordCount": 1149,
+    "publishedAt": "2026-10-23T10:15:25+08:00"
+  },
+  "readingMinutes": 6,
+  "wordCount": 1149
+}
