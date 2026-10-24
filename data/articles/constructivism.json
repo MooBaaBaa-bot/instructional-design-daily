@@ -1,0 +1,267 @@
+{
+  "id": "constructivism",
+  "day": 6,
+  "date": "2026-10-24",
+  "titleZh": "建构主义",
+  "titleEn": "Constructivism",
+  "theme": "学习理论",
+  "stageId": "s1",
+  "type": "理论",
+  "oneLiner": "知识不是被传递的，而是学习者在已有经验基础上主动建构的。",
+  "plainTalk": "同一句话，每个人都是拿自己过去的经历去接的，接出来的意思并不一样。就像发面团，你只能把面递过去，最后包成什么馅，得看他自己怎么揉。",
+  "keywords": [
+    "建构主义",
+    "constructivism",
+    "同化",
+    "assimilation",
+    "顺应",
+    "accommodation",
+    "认知冲突",
+    "cognitive conflict",
+    "概念转变",
+    "conceptual change",
+    "最近发展区",
+    "zone of proximal development",
+    "支架",
+    "scaffolding",
+    "错误概念",
+    "misconception"
+  ],
+  "visual": {
+    "title": "一张图看懂「建构主义」",
+    "lead": "学生不是空容器，教师也不是搬运工——先看他手里已经握了什么。",
+    "mind": {
+      "core": "建构主义",
+      "en": "Constructivism",
+      "branches": [
+        {
+          "label": "是什么",
+          "items": [
+            "知识由学习者在经验上自建",
+            "教师给情境，不给结论"
+          ]
+        },
+        {
+          "label": "分界在哪",
+          "items": [
+            "不等于无指导的发现学习",
+            "不等于教师退场"
+          ]
+        },
+        {
+          "label": "怎么变",
+          "items": [
+            "同化：塞进旧图式",
+            "顺应：改旧图式",
+            "冲突是开关"
+          ]
+        },
+        {
+          "label": "怎么用",
+          "items": [
+            "先探旧知，再设计冲突",
+            "在最近发展区内给支架"
+          ]
+        }
+      ]
+    },
+    "model": {
+      "name": "BSCS 5E 教学序列",
+      "source": "Bybee 等, 2006（BSCS，为美国 NIH 科学教育办公室撰写）",
+      "steps": [
+        "参与：用现象唤起旧知与好奇",
+        "探究：动手取得共同经验",
+        "解释：学生先说，教师再补",
+        "迁移：把新解释用到陌生情境",
+        "评价：学生自评与互评"
+      ],
+      "use": "五步里真正换位置的是第三步：先说的人是学生。若教师第一步就开讲，后面四步会退化成听讲加练习。"
+    },
+    "cases": [
+      {
+        "name": "主动学习：挂科率从 33.8% 降到 21.8%",
+        "tag": "研究证据",
+        "text": "把 225 项本科理科课堂研究合起来看：同样内容，学生要自己动手、讨论、解释的课堂，考试成绩平均高出约 0.47 个标准差，挂科率从 33.8% 降到 21.8%。差别不在讲得多精彩，而在学生有没有真正做事。",
+        "source": "Freeman 等，2014，PNAS 111(23), 8410–8415",
+        "link": "https://doi.org/10.1073/pnas.1319030111",
+        "linkLabel": "DOI"
+      },
+      {
+        "name": "把「力维持运动」的旧想法撞碎",
+        "tag": "课堂设计",
+        "text": "场景：高中物理牛顿第一定律。做法：先写预测，再看气垫导轨与太空中物体的对比视频，小组用一套解释覆盖三种现象，最后改写预测并注明原判断错在哪。可观察结果：学生能自己说出旧解释的漏洞，而非只是背出定律。",
+        "source": "设计设想，依 Bybee 等（2006）的 5E 序列",
+        "link": "https://bscs.org/wp-content/uploads/2022/01/bscs_5e_full_report-1.pdf",
+        "linkLabel": "原报告"
+      }
+    ]
+  },
+  "sections": [
+    {
+      "key": "concept",
+      "heading": "今日概念",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "建构主义（constructivism）主张：知识不是从教师头脑里原样搬到学生头脑里的，而是学习者以已有经验为基础，在情境与互动中主动建构出来的。教师提供的是材料、情境与对话，意义得由学生自己完成。"
+        },
+        {
+          "type": "p",
+          "text": "它不否认讲授，只调整顺序：先弄清学生此刻相信什么，再决定讲什么。"
+        }
+      ]
+    },
+    {
+      "key": "background",
+      "heading": "理论背景",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "皮亚杰（J. Piaget）用同化（assimilation）与顺应（accommodation）描述机制：新信息塞得进原有图式叫同化，塞不进、必须改图式叫顺应。认知冲突由此成为学习的发动机。"
+        },
+        {
+          "type": "p",
+          "text": "维果茨基（L. Vygotsky）补上社会维度：高级心理机能先出现在人与人的交往中，再被个体内化；教学应走在发展前面，作用在最近发展区（zone of proximal development）之内。"
+        },
+        {
+          "type": "p",
+          "text": "1980 年代，冯·格拉塞斯费尔德（E. von Glasersfeld）把它推成激进建构主义；同期科学教育的错误概念研究给出课堂证据，建构主义遂从哲学主张变成设计语言。"
+        }
+      ]
+    },
+    {
+      "key": "mechanism",
+      "heading": "核心机制",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "流派纷杂，落到课堂有三条可操作的机制。"
+        },
+        {
+          "type": "ol",
+          "items": [
+            "旧知决定新知的意思。学生不是空容器，同一段讲解，先备概念不同便听出不同内容；不碰旧知，新知只停在复述。",
+            "冲突驱动概念转变。学生带着成套错误概念进课堂，讲授常只是再叠一层；要让旧解释失效，得先让它公开、被检验、被自己发现不够用。",
+            "互动与支架。在最近发展区内，学生借同伴与教师的提示完成独自做不到的事，能力长出来后再撤掉支架（scaffolding）。"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "三条合起来是一条备课顺序：探明旧知、制造冲突、给支架对话、让学生表达。跳过第一步，后三步都会打折。"
+        }
+      ]
+    },
+    {
+      "key": "contrast",
+      "heading": "概念辨析",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "与认知主义：认知主义假设知识可被较准确地传递，教学是把结构讲清；建构主义认为「教过」不等于「得到」。两者不敌对，一个解释加工，一个解释意义从哪来。"
+        },
+        {
+          "type": "p",
+          "text": "与发现学习：最常被混淆的一对。建构主义是认识论主张，不规定教学必须无指导。把「自己建」读成「教师不教」，正是柯尔施纳等人 2006 年批评的对象——他们反对的是最少指导，不是建构。"
+        },
+        {
+          "type": "p",
+          "text": "与学生中心：它指决策依据从「我要讲什么」转向「他现在怎么想」，不指教师退场。这类课堂里教师的话往往更多，只是多用于追问。"
+        }
+      ]
+    },
+    {
+      "key": "scenario",
+      "heading": "教学情境示例",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "高中物理「牛顿第一定律」。学生进课堂前多持亚里士多德式想法：力是维持运动的原因，推着才动。"
+        },
+        {
+          "type": "p",
+          "text": "教师不从定义讲起。先让学生预测冰壶被推出后若没有摩擦会怎样，把预测写下来；再放三段对比视频——桌面推书、气垫导轨、太空中的物体——请他们解释为何有的很快停、有的停不下来。冲突出现后，小组尝试用一套解释覆盖三种现象，此时才引入惯性与第一定律。"
+        },
+        {
+          "type": "p",
+          "text": "最后一步常被省掉：回头改写那张预测，写出「我原来错在哪」。写得出来，转变才算发生；只记住定律表述的，下一题又回到旧想法。"
+        }
+      ]
+    },
+    {
+      "key": "ai",
+      "heading": "与 AI 教育的连接",
+      "blocks": [
+        {
+          "type": "note",
+          "variant": "evidence",
+          "label": "已有研究支持",
+          "text": "两条核心经验有实证：先备知识强烈影响新学习，单纯讲授难以替换错误概念；先预测、再观察、再解释的序列比直接讲解更能促成转变。AI 在此适合做诊断——批量读学生的预测，找出共同错误概念，据此设计冲突情境。"
+        },
+        {
+          "type": "note",
+          "variant": "design",
+          "label": "仍属设计设想",
+          "text": "让大模型扮演「持错误概念的同学」，由学生说服它，是可试的设想：把推理外化，逼学生组织证据。但角色稳定性、模型的迎合倾向，以及「说服了模型」是否等于「自己懂了」，都缺课堂证据，属假设。"
+        },
+        {
+          "type": "note",
+          "variant": "caution",
+          "label": "使用不当的风险",
+          "text": "风险是效率幻觉：模型一步给出标准解释，学生点头，冲突被跳过，课堂又回到传递模式。宁可让它多问一句「你为什么这么想」，也别让它多讲一段。"
+        }
+      ]
+    },
+    {
+      "key": "reflection",
+      "heading": "一分钟思考",
+      "question": "同一节课你讲得比去年更清楚，学生的错误概念却还在。下一步改哪里？",
+      "answer": [
+        "先别加讲一遍，去收一遍他们的原话：错误概念长什么样，才知道要撞哪面墙。",
+        "把冲突做成活动：预测、观察、解释，让旧想法自己站不住。",
+        "讲完要他们改写原判断，写出「错在哪」，这是转变发生的证据。"
+      ]
+    },
+    {
+      "key": "reading",
+      "heading": "延伸阅读",
+      "items": [
+        {
+          "authors": "von Glasersfeld, E.",
+          "year": "1989",
+          "title": "Cognition, construction of knowledge, and teaching",
+          "source": "Synthese, 80(1), 121–140",
+          "link": "https://doi.org/10.1007/BF00869951",
+          "note": "激进建构主义最清晰的一篇自述，直接回答「那教师还教不教」：教，但不教结论，教的是让学生自己检验想法的机会。",
+          "verified": "Crossref 元数据核对一致（作者 von Glasersfeld，1989，Synthese 80(1), 121–140）"
+        },
+        {
+          "authors": "Driver, R., Asoko, H., Leach, J., Scott, P., & Mortimer, E.",
+          "year": "1994",
+          "title": "Constructing scientific knowledge in the classroom",
+          "source": "Educational Researcher, 23(7), 5–12",
+          "link": "https://doi.org/10.3102/0013189X023007005",
+          "note": "把建构主义从个人认知推到课堂对话：科学知识既是个体建构，也是社会协商的结果，教师要在「学生的说法」与「科学的说法」之间搭桥。",
+          "verified": "Crossref 元数据核对一致（5 位作者、1994、Educational Researcher 23(7), 5–12）"
+        },
+        {
+          "authors": "Kirschner, P. A., Sweller, J., & Clark, R. E.",
+          "year": "2006",
+          "title": "Why minimal guidance during instruction does not work: An analysis of the failure of constructivist, discovery, problem-based, experiential, and inquiry-based teaching",
+          "source": "Educational Psychologist, 41(2), 75–86",
+          "link": "https://doi.org/10.1207/s15326985ep4102_1",
+          "note": "最锋利的一篇反方意见。读它时要分清：被批评的是「最少指导」，不是「学习者建构意义」。这条区分决定了建构主义该被误用还是被用好。",
+          "verified": "Crossref 元数据核对一致（3 位作者、2006、Educational Psychologist 41(2), 75–86）"
+        }
+      ]
+    }
+  ],
+  "meta": {
+    "generatedBy": "WorkBuddy 每日自动化",
+    "sourcesChecked": "2026-10-24",
+    "wordCount": 1168,
+    "updatedAt": "2026-10-24T19:40:41+08:00",
+    "publishedAt": "2026-10-24T19:40:41+08:00"
+  },
+  "readingMinutes": 6,
+  "wordCount": 1168
+}
