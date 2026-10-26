@@ -14,6 +14,6 @@
     "note": "10:00 是任务启动时间。检索、撰写、校验与提交部署需要数分钟，页面生效通常晚于 10:00；定时服务本身也可能延迟或失败。"
   },
   "publisher": "WorkBuddy 每日自动化",
-  "deployVerifiedAt": null,
+  "deployVerifiedAt": "2026-10-26T09:32:52+08:00",
   "deployNote": "内容由定时任务写入 data/ 后提交仓库，GitHub Pages 重建后生效；页面只读取已提交的数据，不会用前端日期切换冒充更新。"
 }
