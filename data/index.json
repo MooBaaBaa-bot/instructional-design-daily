@@ -1,8 +1,39 @@
 {
   "site": "教学设计 · 每日一概念",
-  "generatedAt": "2026-10-24T19:40:41+08:00",
-  "count": 6,
+  "generatedAt": "2026-10-26T09:24:46+08:00",
+  "count": 7,
   "articles": [
+    {
+      "id": "sociocultural-theory",
+      "day": 7,
+      "date": "2026-10-26",
+      "titleZh": "社会文化理论与最近发展区",
+      "titleEn": "Sociocultural Theory and ZPD",
+      "theme": "学习理论",
+      "stageId": "s1",
+      "type": "理论",
+      "readingMinutes": 6,
+      "wordCount": 1156,
+      "oneLiner": "学习发生在社会互动与文化工具之中，语言中介了思维；教学应瞄准「跳一跳够得着」的区间。",
+      "keywords": [
+        "社会文化理论",
+        "sociocultural theory",
+        "最近发展区",
+        "zone of proximal development",
+        "ZPD",
+        "支架",
+        "scaffolding",
+        "中介",
+        "mediation",
+        "内化",
+        "internalization",
+        "互惠教学",
+        "reciprocal teaching"
+      ],
+      "file": "data/articles/sociocultural-theory.json",
+      "sourceCount": 3,
+      "updatedAt": "2026-10-26T09:24:46+08:00"
+    },
     {
       "id": "constructivism",
       "day": 6,
