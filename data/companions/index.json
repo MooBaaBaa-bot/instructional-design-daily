@@ -1,0 +1,9 @@
+{
+  "information-processing": "data/companions/information-processing.json",
+  "behaviorism": "data/companions/behaviorism.json",
+  "cognitivism": "data/companions/cognitivism.json",
+  "sociocultural-theory": "data/companions/sociocultural-theory.json",
+  "constructivism": "data/companions/constructivism.json",
+  "learning": "data/companions/learning.json",
+  "reinforcement": "data/companions/reinforcement.json"
+}

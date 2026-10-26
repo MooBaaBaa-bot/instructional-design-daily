@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "articleId": "sociocultural-theory",
+  "takeaway": "协助完成后，还要检验独立表现",
+  "scenario": "AI 编程助教面对能抄代码却不会独立调试的大一学生。",
+  "decision": "先独立尝试，再按卡点提供追问、方向、局部示例；后续题逐步撤除帮助。",
+  "counterexample": "把有 AI 时的正确率当掌握度；把 ZPD 直接量化成一道题的分差。",
+  "evaluation": "同等时间比较分层提示与直接答案；一周后无 AI 完成新调试题，另记提示依赖。",
+  "evidenceStatus": "设计假设：以上产品方案与评估建议并非已验证的 AI 教学效果。",
+  "reflection": {
+    "question": "如果分层提示提高了完成率，却没有提高无 AI 测验，你会如何决定上线？",
+    "answer": "先保留为待验证假设；检查提示是否替代思考、撤除是否过早；根据独立迁移结果迭代。"
+  },
+  "related": [
+    "constructivism",
+    "learning"
+  ],
+  "audit": {
+    "status": "局部核验，其他主张仍待核验",
+    "note": "本次核对 Wood 等（1976）原文研究对象与支架功能；未据此确认 AI 产品有效。"
+  },
+  "corrections": [
+    {
+      "text": "原文将 Wood 等（1976）描述为母子搭积木研究，应更正为成人辅导者指导 3–5 岁儿童的搭建任务。六项支架功能不是固定的六步流程。",
+      "source": "Wood, Bruner & Ross (1976), pp. 89–90, 98–99",
+      "url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1111/j.1469-7610.1976.tb00381.x"
+    },
+    {
+      "text": "传统辅导研究不能直接证明生成式 AI 能补足个性化支架。原文“AI 恰好补这一环”应作为待验证的设计假设阅读。",
+      "source": "编辑补注：证据适用范围",
+      "url": ""
+    }
+  ]
+}

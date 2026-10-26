@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "articleId": "behaviorism",
+  "takeaway": "关注行为的条件与后果",
+  "scenario": "大学英语练习平台想提高学生主动练习的频率。",
+  "decision": "明确定义目标行为：主动订正并解释错误，而不是单纯点击签到。",
+  "counterexample": "把积分增加等同于内在动机或理解提升。",
+  "evaluation": "观察无奖励时的订正频率，并另测理解和迁移。",
+  "evidenceStatus": "设计假设：以上产品方案与评估建议并非已验证的 AI 教学效果。",
+  "reflection": {
+    "question": "若积分让点击变多却没有订正，你会改哪个反馈环节？",
+    "answer": "重新定义目标行为，检查反馈时机；用学习测验排除只刷次数。"
+  },
+  "related": [
+    "reinforcement",
+    "learning"
+  ],
+  "audit": {
+    "status": "待逐条全文核验",
+    "note": "历史参考文献中的书目信息核对，不等于研究结论或 AI 外推已经核验。"
+  },
+  "corrections": []
+}

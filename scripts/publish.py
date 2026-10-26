@@ -8,8 +8,8 @@
     publish <article.json>       校验并通过后写入 data/、提交、推送、验证线上生效
 
 常用参数
-    --dry-run                    只做校验与文件写入，不提交、不推送
-    --update                     今天已发布时，用新内容覆盖当天那一篇（默认拒绝）
+    --dry-run                    只做校验，不写入、不提交、不推送
+    --update                     已停用；历史文章不可覆盖
     --backfill                   允许文章日期早于今天（用于补录，需显式指定）
     --no-verify                  跳过线上验证（仅用于本地预览，正式发布不要用）
 
@@ -22,6 +22,7 @@
 from __future__ import annotations
 
 import argparse
+import fcntl
 import json
 import os
 import subprocess
@@ -157,6 +158,21 @@ def cmd_publish(args) -> int:
     if not src.exists():
         print(f"找不到文件：{src}")
         return 2
+    if args.update:
+        say("--update 已停用：历史文章不可覆盖；更正请新增独立补注。")
+        return 2
+    if not args.dry_run:
+        if git("branch", "--show-current").stdout.strip() != "main":
+            say("发布必须在 main 分支执行。")
+            return 3
+        dirty = git("status", "--porcelain", "--untracked-files=no").stdout.strip()
+        if dirty:
+            say("工作区存在已跟踪文件改动，请先处理；拒绝混入发布。")
+            return 3
+        fetch = git("fetch", "origin", "main")
+        if fetch.returncode or git("rev-parse", "HEAD").stdout.strip() != git("rev-parse", "origin/main").stdout.strip():
+            say("无法确认远端或本地不是最新 main；请先同步，再重新运行 next。")
+            return 3
     article = load(src)
     known = published_ids()
     idx = index()
@@ -164,17 +180,30 @@ def cmd_publish(args) -> int:
     today = today_str()
 
     errors, warnings = validate(article, known_ids=known)
+    if errors:
+        for error in errors: say(f"错误：{error}")
+        return 2
     dup_err, dup_warn = similarity_check(article)
     errors += dup_err
     warnings += dup_warn
 
+    if (ARTICLES / f"{article['id']}.json").exists():
+        errors.append("文章文件已存在，禁止覆盖（即使索引未包含它）")
+    planned = next((c for c in curriculum()["concepts"] if c["id"] == article["id"]), None)
+    if not planned or any(article.get(k) != planned.get(k) for k in ("day", "stageId", "titleZh", "titleEn")):
+        errors.append("文章与 curriculum 的概念、序号或阶段不一致")
+    nxt = next_concept()
+    if nxt and article['id'] != nxt['id'] and not args.backfill:
+        errors.append("必须按课程顺序发布下一概念")
+    if article.get("date", "") > today:
+        errors.append("不允许发布未来日期")
     if article.get("date") and article["date"] != today and not args.backfill:
         errors.append(f"文章日期 {article['date']} 不是今天（{today}）；如确需补录请加 --backfill")
     same_day = [a for a in idx["articles"] if a["date"] == article.get("date")]
     if same_day and not args.update:
         errors.append(
             f"{article['date']} 已发布过「{same_day[0]['titleZh']}」；同一天默认只发布一篇，"
-            "如需替换请显式加 --update"
+            "历史内容不可替换，请新增独立补注"
         )
 
     for w in warnings:
@@ -201,10 +230,15 @@ def cmd_publish(args) -> int:
     if stage["theme"] != article["theme"]:
         say(f"警告：主题「{article['theme']}」与阶段主题「{stage['theme']}」不一致")
 
+    if args.dry_run:
+        say("校验通过；--dry-run 未写入任何文件、未提交、未推送。")
+        return 0
+
     # 1. 文章文件（先写新文件，成功后才动索引）
     ARTICLES.mkdir(parents=True, exist_ok=True)
     target = ARTICLES / f"{article['id']}.json"
-    dump(target, article)
+    with target.open("x", encoding="utf-8") as handle:
+        handle.write(json.dumps(article, ensure_ascii=False, indent=2) + "\n")
     say(f"已写入文章：data/articles/{article['id']}.json（正文 {chars} 字，约 {article['readingMinutes']} 分钟）")
 
     # 2. 索引
@@ -276,7 +310,7 @@ def cmd_publish(args) -> int:
         return 0
 
     # 5. 提交与推送
-    git("add", "-A")
+    git("add", "data")
     commit = git("commit", "-m", f"content: day {article['day']} {article['titleZh']}（{article['titleEn']}）")
     if commit.returncode != 0 and "nothing to commit" not in (commit.stdout + commit.stderr):
         say(f"提交失败：{commit.stderr.strip()}")
@@ -333,12 +367,14 @@ def cmd_resume(_args) -> int:
     st = status()
     dirty = git("status", "--porcelain").stdout.strip()
     if dirty:
-        git("add", "-A")
-        c = git("commit", "-m", "content: 续跑上一次中断的发布")
-        if c.returncode != 0:
-            say(f"提交失败：{(c.stdout + c.stderr).strip()}")
-            return 3
-        say("已补提交本地未提交的改动")
+        say("存在未提交文件；请人工核对并提交后再 resume，避免带入无关改动。")
+        return 3
+    if git("fetch", "origin", "main").returncode:
+        say("无法读取远端，未执行续推。")
+        return 3
+    if git("merge-base", "--is-ancestor", "origin/main", "HEAD").returncode:
+        say("远端存在新提交，请先处理分歧，禁止自动覆盖。")
+        return 3
 
     ahead = git("rev-list", "--count", "origin/main..HEAD").stdout.strip()
     if ahead and ahead != "0":
@@ -401,6 +437,15 @@ def main() -> int:
     p.set_defaults(func=cmd_publish)
 
     args = parser.parse_args()
+    if args.cmd in ("publish", "resume"):
+        lock_path = ROOT / ".git" / "daily-publish.lock"
+        with lock_path.open("w") as lock:
+            try:
+                fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            except BlockingIOError:
+                say("另一个发布进程正在运行；本次退出。")
+                return 3
+            return args.func(args)
     return args.func(args)
 
 

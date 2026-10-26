@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "articleId": "reinforcement",
+  "takeaway": "强化看行为是否增加，不看奖励名称",
+  "scenario": "AI 编程练习为学生的调试过程提供反馈。",
+  "decision": "针对定位错误并说明原因给具体反馈，逐渐减少外部奖励。",
+  "counterexample": "把负强化说成惩罚；把所有表扬都称为有效强化。",
+  "evaluation": "比较反馈前后目标行为的频率，同时检查无反馈新题表现。",
+  "evidenceStatus": "设计假设：以上产品方案与评估建议并非已验证的 AI 教学效果。",
+  "reflection": {
+    "question": "学生为拿积分反复提交同一答案，怎样避免强化错误行为？",
+    "answer": "奖励有意义的调试解释；限制重复计分；撤去积分后观察是否保持。"
+  },
+  "related": [
+    "behaviorism",
+    "learning"
+  ],
+  "audit": {
+    "status": "待逐条全文核验",
+    "note": "历史参考文献中的书目信息核对，不等于研究结论或 AI 外推已经核验。"
+  },
+  "corrections": []
+}

@@ -97,7 +97,7 @@ function totalPlanned() {
 /* ---------------- 本地学习记录 ---------------- */
 
 function emptyRecords() {
-  return { version: 1, read: {}, fav: {}, notes: {}, marks: {}, updatedAt: null };
+  return { version: 1, read: {}, fav: {}, notes: {}, marks: {}, practice: {}, reviews: {}, updatedAt: null };
 }
 
 function loadRecords() {
@@ -111,6 +111,8 @@ function loadRecords() {
       fav: parsed.fav && typeof parsed.fav === 'object' ? parsed.fav : {},
       notes: parsed.notes && typeof parsed.notes === 'object' ? parsed.notes : {},
       marks: parsed.marks && typeof parsed.marks === 'object' ? parsed.marks : {},
+      practice: parsed.practice && typeof parsed.practice === 'object' ? parsed.practice : {},
+      reviews: parsed.reviews && typeof parsed.reviews === 'object' ? parsed.reviews : {},
       updatedAt: parsed.updatedAt || null,
     };
   } catch (err) {
@@ -137,6 +139,7 @@ async function bootstrap() {
       fetchJSON('data/index.json'),
       fetchJSON('data/status.json'),
     ]);
+    state.companions = await fetchJSON('data/companions/index.json').catch(() => ({}));
     state.curriculum = curriculum;
     state.index = index;
     state.status = status;
@@ -158,6 +161,7 @@ async function getArticle(id) {
   const meta = state.index.articles.find((a) => a.id === id);
   if (!meta) return null;
   const article = await fetchJSON(meta.file);
+  if (state.companions[id]) article.companion = await fetchJSON(state.companions[id]).catch(() => null);
   state.articles.set(id, article);
   return article;
 }
@@ -303,7 +307,7 @@ async function renderToday() {
     <div class="notice" role="status">
       <strong>今日尚未发布，以下是最近一期。</strong>
       今天是 ${esc(fmtDateCn(today))}，站内最新一期为 ${esc(fmtDateCn(st.lastPublishedDate))}。
-      每日任务在 10:00 启动，检索、撰写、校验与部署需要几分钟；若已过 10:30 仍未出现，说明今天这次更新没有成功。
+      每日任务在 10:00 启动，检索、撰写、校验与部署需要几分钟；若已过预期时间仍未出现，只能确认尚未看到新发布，执行情况需查看 WorkBuddy。
       页面不会把旧内容说成今天的更新。
     </div>`;
 
@@ -442,7 +446,9 @@ function readerHTML(article, opts = {}) {
       ${opts.notice || ''}
       ${mastheadHTML(article, opts.meta, opts)}
       ${plainHTML(article)}
+      ${learningHTML(article)}
       <div class="article" id="article-body"></div>
+      ${weeklyHTML(article)}
       <div class="article-actions" id="article-actions"></div>
       <div class="marks" id="article-marks"></div>
       <div class="note-editor" id="article-note"></div>
@@ -466,6 +472,7 @@ function readerHTML(article, opts = {}) {
 function mountReader(article, meta) {
   state.article = article;
   el('article-body').innerHTML = renderSections(article);
+  mountLearning(article);
   applyFontSize();
   paintMarks(article);
   bindMarkList(article);
@@ -1783,8 +1790,8 @@ function renderMine() {
     <div class="panel-grid">
       <div>
         <section class="panel">
-          <h2>复习入口</h2>
-          <p class="panel__hint">重新看一遍比多读一篇更有效。随机抽一条已学内容，或从收藏里挑。</p>
+          <h2>复习入口</h2>${reviewQueueHTML()}
+          <p class="panel__hint">先尝试回忆，再核对原文。优先复习到期内容，或从收藏里挑。</p>
           <div class="data-actions">
             <button class="btn btn--primary" type="button" id="review-random" ${all.length ? '' : 'disabled'}>随机复习一条</button>
             <button class="btn" type="button" id="review-fav" ${favIds.length ? '' : 'disabled'}>从收藏中抽</button>
@@ -1833,6 +1840,7 @@ function renderMine() {
         </section>
 
         <section class="panel">
+          <h2>产品实践记录</h2>${practiceRecordsHTML()}
           <h2>我的笔记 <span class="panel__num">${noteIds.length}</span></h2>
           <p class="panel__hint">点击标题回到原文继续修改。</p>
           <div>${notesHtml}</div>
@@ -1840,7 +1848,7 @@ function renderMine() {
 
         <section class="panel">
           <h2>备份与迁移</h2>
-          <p class="panel__hint">导出为一个 JSON 文件，包含已读、收藏与笔记。导入时与现有记录合并，不覆盖已有内容。</p>
+          <p class="panel__hint">导出为一个 JSON 文件，包含已读、收藏、笔记、划线、产品实践与复习安排。导入时与现有记录合并，不覆盖已有内容。</p>
           <div class="data-actions">
             <button class="btn" type="button" id="export-btn">导出记录</button>
             <label class="btn" for="import-file" style="cursor:pointer">导入记录</label>
@@ -1923,12 +1931,15 @@ async function importRecords(e) {
       throw new Error('文件格式不符合导出结构');
     }
     let merged = 0;
-    for (const bucket of ['read', 'fav', 'notes']) {
+    for (const bucket of ['read', 'fav', 'notes', 'practice', 'reviews']) {
       const src = rec[bucket] || {};
       for (const [id, value] of Object.entries(src)) {
         if (!(id in state.records[bucket])) merged += 1;
+        if (['__proto__', 'constructor', 'prototype'].includes(id)) continue;
+        if (bucket !== 'reviews' && typeof value !== 'string') continue;
+        if (bucket === 'reviews' && (!value || typeof value !== 'object' || !Number.isFinite(Date.parse(value.next)))) continue;
         if (bucket === 'notes') {
-          if (!state.records.notes[id] || String(value).length > String(state.records.notes[id]).length) {
+          if (!state.records.notes[id]) {
             state.records.notes[id] = value;
           }
         } else if (!state.records[bucket][id]) {
@@ -1938,7 +1949,7 @@ async function importRecords(e) {
     }
     /* 划线按 id 去重合并，避免同一句被重复导入 */
     for (const [aid, arr] of Object.entries(rec.marks || {})) {
-      if (!Array.isArray(arr)) continue;
+      if (['__proto__', 'constructor', 'prototype'].includes(aid) || !Array.isArray(arr)) continue;
       if (!state.records.marks[aid]) state.records.marks[aid] = [];
       const exist = new Set(state.records.marks[aid].map((m) => m && m.id));
       arr.forEach((m) => {
@@ -2007,3 +2018,73 @@ paintPanels();
 setupChrome();
 setupHighlighting();
 bootstrap();
+
+
+/* 附加学习层放在原文之外；历史正文和划线字符偏移保持不变。 */
+function weeklyHTML(article) {
+  const w = article.weeklyReview;
+  if (!w) return '';
+  return `<section class="learning-card"><h2>${esc(w.heading || '本周回顾')}</h2>${(w.blocks || []).map(renderBlock).join('')}</section>`;
+}
+function learningHTML(article) {
+  const c = article.companion || article.learning;
+  return `<section class="learning-card" aria-label="分层阅读">
+    <p class="eyebrow">把理论带回产品工作</p>
+    <div class="data-actions" role="group" aria-label="阅读层次">
+      <button class="btn" data-layer="quick" aria-pressed="false">1 分钟速览</button>
+      <button class="btn btn--primary" data-layer="full" aria-pressed="true">完整阅读</button>
+      <button class="btn" data-layer="practice" aria-pressed="false">产品实践</button>
+    </div>
+    <p>${esc(c ? c.takeaway : article.oneLiner)}</p>
+    ${c ? `<details class="learning-practice" id="learning-practice"><summary>产品场景、反例与验证</summary>
+      <p><b>场景：</b>${esc(c.scenario)}</p><p><b>设计决策：</b>${esc(c.decision)}</p>
+      <p><b>反例：</b>${esc(c.counterexample)}</p><p><b>如何验证：</b>${esc(c.evaluation)}</p>
+      <p class="panel__hint">${esc(c.evidenceStatus)}</p>
+      <h3>先独立思考</h3><p>${esc(c.reflection.question)}</p>
+      <label for="practice-answer">我的判断与下一步实验（仅保存在当前浏览器）</label>
+      <textarea id="practice-answer" rows="4">${esc(state.records.practice[article.id] || '')}</textarea>
+      <details><summary>对照参考思路</summary><p>${esc(c.reflection.answer)}</p></details>
+      <div class="data-actions"><button class="btn" data-review="1">仍需巩固 · 明天复习</button><button class="btn" data-review="7">能够解释 · 7 天后</button><button class="btn" data-review="30">能用于工作 · 30 天后</button></div>
+      <p id="practice-status" role="status"></p>
+      <p>关联概念：${c.related.map(id => { const a = state.index.articles.find(a => a.id === id); return a ? `<a href="#/read/${esc(id)}">${esc(a.titleZh)}</a>` : ''; }).filter(Boolean).join(' · ')}</p>
+      </details>
+      <details ${(c.corrections || []).length ? 'open' : ''}><summary>学术核验与补注 · ${esc(c.audit.status)}</summary><p>${esc(c.audit.note)}</p>
+      ${(c.corrections || []).map(x => `<p>${esc(x.text)} <small>${esc(x.source)}</small>${/^https?:\/\//.test(x.url) ? ` <a href="${esc(x.url)}" target="_blank" rel="noopener">查看来源</a>` : ''}</p>`).join('')}</details>` : '<p class="panel__hint">本篇产品实践补充尚未编写；可先阅读原文中的 AI 连接与反思。</p>'}
+  </section>`;
+}
+function mountLearning(article) {
+  document.querySelectorAll('[data-layer]').forEach(btn => btn.addEventListener('click', () => {
+    const layer = btn.dataset.layer;
+    el('article-body').hidden = layer !== 'full';
+    const practice = el('learning-practice');
+    if (practice) practice.open = layer === 'practice';
+    document.querySelectorAll('[data-layer]').forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
+  }));
+  // TOC must always reveal hidden full text before navigating to it.
+  document.querySelectorAll('[data-target]').forEach(btn => btn.addEventListener('click', () => {
+    el('article-body').hidden = false;
+    document.querySelectorAll('[data-layer]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.layer === 'full')));
+  }));
+  const input = el('practice-answer');
+  if (input) input.addEventListener('input', () => { state.records.practice[article.id] = input.value; saveRecords(); });
+  document.querySelectorAll('[data-review]').forEach(btn => btn.addEventListener('click', () => {
+    const next = new Date(); next.setDate(next.getDate() + Number(btn.dataset.review));
+    state.records.reviews[article.id] = {last: new Date().toISOString(), next: next.toISOString(), days: Number(btn.dataset.review)};
+    saveRecords(); el('practice-status').textContent = `已安排 ${btn.dataset.review} 天后复习。这是自选提醒，不代表掌握度测量。`;
+  }));
+}
+function reviewQueueHTML() {
+  const now = Date.now();
+  const due = state.index.articles.filter(a => {
+    const r = state.records.reviews[a.id];
+    return r ? Date.parse(r.next) <= now : Boolean(state.records.read[a.id]);
+  });
+  return `<p class="panel__hint">按 1 / 7 / 30 天自选间隔复习，不是算法诊断。30 天是课程长度；每 7 个概念附一次回顾。</p><ul class="mini-list">${due.length ? due.map(a => `<li><a href="#/read/${esc(a.id)}">待复习：${esc(a.titleZh)}</a></li>`).join('') : '<li>暂无到期复习。在文章的「产品实践」里安排下一次复习。</li>'}</ul>`;
+}
+
+function practiceRecordsHTML() {
+  return state.index.articles.filter(a => state.records.practice[a.id] || state.records.reviews[a.id]).map(a => {
+    const r = state.records.reviews[a.id];
+    return `<div class="note-card"><a href="#/read/${esc(a.id)}">${esc(a.titleZh)}</a><p class="note-card__text">${esc(state.records.practice[a.id] || '尚未填写实践反思')}</p>${r ? `<p class="panel__hint">下次复习：${esc(fmtStamp(r.next))}（北京时间）</p>` : ''}</div>`;
+  }).join('') || '<p class="panel__hint">文章中的实践反思和复习安排会汇集在这里。</p>';
+}

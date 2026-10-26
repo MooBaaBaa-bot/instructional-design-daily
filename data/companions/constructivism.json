@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "articleId": "constructivism",
+  "takeaway": "让学习者用证据修正解释",
+  "scenario": "AI 案例讨论用于大学教育技术课程。",
+  "decision": "先收集学生的预测，再提供反例和证据，要求修订并解释原因。",
+  "counterexample": "把自主建构等同于无指导探索，或把流畅表达当理解。",
+  "evaluation": "使用统一量规比较修订前后论证，并在新案例检验迁移。",
+  "evidenceStatus": "设计假设：以上产品方案与评估建议并非已验证的 AI 教学效果。",
+  "reflection": {
+    "question": "学生讨论热烈却重复原观点，你会给哪种支持？",
+    "answer": "引入能检验观点的证据或反例，明确评价标准，再要求修改解释。"
+  },
+  "related": [
+    "cognitivism",
+    "sociocultural-theory"
+  ],
+  "audit": {
+    "status": "待逐条全文核验",
+    "note": "历史参考文献中的书目信息核对，不等于研究结论或 AI 外推已经核验。"
+  },
+  "corrections": []
+}

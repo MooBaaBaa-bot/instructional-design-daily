@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "articleId": "learning",
+  "takeaway": "区分当场完成与持久学习",
+  "scenario": "高校 AI 答疑让作业正确率上升，但离开工具后的理解未必改善。",
+  "decision": "把即时正确率与一周后无提示迁移题分开记录。",
+  "counterexample": "只把提交速度、满意度当学习效果。",
+  "evaluation": "同等学习时间下比较无提示迁移题，记录先验水平与退出率。",
+  "evidenceStatus": "设计假设：以上产品方案与评估建议并非已验证的 AI 教学效果。",
+  "reflection": {
+    "question": "如果 AI 帮学生完成了全部步骤，你凭什么判断学习发生？",
+    "answer": "保留独立作答基线；安排延迟测验；把工具表现与学习表现分别报告。"
+  },
+  "related": [
+    "behaviorism",
+    "cognitivism"
+  ],
+  "audit": {
+    "status": "待逐条全文核验",
+    "note": "历史参考文献中的书目信息核对，不等于研究结论或 AI 外推已经核验。"
+  },
+  "corrections": []
+}

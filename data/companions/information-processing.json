@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "articleId": "information-processing",
+  "takeaway": "管理注意与加工负担",
+  "scenario": "高校 AI 课件助手自动生成了信息密集的讲解页。",
+  "decision": "把核心步骤分段呈现，保留必要上下文，让学生先作答再继续。",
+  "counterexample": "按固定“记忆容量数字”机械限制页面；切得过碎又丢失关系。",
+  "evaluation": "比较理解与延迟回忆，记录学习时间和自报负担；不把停留短当有效。",
+  "evidenceStatus": "设计假设：以上产品方案与评估建议并非已验证的 AI 教学效果。",
+  "reflection": {
+    "question": "一次解释同时出现公式、动画和语音时，先删什么，保留什么？",
+    "answer": "围绕目标移除无关信息；整合互相依赖的表征；用学习结果检验。"
+  },
+  "related": [
+    "cognitivism",
+    "learning"
+  ],
+  "audit": {
+    "status": "待逐条全文核验",
+    "note": "历史参考文献中的书目信息核对，不等于研究结论或 AI 外推已经核验。"
+  },
+  "corrections": []
+}

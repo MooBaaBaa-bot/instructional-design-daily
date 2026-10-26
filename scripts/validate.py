@@ -10,6 +10,7 @@
 from __future__ import annotations
 
 import json
+from datetime import date
 import re
 import sys
 from pathlib import Path
@@ -127,12 +128,21 @@ def validate(article: dict, known_ids: set[str] | None = None) -> tuple[list[str
     errors: list[str] = []
     warnings: list[str] = []
 
+    if not isinstance(article, dict):
+        return ["文章必须是 JSON 对象"], warnings
     for key in REQUIRED_TOP:
         if key not in article or article[key] in (None, "", [], {}):
             errors.append(f"缺少字段：{key}")
     if errors:
         return errors, warnings
 
+    for key in ("id", "date", "titleZh", "titleEn", "oneLiner", "stageId", "theme", "type"):
+        if not isinstance(article[key], str): errors.append(f"{key} 必须是字符串")
+    if not isinstance(article["sections"], list) or not all(isinstance(s, dict) for s in article["sections"]):
+        errors.append("sections 必须是对象数组")
+    if errors: return errors, warnings
+    try: date.fromisoformat(article["date"])
+    except ValueError: errors.append("date 不是有效日期")
     if not re.fullmatch(r"[a-z0-9]+(-[a-z0-9]+)*", article["id"]):
         errors.append("id 只能使用小写字母、数字与连字符")
     if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", article["date"]):
@@ -210,6 +220,13 @@ def validate(article: dict, known_ids: set[str] | None = None) -> tuple[list[str
         if not link and not (item.get("note") and re.search(r"DOI|无 DOI|图书馆|官网|未公开", item.get("note", ""))):
             warnings.append(f"延伸阅读第 {i} 条没有链接，且 note 未说明原因")
 
+    learning = article.get("learning")
+    if learning is not None:
+        errors.extend(validate_learning(learning))
+    else:
+        warnings.append("缺少 learning 产品实践层；旧格式兼容，尚未达到新版内容标准")
+    if article.get("day") in (7, 14, 21, 28) and not article.get("weeklyReview"):
+        errors.append("第 7/14/21/28 个概念必须包含 weeklyReview")
     chars = body_char_count(article)
     if chars < MIN_CHARS:
         errors.append(f"正文 {chars} 字，少于 {MIN_CHARS} 字")
@@ -222,6 +239,24 @@ def validate(article: dict, known_ids: set[str] | None = None) -> tuple[list[str
         errors.append(f"概念 id「{article['id']}」已发布，拒绝重复发布")
 
     return errors, warnings
+
+
+def validate_learning(value):
+    errors = []
+    if not isinstance(value, dict): return ["learning 必须是对象"]
+    for key in ("takeaway", "scenario", "decision", "counterexample", "evaluation", "evidenceStatus"):
+        if not isinstance(value.get(key), str) or not value[key].strip(): errors.append(f"learning.{key} 必须是非空文本")
+    for key, fields in (("reflection", ("question", "answer")), ("audit", ("status", "note"))):
+        obj = value.get(key)
+        if not isinstance(obj, dict) or any(not isinstance(obj.get(f), str) or not obj[f].strip() for f in fields): errors.append(f"learning.{key} 缺少文本字段 {fields}")
+    if not isinstance(value.get("related"), list) or not all(isinstance(v, str) for v in value["related"]): errors.append("learning.related 必须是概念 id 数组")
+    corrections = value.get("corrections", [])
+    if not isinstance(corrections, list) or any(not isinstance(v, dict) or not isinstance(v.get("text"), str) for v in corrections): errors.append("learning.corrections 格式错误")
+    # A schema checker cannot certify scientific truth. Claims require inspectable evidence.
+    for claim in value.get("claims", []):
+        if not isinstance(claim, dict) or any(not claim.get(k) for k in ("claim", "source", "locator", "scope", "checkedAt")):
+            errors.append("核验主张必须含 claim/source/locator/scope/checkedAt")
+    return errors
 
 
 def main(argv: list[str]) -> int:
