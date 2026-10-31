@@ -19,5 +19,13 @@
 
 ## 代码维护
 
-保留现有暖白/深绿视觉、idd.records.v1 键以及 read/fav/notes/marks；新字段 practice/reviews 为增量字段。备份导入只合并缺失记录，不覆盖现有笔记。新内容须放在 article-body 外，测试历史正文渲染不变。
+保留现有牛皮纸底色与赭黄棕主题视觉、idd.records.v1 键以及 read/fav/notes/marks；新字段 practice/reviews 为增量字段。备份导入只合并缺失记录，不覆盖现有笔记。新内容须放在 article-body 外，测试历史正文渲染不变。
 验证：`python3 -m unittest discover -s tests -v`、`node tests/test_records.cjs`、`node --check assets/js/app.js`；另外检查真实浏览器阅读模式、目录跳转、记录刷新保留与导入导出。
+
+## Emilia 牛皮纸主题（2026-11-01 用户要求）
+
+- 内页统一牛皮纸底色，主题色按首页书脊：机会库森林绿、AI 周报灰蓝、每日概念赭黄棕、技术实践酒红、产品研究奶油棕。
+- `emilia-kraft.css` 为独立主题文件。内容更新保留 HTML 根元素的 `data-emilia-theme` 和 head 末尾的 `id="emilia-kraft-theme"` 样式引用，不用旧模板覆盖最新 HTML。更新前先读取远端最新版。
+- 仅更新已有数据或内容区；不得为更新内容删除主题文件、重写整页或改动稳定 ID、个人记录存储键。若另有生成模板，必须保留上述主题标记与引用。
+- 变更样式时更新版本参数，检查从 Emilia 书架进入的线上效果。保留首页英文书架、历史内容、搜索、筛选、收藏、练习、笔记与划线功能。
+- UI 维护不修改定时任务启停、频率、内容发布时间或历史数据。发布完成后核验 Pages 和实际页面。
