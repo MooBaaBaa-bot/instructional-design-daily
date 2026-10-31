@@ -152,3 +152,178 @@ html[data-emilia-theme] :is(.toast){background:var(--ink-2);color:var(--on-accen
  html[data-emilia-theme] :is(.reason,.callout,.feedback,.reflection,.notice,.phd-detail-card){background:transparent!important;color:#222!important}
  html[data-emilia-theme="opportunities"] .rr-page .item-highlight{background:transparent!important;color:#222!important}
 }
+
+/* AI Studio editorial adaptation · Emilia · 2026-11-01
+   Five independent volumes; enter from the unchanged bookshelf.
+   Applied to live content and existing controls; no prototype data or storage. */
+:root[data-emilia-theme]{--ink:#241f1a;--ink-2:#493b2b;--muted:#65533e;--line:#d4c2a3;--line-soft:#ddccae;--line-strong:#b49a75;--editorial-serif:"Songti SC","STSong","Noto Serif CJK SC",Georgia,serif;--editorial-ui:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}
+html[data-emilia-theme] body{font-family:var(--editorial-serif);line-height:1.85}
+html[data-emilia-theme] :is(button,input,select,.eyebrow,.kicker,.section-label,.meta,.tag,.badge,.tabs,.categories){font-family:var(--editorial-ui)}
+html[data-emilia-theme] :is(button,input,select,textarea,summary){min-height:44px}
+html[data-emilia-theme] :is(button,.button,input,select,textarea,.card,.item-card,.paper,.panel,.toolbar,.aside-card,.stat-item,.hero,.masthead,.page-header){border-radius:2px}
+html[data-emilia-theme] :is(button,a,input,select,textarea,summary):focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+html[data-emilia-theme] :is(h1,h2,h3){font-family:var(--editorial-serif);text-wrap:pretty}
+html[data-emilia-theme] :is(.hero,.page-header,.masthead:not(.emilia-library-bar)){background:var(--paper);box-shadow:0 2px 3px #2d221614;border:1px solid var(--line);border-top:2px solid var(--accent);border-bottom:2px solid var(--accent)}
+html[data-emilia-theme] :is(.hero,.page-header,.masthead)::before{width:70px;height:70px;opacity:.15}
+html[data-emilia-theme] :is(.hero,.page-header,.masthead)::after{margin:22px auto 0;opacity:.25}
+html[data-emilia-theme] :is(.card,.item-card,.paper,.panel){box-shadow:0 2px 4px #2d22160b}
+html[data-emilia-theme] :is(.item-summary,.summary,.article p){font-size:16px;line-height:1.95;color:var(--ink-2)}
+html[data-emilia-theme] :is(.reason,.callout,.item-highlight){border-radius:0;border-left:2px solid var(--accent);line-height:1.9}
+html[data-emilia-theme] :is(.tag,.badge,.category-pill){border-radius:1px}
+html[data-emilia-theme] .emilia-library-bar{display:block;width:100%;margin:0;background:var(--paper);border-bottom:2px solid var(--accent);position:relative;z-index:41}
+html[data-emilia-theme] .emilia-library-inner{max-width:1280px;margin:0 auto;padding:14px 32px;display:flex;align-items:center;gap:24px;min-height:86px}
+html[data-emilia-theme] .emilia-back{display:inline-flex;align-items:center;gap:10px;min-height:44px;padding-right:24px;border-right:1px solid var(--line);text-decoration:none;font:13px/1.5 var(--editorial-ui);color:var(--ink-2);white-space:nowrap}
+html[data-emilia-theme] .emilia-back:hover{color:var(--accent);text-decoration:underline}
+html[data-emilia-theme] .emilia-signature{display:flex;align-items:center;gap:12px;color:var(--ink);font:bold 27px/1.1 Georgia,serif;letter-spacing:2px}
+html[data-emilia-theme] .emilia-signature small{display:block;margin-top:5px;font:9px/1.4 var(--editorial-ui);letter-spacing:1.7px}
+html[data-emilia-theme] .emilia-signature .emilia-bookplate{width:36px;height:40px;border-radius:50%;box-shadow:inset 0 0 0 3px var(--paper)}
+html[data-emilia-theme] .emilia-volume{margin-left:auto;font:10px/1.6 var(--editorial-ui);letter-spacing:2px;color:var(--accent)}
+/* I · The opportunity index */
+html[data-emilia-theme="opportunities"] .container{max-width:1280px;padding:40px 32px 64px 280px}
+html[data-emilia-theme="opportunities"] .sidebar{left:max(32px,calc((100vw - 1280px)/2 + 32px));width:212px;top:124px;bottom:32px;padding:24px 20px 12px 0;border-top:2px solid var(--accent)}
+html[data-emilia-theme="opportunities"] .sidebar .brand{font:21px var(--editorial-serif);margin-bottom:24px}
+html[data-emilia-theme="opportunities"] .sidebar-note{font-size:12px}
+html[data-emilia-theme="opportunities"] .nav-button{border-radius:0;min-height:48px;border-bottom:1px solid var(--line);margin:0;font-size:13px}
+html[data-emilia-theme="opportunities"] .nav-button.active{background:var(--accent);color:var(--on-accent)}
+html[data-emilia-theme="opportunities"] .page-header{padding:30px 36px;margin-bottom:24px}
+html[data-emilia-theme="opportunities"] .page-header h1{font-size:42px;font-weight:600;letter-spacing:2px;color:var(--ink)}
+html[data-emilia-theme="opportunities"] .page-header::after{margin-left:0}
+html[data-emilia-theme="opportunities"] .stats-bar{gap:0;border:1px solid var(--line);background:var(--paper)}
+html[data-emilia-theme="opportunities"] .stat-item{border:0;border-right:1px solid var(--line);box-shadow:none;background:transparent;padding:18px}
+html[data-emilia-theme="opportunities"] .stat-item:last-child{border-right:0}
+html[data-emilia-theme="opportunities"] .stat-item .stat-num{font:italic 30px Georgia;color:var(--accent)!important}
+html[data-emilia-theme="opportunities"] .toolbar{padding:18px;border:1px solid var(--line);background:var(--note-paper)}
+html[data-emilia-theme="opportunities"] .item-card{border-left:3px solid var(--accent);padding:28px 30px}
+html[data-emilia-theme="opportunities"] .item-title{font-size:24px}
+html[data-emilia-theme="opportunities"] .card-top{border-bottom:1px solid var(--line);padding-bottom:12px}
+html[data-emilia-theme="opportunities"] .item-highlight{padding:14px 18px}
+/* II · A weekly gazette */
+html[data-emilia-theme="weekly"] .wrap{max-width:1280px;padding:0 32px}
+html[data-emilia-theme="weekly"] .hero{display:block;text-align:center;padding:28px 36px;margin:40px 0 32px}
+html[data-emilia-theme="weekly"] .hero .eyebrow{text-align:left;border-bottom:1px solid var(--line);padding-bottom:16px;font-size:11px;letter-spacing:2px}
+html[data-emilia-theme="weekly"] .hero h1{font-size:clamp(36px,5vw,62px);letter-spacing:5px;font-weight:600;color:var(--ink);margin:26px 0 12px}
+html[data-emilia-theme="weekly"] .hero .intro{font-style:italic;font-size:15px;line-height:1.9}
+html[data-emilia-theme="weekly"] .hero .intro br{display:none}
+html[data-emilia-theme="weekly"] .issue{border-left:0;border-top:1px solid var(--line);padding:16px 0 0;margin-top:26px;display:flex;align-items:center;justify-content:space-between;gap:20px;text-align:left}
+html[data-emilia-theme="weekly"] .issue>div:first-child{display:flex;align-items:center;gap:16px}
+html[data-emilia-theme="weekly"] .issue-date{font-size:22px;margin:0}
+html[data-emilia-theme="weekly"] .issue>div:last-child{display:flex;align-items:center;gap:12px}
+html[data-emilia-theme="weekly"] .hero::after{display:none}
+html[data-emilia-theme="weekly"] .toolbar{background:var(--note-paper);padding:22px;margin-bottom:32px}
+html[data-emilia-theme="weekly"] .content-layout{display:block}
+html[data-emilia-theme="weekly"] #articles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
+html[data-emilia-theme="weekly"] .card{margin:0;border-left:3px solid var(--accent);padding:28px;display:flex;flex-direction:column}
+html[data-emilia-theme="weekly"] .card:first-child{grid-column:1/-1;border-left:1px solid var(--line);border-top:4px solid var(--accent);padding:32px}
+html[data-emilia-theme="weekly"] .card:first-child h3{font-size:32px;line-height:1.55}
+html[data-emilia-theme="weekly"] .card h3{font-size:23px;font-weight:600}
+html[data-emilia-theme="weekly"] .card-top{border-bottom:1px solid var(--line);padding-bottom:12px}
+html[data-emilia-theme="weekly"] .card-bottom{margin-top:auto;padding-top:18px}
+html[data-emilia-theme="weekly"] .card .tags{margin-bottom:18px}
+html[data-emilia-theme="weekly"] .reason{font-size:14px;padding:16px}
+html[data-emilia-theme="weekly"] .content-layout>aside{position:static;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin-top:36px}
+html[data-emilia-theme="weekly"] .aside-card{margin:0}
+html[data-emilia-theme="weekly"] .chip[aria-pressed=true]{background:var(--accent);color:var(--on-accent);box-shadow:none}
+/* III · A concept notebook; original paragraph nodes and annotation offsets remain intact */
+html[data-emilia-theme="design"] .site-head{position:relative;top:auto;border-bottom:1px solid var(--line);background:transparent}
+html[data-emilia-theme="design"] .site-head__inner{padding-top:22px;padding-bottom:0}
+html[data-emilia-theme="design"] .brand__title{font-family:var(--editorial-serif);font-size:22px}
+html[data-emilia-theme="design"] .reader__main{background:var(--paper);padding:32px;border:1px solid var(--line);box-shadow:0 2px 4px #2d22160d;min-width:0}
+html[data-emilia-theme="design"] .masthead{padding:24px 0 28px;border-left:0;border-right:0;box-shadow:none;background:transparent}
+html[data-emilia-theme="design"] .masthead__title{font-size:42px;line-height:1.5;color:var(--ink);font-weight:600}
+html[data-emilia-theme="design"] .masthead__no{font-style:italic}
+html[data-emilia-theme="design"] .masthead__standfirst{font-size:19px;font-style:italic;line-height:1.85}
+html[data-emilia-theme="design"] .learning-card{border-radius:0;background:var(--note-paper);padding:24px}
+html[data-emilia-theme="design"] .reader__aside{padding-top:10px}
+html[data-emilia-theme="design"] .toc{background:var(--note-paper);border:1px solid var(--line);border-top:2px solid var(--accent);padding:18px}
+html[data-emilia-theme="design"] .qnav{top:220px;max-height:calc(100vh - 245px)}
+/* IV · A field manual with a persistent chapter index */
+html[data-emilia-theme="practice"] .masthead{max-width:1072px;margin:40px auto 0;padding:30px 36px}
+html[data-emilia-theme="practice"] .masthead h1{color:var(--ink);font-size:46px;font-weight:600}
+html[data-emilia-theme="practice"] .masthead .meta{border-top:1px solid var(--line);padding-top:16px;margin-top:24px}
+html[data-emilia-theme="practice"] .tabs{margin-top:18px}
+html[data-emilia-theme="practice"] .layout{grid-template-columns:230px minmax(0,1fr);gap:26px}
+html[data-emilia-theme="practice"] .side{background:var(--paper);border:1px solid var(--line);border-top:3px solid var(--accent);padding:24px 20px}
+html[data-emilia-theme="practice"] .side nav a{border-bottom:1px solid var(--line);min-height:48px;font-family:var(--editorial-ui)}
+html[data-emilia-theme="practice"] .paper{padding:32px;border-top:2px solid var(--accent)}
+html[data-emilia-theme="practice"] .paper h2{font-size:30px;color:var(--ink)}
+html[data-emilia-theme="practice"] .lead{font-size:24px}
+html[data-emilia-theme="practice"] .section-label{font-size:11px;letter-spacing:1.5px}
+html[data-emilia-theme="practice"] .option:has(input:checked){border-color:var(--accent);background:var(--note-paper)}
+/* V · Product dossiers */
+html[data-emilia-theme="research"] .wrap{max-width:1200px;padding:0 32px}
+html[data-emilia-theme="research"] .hero{margin-top:40px;padding:36px 40px}
+html[data-emilia-theme="research"] .hero h1{font-size:46px;color:var(--ink);font-weight:600;letter-spacing:1px}
+html[data-emilia-theme="research"] .hero p{font-family:var(--editorial-serif);font-size:16px;max-width:65%}
+html[data-emilia-theme="research"] .hero-index{font:italic 92px Georgia;border:0;right:50px;top:48px;text-align:center;padding:0;color:var(--accent);letter-spacing:0}
+html[data-emilia-theme="research"] .hero-index span{font-size:9px;letter-spacing:1px}
+html[data-emilia-theme="research"] .hero::after{margin-left:0}
+html[data-emilia-theme="research"] :is(.card,.panel){padding:28px;border-top:2px solid var(--accent)}
+html[data-emilia-theme="research"] .article{max-width:850px;background:var(--paper);padding:36px 44px;border:1px solid var(--line);border-top:3px solid var(--accent)}
+html[data-emilia-theme="research"] .article h2{font-size:34px}
+html[data-emilia-theme="research"] .facts{background:var(--note-paper);padding:0 20px}
+html[data-emilia-theme="research"] .filters{padding:20px;background:var(--note-paper);border:1px solid var(--line)}
+/* Responsive pages keep one entrance and the existing in-volume controls. */
+@media(max-width:900px){
+ html[data-emilia-theme] .emilia-volume{display:none}
+ html[data-emilia-theme="opportunities"] .container{padding:28px 24px}
+ html[data-emilia-theme="opportunities"] .sidebar{position:static;width:auto;padding:0;border:0;margin:0 0 24px}
+ html[data-emilia-theme="opportunities"] .sidebar .brand{display:none}
+ html[data-emilia-theme="opportunities"] .sidebar nav{flex-wrap:wrap;overflow:visible}
+ html[data-emilia-theme="opportunities"] .nav-button{width:auto;padding:10px 14px;border:1px solid var(--line)}
+ html[data-emilia-theme="weekly"] .content-layout>aside{grid-template-columns:1fr}
+ html[data-emilia-theme="research"] .hero-index{display:none}
+ html[data-emilia-theme="research"] .hero p{max-width:none}
+}
+@media(max-width:760px){
+ html[data-emilia-theme] .emilia-library-inner{padding:12px 18px;gap:16px;min-height:76px}
+ html[data-emilia-theme] .emilia-back{padding-right:16px;font-size:12px;gap:6px}
+ html[data-emilia-theme] .emilia-signature{font-size:23px;gap:9px}
+ html[data-emilia-theme] .emilia-signature small{font-size:8px;letter-spacing:1px}
+ html[data-emilia-theme] .emilia-signature .emilia-bookplate{display:none}
+ html[data-emilia-theme] :is(.hero,.page-header,.masthead)::before{width:48px;height:48px}
+ html[data-emilia-theme="weekly"] .wrap,html[data-emilia-theme="research"] .wrap{padding:0 16px}
+ html[data-emilia-theme="weekly"] .hero{margin:24px 0;padding:22px 18px}
+ html[data-emilia-theme="weekly"] .hero h1{font-size:38px;letter-spacing:3px}
+ html[data-emilia-theme="weekly"] .hero .eyebrow{font-size:9px;letter-spacing:1px;padding-right:20px}
+ html[data-emilia-theme="weekly"] .issue,html[data-emilia-theme="weekly"] .issue>div:last-child{display:block}
+ html[data-emilia-theme="weekly"] .issue>div:last-child{margin-top:12px}
+ html[data-emilia-theme="weekly"] .issue small{display:inline}
+ html[data-emilia-theme="weekly"] #articles{grid-template-columns:1fr;gap:18px}
+ html[data-emilia-theme="weekly"] .card,html[data-emilia-theme="weekly"] .card:first-child{padding:22px 20px;grid-column:auto}
+ html[data-emilia-theme="weekly"] .card:first-child h3{font-size:25px}
+ html[data-emilia-theme="weekly"] .card h3{font-size:22px}
+ html[data-emilia-theme="weekly"] .toolbar{padding:16px}
+ html[data-emilia-theme="opportunities"] .container{padding:24px 16px}
+ html[data-emilia-theme="opportunities"] .page-header{padding:24px}
+ html[data-emilia-theme="opportunities"] .page-header h1{font-size:30px;letter-spacing:1px}
+ html[data-emilia-theme="opportunities"] .page-header .subtitle{font-size:15px}
+ html[data-emilia-theme="opportunities"] .stats-bar{grid-template-columns:repeat(2,minmax(0,1fr))}
+ html[data-emilia-theme="opportunities"] .stat-item{padding:14px;display:block}
+ html[data-emilia-theme="opportunities"] .item-card{padding:22px 20px}
+ html[data-emilia-theme="opportunities"] .item-title{font-size:22px}
+ html[data-emilia-theme="opportunities"] .toolbar{padding:14px}
+ html[data-emilia-theme="design"] .reader__main{padding:20px 18px}
+ html[data-emilia-theme="design"] .masthead{padding:20px 0}
+ html[data-emilia-theme="design"] .masthead__title{font-size:32px}
+ html[data-emilia-theme="design"] .learning-card{padding:18px}
+ html[data-emilia-theme="design"] .qnav{top:0;max-height:100dvh}
+ html[data-emilia-theme="practice"] .masthead{margin:24px 16px 0;padding:24px}
+ html[data-emilia-theme="practice"] .masthead h1{font-size:32px}
+ html[data-emilia-theme="practice"] .layout{display:block}
+ html[data-emilia-theme="practice"] .side{padding:12px 16px}
+ html[data-emilia-theme="practice"] .side nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 12px}
+ html[data-emilia-theme="practice"] .side nav a{font-size:12px}
+ html[data-emilia-theme="practice"] .paper{padding:24px 20px}
+ html[data-emilia-theme="practice"] .paper h2{font-size:26px}
+ html[data-emilia-theme="research"] .hero{margin-top:24px;padding:28px 24px}
+ html[data-emilia-theme="research"] .hero h1{font-size:34px}
+ html[data-emilia-theme="research"] .hero p br{display:none}
+ html[data-emilia-theme="research"] :is(.card,.panel){padding:22px}
+ html[data-emilia-theme="research"] .article{padding:26px 20px}
+ html[data-emilia-theme="research"] .article h2{font-size:28px}
+ html[data-emilia-theme="research"] .filters{padding:16px}
+}
+@media print{html[data-emilia-theme] .emilia-library-bar{display:none}html[data-emilia-theme] :is(.reader__main,.article){box-shadow:none;border:0}html[data-emilia-theme="weekly"] #articles{display:block}}
+
+/* Programmatic route focus should not frame the entire reading canvas. */
+html[data-emilia-theme] main[tabindex="-1"]:focus{outline:none}
