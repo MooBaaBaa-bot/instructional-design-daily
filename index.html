@@ -6,7 +6,7 @@
 <title>教学设计 · 每日一概念</title>
 <meta name="description" content="每天一个教育学与教学设计核心概念：学习理论、学习机制、教学设计、教学策略、学习评价、迁移与 AI 教育。每日 10:00 更新，内容累积保存。">
 <meta name="color-scheme" content="light">
-<meta name="theme-color" content="#193f33">
+<meta name="theme-color" content="#f0e6d8">
 <meta property="og:title" content="教学设计 · 每日一概念">
 <meta property="og:description" content="每天一个教育学与教学设计核心概念，从学习理论到迁移与 AI 教育。">
 <meta property="og:type" content="website">
@@ -23,6 +23,18 @@ body{background:var(--bg);color:var(--ink);font-family:var(--rr-sans);-webkit-fo
 .rr-page .site-head,.rr-page .site-head.is-compact{background:var(--bg);backdrop-filter:none}.rr-page .brand__seal{border-radius:16px 16px 3px 3px;background:transparent;width:36px;height:40px;font-size:22px}.rr-page .masthead{background:var(--green);color:var(--paper);padding:28px;border-radius:7px}.rr-page .masthead__title{color:var(--paper);font-weight:500}.rr-page .masthead__no{color:var(--rr-gold)}.rr-page .masthead__en,.rr-page .masthead__standfirst,.rr-page .masthead__meta,.rr-page .masthead__top,.rr-page .masthead__theme,.rr-page .masthead__date,.rr-page .masthead__of{color:#c0d0bf}.rr-page .masthead__standfirst{border-color:var(--rr-gold)}.rr-page .masthead__state--stale{color:#efc09e}.rr-page .masthead__state--stale .dot{background:#efc09e}.rr-page .masthead__top{border-color:#6e8678}.rr-page .masthead__rule{background:#6e8678}.rr-page .series__tick{background:#6e8678}.rr-page .series__tick.is-now{background:var(--rr-gold)}.rr-page .series__tick.is-past{background:#c0d0bf}.rr-page .page-head h1{font-size:32px}.rr-page .site-foot{background:var(--bg)}
 @media(max-width:740px){.rr-page .masthead{padding:24px 20px}.rr-page .masthead__title{font-size:32px}.rr-page .masthead__standfirst{font-size:17px}}
 </style>
+<style id="reading-room-column-palette">
+/* Column palette matched to its Reading Room entrance card. Preserve on content updates. */
+:root{--accent:#80583e;--green:#80583e;--soft:#f0e6d8;--green-tint:#f0e6d8;--green-2:#80583e;--green-3:#80583e;--green-line:#ded2c3;--ink:#493526;--ink-2:#493526;--ink-3:#756354;--muted:#756354;--line:#ded2c3;--line-strong:#ded2c3;--line-soft:#ded2c3;--gold:#80583e;--gold-2:#80583e;--gold-tint:#f0e6d8;--gold-line:#ded2c3;--rr-gold:#80583e;--bg:#f5f3ed;--paper:#fdfcf8;--paper-2:#fdfcf8;--bg-deep:#f0e6d8}
+.rr-page a:focus-visible,.rr-page button:focus-visible,.rr-page input:focus-visible,.rr-page select:focus-visible,.rr-page summary:focus-visible{outline-color:var(--accent)}
+.rr-page .rr-links a[aria-current=page]{background:var(--soft);color:var(--accent);box-shadow:inset 0 0 0 1px var(--line)}.rr-page .rr-seal{color:var(--accent);border-color:var(--accent)}
+.rr-page .page-header,.rr-page .hero,.rr-page .masthead:not(header){background:var(--soft);color:var(--ink);border:1px solid var(--line)}
+.rr-page .page-header h1,.rr-page .hero h1,.rr-page .hero h1 span,.rr-page .masthead__title{color:var(--accent)}
+.rr-page .page-header .eyebrow,.rr-page .hero .eyebrow,.rr-page .page-header .subtitle,.rr-page .page-header .updated,.rr-page .intro,.rr-page .issue-label,.rr-page .issue small{color:var(--accent)}
+.rr-page .issue,.rr-page .masthead__top{border-color:var(--line)}.rr-page .issue-date,.rr-page .issue p{color:var(--accent)}.rr-page .status-dot{background:var(--accent)}
+.rr-page .tag,.rr-page .category-pill,.rr-page .reason{background:var(--soft);color:var(--accent)}.rr-page .summary,.rr-page .item-summary{color:var(--muted)}
+.rr-page .save-button[aria-pressed=true],.rr-page .bookmark[aria-pressed=true]{background:var(--soft);color:var(--accent)}
+ .rr-page .masthead{background:var(--soft);color:var(--ink);border:1px solid var(--line)}.rr-page .masthead__en,.rr-page .masthead__standfirst,.rr-page .masthead__meta,.rr-page .masthead__top,.rr-page .masthead__theme,.rr-page .masthead__date,.rr-page .masthead__of,.rr-page .masthead__no{color:var(--accent)}.rr-page .masthead__standfirst{border-color:var(--accent)}.rr-page .masthead__rule{background:var(--line)}.rr-page .masthead__state--stale{color:#87452f}.rr-page .masthead__state--stale .dot{background:#87452f}.rr-page .series__tick{background:var(--line)}.rr-page .series__tick.is-now,.rr-page .series__tick.is-past{background:var(--accent)}.rr-page .head-status .dot{box-shadow:none}.rr-page .brand__seal{color:var(--accent);border-color:var(--accent)}.rr-page .readbar__fill{background:var(--accent)}</style>
 </head>
 <body class="rr-page">
 <nav class="rr-nav" aria-label="阅读站栏目"><div class="rr-nav-inner"><a class="rr-home" href="https://moobaabaa-bot.github.io/ed-tech-opportunity/hub.html"><span class="rr-seal" aria-hidden="true">阅</span>返回阅读站</a><div class="rr-links"><a href="https://moobaabaa-bot.github.io/ed-tech-opportunity/Ed_Tech_Opportunity.html">机会库</a><a href="https://moobaabaa-bot.github.io/ai-edu-weekly/AI%E6%95%99%E8%82%B2%E5%91%A8%E6%8A%A5.html">AI 周报</a><a href="https://moobaabaa-bot.github.io/instructional-design-daily/index.html" aria-current="page">每日概念</a></div></div></nav>
