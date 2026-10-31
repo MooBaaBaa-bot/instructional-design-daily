@@ -35,6 +35,7 @@ from difflib import SequenceMatcher
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from check_ui import check as check_ui
 from validate import body_char_count, validate  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -154,6 +155,11 @@ def similarity_check(article: dict) -> tuple[list[str], list[str]]:
 # ---------------------------------------------------------------- 发布
 
 def cmd_publish(args) -> int:
+    ui_errors = check_ui(ROOT)
+    if ui_errors:
+        for error in ui_errors: say(error)
+        say("界面基线校验未通过，未写入或发布内容。")
+        return 2
     src = Path(args.article).resolve()
     if not src.exists():
         print(f"找不到文件：{src}")
@@ -219,7 +225,7 @@ def cmd_publish(args) -> int:
     article["meta"]["wordCount"] = chars
     article["meta"]["updatedAt"] = iso(now())
     article["meta"].setdefault("publishedAt", iso(now()))
-    article["meta"]["generatedBy"] = article["meta"].get("generatedBy", "WorkBuddy 每日自动化")
+    article["meta"]["generatedBy"] = article["meta"].get("generatedBy", "Codex 每日自动化")
     article["readingMinutes"] = max(5, min(8, round(chars / 200)))
     article["wordCount"] = chars
 
@@ -364,6 +370,10 @@ def wait_online(expected: str) -> bool:
 
 def cmd_resume(_args) -> int:
     """上一次运行中断后继续：补提交、补推送、补验证，不重新生成内容。"""
+    ui_errors = check_ui(ROOT)
+    if ui_errors:
+        for error in ui_errors: say(error)
+        return 2
     st = status()
     dirty = git("status", "--porcelain").stdout.strip()
     if dirty:

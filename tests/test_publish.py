@@ -32,6 +32,13 @@ class PublishingTests(unittest.TestCase):
         return {str(p.relative_to(self.root)):p.read_bytes() for p in self.root.rglob('*') if p.is_file()}
     def test_dry_run_is_read_only(self):
         before=self.snapshot(); self.assertEqual(publish.cmd_publish(self.args),0);self.assertEqual(self.snapshot(),before)
+    def test_ui_drift_blocks_before_content_write(self):
+        before=self.snapshot(); original=publish.check_ui
+        try:
+            publish.check_ui=lambda root: ["theme changed"]
+            self.assertEqual(publish.cmd_publish(self.args),2)
+            self.assertEqual(self.snapshot(),before)
+        finally:publish.check_ui=original
     def test_orphan_article_is_not_overwritten(self):
         (publish.ARTICLES/(self.article['id']+'.json')).write_text('original')
         before=self.snapshot();self.assertEqual(publish.cmd_publish(self.args),2);self.assertEqual(before,self.snapshot())

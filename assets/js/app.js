@@ -307,7 +307,7 @@ async function renderToday() {
     <div class="notice" role="status">
       <strong>今日尚未发布，以下是最近一期。</strong>
       今天是 ${esc(fmtDateCn(today))}，站内最新一期为 ${esc(fmtDateCn(st.lastPublishedDate))}。
-      每日任务在 10:00 启动，检索、撰写、校验与部署需要几分钟；若已过预期时间仍未出现，只能确认尚未看到新发布，执行情况需查看 WorkBuddy。
+      每日任务在 10:00 启动，检索、撰写、校验与部署需要几分钟；若已过预期时间仍未出现，只能确认尚未看到新发布，执行情况需查看 Codex 定时任务记录。
       页面不会把旧内容说成今天的更新。
     </div>`;
 

@@ -1,0 +1,60 @@
+{
+  "version": 1,
+  "reviewedAt": "2026-11-01",
+  "description": "Emilia kraft paper, book accents, ornaments and subdued note surfaces. Content jobs must not rewrite this baseline.",
+  "files": {
+    "emilia-kraft.css": "98e3609beae140a586ce8155730c163c24a36f417e8d3dfaf939259f3e760180",
+    "emilia-icons-LICENSE.txt": "b495047bd93a9b06913511076f504daba17d5bbeb3e0650f3bb53a4220329c57",
+    "assets/css/style.css": "1187aadde49a731153bcc7f63ebaf124585a9cec4fc5a1a1affc3b1f3d8afc22",
+    "assets/js/app.js": "80b50f7c8229324f57282a36eec987f193de50b0892c168f25d98245af3beb04",
+    "scripts/check_ui.py": "5a42fbb19913e0834b972ff4969640e054547f54daf1d4b744f88a857d7b624e"
+  },
+  "pages": {
+    "index.html": {
+      "theme": "design",
+      "stylesheets": [
+        {
+          "rel": "stylesheet",
+          "href": "assets/css/style.css?v=20261026-learning"
+        },
+        {
+          "id": "emilia-kraft-theme",
+          "rel": "stylesheet",
+          "href": "emilia-kraft.css?v=20261101-paper2"
+        }
+      ],
+      "ui_blocks": [
+        [
+          "style",
+          {
+            "id": "reading-room-theme"
+          },
+          "e6eeb4f25e0950cfeb4ad94903b43b05bc56e814fac4e86df81e69cb957f258d"
+        ],
+        [
+          "style",
+          {
+            "id": "reading-room-column-palette"
+          },
+          "9d727796d881ae4e827d943611105b436bd1fcb9a73f09813858e6ea8f4a7aaf"
+        ],
+        [
+          "script",
+          {
+            "src": "assets/js/app.js?v=20261101-sync1"
+          },
+          "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        ]
+      ],
+      "navigation": [
+        "65435d5c1a7d5a200f66fecae0f8bede939e4bfe0dbcadb64938546b4575e602",
+        "497b6f62c7ded2e5b0849b3fd4230c8ebc4bea0ec53a770eaf8ef009487db71b"
+      ],
+      "icons": 2,
+      "allowed_inline_styles": [
+        "max-width:34rem;margin:40px auto;padding:0 20px"
+      ]
+    }
+  },
+  "site": "https://moobaabaa-bot.github.io/instructional-design-daily/"
+}
