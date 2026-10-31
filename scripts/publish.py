@@ -35,7 +35,7 @@ from difflib import SequenceMatcher
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from check_ui import check as check_ui
+from check_ui import check as check_ui, tls_context
 from validate import body_char_count, validate  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -350,7 +350,7 @@ def cmd_publish(args) -> int:
 def fetch_json(url: str) -> dict | None:
     try:
         req = urllib.request.Request(url, headers={"Cache-Control": "no-cache", "User-Agent": "idd-publish/1.0"})
-        with urllib.request.urlopen(req, timeout=15) as resp:
+        with urllib.request.urlopen(req, timeout=15, context=tls_context()) as resp:
             return json.loads(resp.read().decode("utf-8"))
     except (urllib.error.URLError, urllib.error.HTTPError, json.JSONDecodeError, TimeoutError):
         return None

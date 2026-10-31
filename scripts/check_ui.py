@@ -3,6 +3,8 @@
 import hashlib
 import json
 import argparse
+import ssl
+import sys
 import tempfile
 import time
 import urllib.request
@@ -75,6 +77,15 @@ def check(root=ROOT):
         if not sheets or sheets[-1].get('id')!='emilia-kraft-theme':errors.append(name+': Emilia theme must be the last stylesheet')
     return errors
 
+def tls_context():
+    context=ssl.create_default_context()
+    # Python.org macOS installs may lack their own CA bundle. Add trusted OS roots;
+    # retain certificate and hostname verification, never use an unverified context.
+    system_ca=Path('/etc/ssl/cert.pem')
+    if sys.platform=='darwin' and system_ca.is_file():
+        context.load_verify_locations(cafile=str(system_ca))
+    return context
+
 def check_online(root=ROOT):
     baseline=json.loads((root/'ui-baseline.json').read_text())
     names=set(baseline['files']) | set(baseline['pages'])
@@ -84,12 +95,12 @@ def check_online(root=ROOT):
         def download(name):
             url=baseline['site'].rstrip('/')+'/'+urllib.parse.quote(name)+'?ui-check='+str(time.time_ns())
             try:
-                with urllib.request.urlopen(urllib.request.Request(url,headers={'User-Agent':'Emilia-UI-check/1.0','Cache-Control':'no-cache'}),timeout=25) as response:
+                with urllib.request.urlopen(urllib.request.Request(url,headers={'User-Agent':'Emilia-UI-check/1.0','Cache-Control':'no-cache'}),timeout=25,context=tls_context()) as response:
                     data=response.read()
                 p=remote/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(data)
             except Exception as exc:return name+': '+str(exc)
         with ThreadPoolExecutor(max_workers=4) as pool:failures=[e for e in pool.map(download,names) if e]
-        return failures+check(remote)
+        return failures if failures else check(remote)
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)

@@ -7,7 +7,7 @@
     "emilia-icons-LICENSE.txt": "b495047bd93a9b06913511076f504daba17d5bbeb3e0650f3bb53a4220329c57",
     "assets/css/style.css": "1187aadde49a731153bcc7f63ebaf124585a9cec4fc5a1a1affc3b1f3d8afc22",
     "assets/js/app.js": "80b50f7c8229324f57282a36eec987f193de50b0892c168f25d98245af3beb04",
-    "scripts/check_ui.py": "5a42fbb19913e0834b972ff4969640e054547f54daf1d4b744f88a857d7b624e"
+    "scripts/check_ui.py": "80be6da49608b507dd499594be60b25f9e514f29a0e0208e7b4d8bc2cd6fb290"
   },
   "pages": {
     "index.html": {
