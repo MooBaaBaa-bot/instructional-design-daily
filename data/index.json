@@ -1,8 +1,30 @@
 {
   "site": "教学设计 · 每日一概念",
-  "generatedAt": "2026-10-26T09:24:46+08:00",
-  "count": 7,
+  "generatedAt": "2026-11-02T10:00:27+08:00",
+  "count": 8,
   "articles": [
+    {
+      "id": "prior-knowledge",
+      "day": 8,
+      "date": "2026-11-02",
+      "titleZh": "先验知识",
+      "titleEn": "Prior Knowledge",
+      "theme": "学习机制",
+      "stageId": "s2",
+      "type": "机制",
+      "readingMinutes": 5,
+      "wordCount": 832,
+      "oneLiner": "先看学生带着怎样的旧理解进入任务，再决定新知识怎样连接、补足或纠正。",
+      "keywords": [
+        "先验知识",
+        "Prior Knowledge",
+        "前测",
+        "误解"
+      ],
+      "file": "data/articles/prior-knowledge.json",
+      "sourceCount": 1,
+      "updatedAt": "2026-11-02T10:00:27+08:00"
+    },
     {
       "id": "sociocultural-theory",
       "day": 7,
