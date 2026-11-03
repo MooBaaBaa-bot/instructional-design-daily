@@ -1,8 +1,30 @@
 {
   "site": "教学设计 · 每日一概念",
-  "generatedAt": "2026-11-02T10:00:27+08:00",
-  "count": 8,
+  "generatedAt": "2026-11-03T10:00:49+08:00",
+  "count": 9,
   "articles": [
+    {
+      "id": "cognitive-load",
+      "day": 9,
+      "date": "2026-11-03",
+      "titleZh": "认知负荷理论",
+      "titleEn": "Cognitive Load Theory",
+      "theme": "学习机制",
+      "stageId": "s2",
+      "type": "理论",
+      "readingMinutes": 5,
+      "wordCount": 840,
+      "oneLiner": "减少无关加工，保留必要思考，并根据学生基础安排学习任务。",
+      "keywords": [
+        "认知负荷",
+        "工作记忆",
+        "Cognitive Load Theory",
+        "教学提示"
+      ],
+      "file": "data/articles/cognitive-load.json",
+      "sourceCount": 1,
+      "updatedAt": "2026-11-03T10:00:49+08:00"
+    },
     {
       "id": "prior-knowledge",
       "day": 8,

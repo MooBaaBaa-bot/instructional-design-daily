@@ -1,0 +1,164 @@
+{
+  "id": "cognitive-load",
+  "day": 9,
+  "date": "2026-11-03",
+  "titleZh": "认知负荷理论",
+  "titleEn": "Cognitive Load Theory",
+  "theme": "学习机制",
+  "stageId": "s2",
+  "type": "理论",
+  "oneLiner": "减少无关加工，保留必要思考，并根据学生基础安排学习任务。",
+  "plainTalk": "像第一次做菜时，边找调料边翻菜单容易手忙脚乱；先把当前步骤需要的东西放一起，省下精力理解火候，而不是替你做完整道菜。",
+  "keywords": [
+    "认知负荷",
+    "工作记忆",
+    "Cognitive Load Theory",
+    "教学提示"
+  ],
+  "meta": {
+    "generatedBy": "Codex 每日自动化",
+    "wordCount": 840,
+    "updatedAt": "2026-11-03T10:00:49+08:00",
+    "publishedAt": "2026-11-03T10:00:49+08:00"
+  },
+  "sections": [
+    {
+      "key": "concept",
+      "heading": "今日概念",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "认知负荷理论关注学习任务怎样占用有限的工作记忆。面对陌生内容，学生需要同时处理的关系可能超过当前承受范围。设计目标不是让人完全不费力，而是把有限精力用在理解关键关系上。页面看起来简洁，也不代表学习任务已经容易。"
+        }
+      ]
+    },
+    {
+      "key": "background",
+      "heading": "理论背景",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "斯威勒等人在二〇一九年的理论综述中回顾了这一研究传统：新信息的加工受工作记忆限制，已有知识会改变任务的复杂程度。本篇依据作者综述的理论说明，不把它当成某款智能辅导产品的效果实验，也不据此承诺固定幅度的成绩提升。"
+        }
+      ]
+    },
+    {
+      "key": "mechanism",
+      "heading": "核心机制",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "内在负荷与需要共同理解的要素及学习者基础有关；外在负荷与呈现方式和教学要求有关。比如新手同时理解公式、变量和图表，比熟悉这些关系的人更吃力。常见教材还列出“相关负荷”；但上述综述将它重新解释为投入任务内在加工的资源，而非第三种独立相加的负荷。不要把三只可直接测量的水桶当成定论。"
+        }
+      ]
+    },
+    {
+      "key": "contrast",
+      "heading": "概念辨析",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "负荷不等于字数，也不等于学生报告的困难程度。删掉关键推理可能让阅读轻松，却使独立解题更难。分步骤也不是越碎越好：如果学生无法看见步骤间关系，仍可能只会照做。实践中应结合解释质量、独立表现和主观努力判断，避免用页面停留时间直接诊断认知负荷。"
+        }
+      ]
+    },
+    {
+      "key": "scenario",
+      "heading": "教学情境示例",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "设计设想：大学统计课的学生第一次学习置信区间，助手同时弹出公式释义、聊天建议和完整解答，学生来回寻找符号含义。产品经理可先保留一条解题主线，把当前公式与对应变量解释放在一起，将可选扩展收起。教师要求学生说清每一步为何成立，再用新数据独立完成。对基础较好的学生允许跳过提示；这一方案需要课堂试验，不能仅凭界面整洁判断有效。"
+        }
+      ]
+    },
+    {
+      "key": "ai",
+      "heading": "与 AI 教育的连接",
+      "blocks": [
+        {
+          "type": "note",
+          "variant": "evidence",
+          "label": "理论依据",
+          "text": "已核对作者综述的认知架构与负荷分类段落，支持关注任务、基础和呈现之间的关系；没有核实生成式助手的效果。"
+        },
+        {
+          "type": "note",
+          "variant": "design",
+          "label": "待验证的产品设计",
+          "text": "让教师先限定学习目标与提示顺序，AI 只按当前步骤解释，并要求学生提交理由。记录提示使用与后续独立表现，供教师调整支持程度。"
+        },
+        {
+          "type": "note",
+          "variant": "caution",
+          "label": "失败反例与边界",
+          "text": "助手一键代写推导，学生感觉更轻松但不会迁移；或者把必要条件藏进折叠菜单，反而增加查找。对复杂任务不能只做减法，还要保留理解所需的关系。"
+        }
+      ]
+    },
+    {
+      "key": "reflection",
+      "heading": "一分钟思考",
+      "question": "你准备删去助手的哪项提示？怎样确认删掉的是干扰而不是必要支持？",
+      "answer": [
+        "先标明提示服务的学习目标及依赖关系，请教师审阅。",
+        "比较相同学习时间下的无提示新题与一周后解释质量。",
+        "若轻松评分上升而迁移下降，不能将改版认定为学习改善。"
+      ]
+    },
+    {
+      "key": "reading",
+      "heading": "延伸阅读",
+      "items": [
+        {
+          "authors": "John Sweller, Jeroen J. G. van Merriënboer, Fred Paas",
+          "year": 2019,
+          "title": "Cognitive Architecture and Instructional Design: 20 Years Later",
+          "source": "Educational Psychology Review, 31, 261–292",
+          "link": "https://link.springer.com/article/10.1007/s10648-019-09465-5",
+          "note": "重点读 Human Cognitive Architecture Used in 1998 与 Categories of Cognitive Load；后者说明相关负荷解释的修订。",
+          "verified": "2026-11-03 已阅读出版社开放正文相关段落，核对理论表述；未逐项复核综述所引实验。"
+        }
+      ]
+    }
+  ],
+  "learning": {
+    "takeaway": "不要以更轻松或更短作为学得更好的替代指标。",
+    "scenario": "高校统计课程的 AI 辅导助手：新手同时查看公式、变量解释与聊天建议，难以跟住推导。",
+    "decision": "按教师确认的推理顺序提供提示，当前公式与解释相邻，可选扩展折叠；保留独立解释和新题练习。",
+    "counterexample": "一键生成完整推导后任务完成率上升，但无提示新题失败；删去必要条件也可能增加学习困难。",
+    "evaluation": "待验证实验：按前测基础分层随机比较现版与步骤提示版，教师、内容和学习时长尽量一致。主指标为无提示新题正确率、理由评分及一周后保持；辅指标为主观努力、提示依赖与查找错误。评分者尽量不知道版本；分别报告不同基础学生结果。",
+    "evidenceStatus": "作者综述支持理论区分；本文统计课场景和 AI 提示方案属于设计假设，尚无直接效果证据。",
+    "reflection": {
+      "question": "哪项提示增加查找却没有帮助理解？你将用什么结果决定保留它？",
+      "answer": "保存具体提示、对应学习目标与删改理由；比较无提示迁移和延迟解释表现。必要推理不能仅因使用少就删去。"
+    },
+    "related": [
+      "information-processing",
+      "prior-knowledge"
+    ],
+    "audit": {
+      "status": "出版社正文已核对；AI 方案待检验",
+      "note": "核对作者、年份、题名、卷页及指定正文段落。区分书目核对与理论主张核对；相关负荷不是稳定的独立第三类定论。"
+    },
+    "claims": [
+      {
+        "claim": "陌生信息加工受工作记忆限制，已有知识影响任务复杂性。",
+        "source": "https://link.springer.com/article/10.1007/s10648-019-09465-5",
+        "locator": "Human Cognitive Architecture Used in 1998；Categories of Cognitive Load 前五段",
+        "scope": "认知负荷理论的解释框架；不提供个体固定容量诊断，也不证明特定 AI 产品有效。",
+        "checkedAt": "2026-11-03"
+      },
+      {
+        "claim": "作者将相关负荷重新解释为处理内在负荷的资源分配，而非额外相加的独立负荷。",
+        "source": "https://link.springer.com/article/10.1007/s10648-019-09465-5",
+        "locator": "Categories of Cognitive Load，Germane cognitive load was defined 起的最后四段",
+        "scope": "该作者团队在2019综述中的修订表述，不代表所有研究均使用同一分类。",
+        "checkedAt": "2026-11-03"
+      }
+    ],
+    "corrections": []
+  },
+  "readingMinutes": 5,
+  "wordCount": 840
+}
