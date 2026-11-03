@@ -1,9 +1,9 @@
 {
   "version": 1,
   "reviewedAt": "2026-11-03",
-  "description": "Reviewed date timelines for scheduled reading sections; kraft palettes, homepage, practice course, historical data and record storage preserved.",
+  "description": "Compact aligned headers for all five interiors; 32px desktop / 26px mobile titles. Reviewed alongside existing timeline, kraft palette and storage contracts.",
   "files": {
-    "emilia-kraft.css": "256a145a5e225d23598427ca6e7468c273cce8516f45343ddd94b6b4957e481c",
+    "emilia-kraft.css": "a774c861f1d66ab98a88c7b9acfcb7dfddf11f42270e81396b3610e536937f7b",
     "emilia-icons-LICENSE.txt": "b495047bd93a9b06913511076f504daba17d5bbeb3e0650f3bb53a4220329c57",
     "assets/css/style.css": "1187aadde49a731153bcc7f63ebaf124585a9cec4fc5a1a1affc3b1f3d8afc22",
     "assets/js/app.js": "ee90d29190a4638f152061e887005cd58f756fcddf8bac2af08cbeb260c1dca1",
@@ -21,7 +21,7 @@
         {
           "id": "emilia-kraft-theme",
           "rel": "stylesheet",
-          "href": "emilia-kraft.css?v=20261103-timeline1"
+          "href": "emilia-kraft.css?v=20261103-compact1"
         }
       ],
       "ui_blocks": [

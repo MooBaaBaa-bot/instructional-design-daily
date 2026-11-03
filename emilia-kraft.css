@@ -371,3 +371,90 @@ html[data-emilia-theme="design"] .concept-card a{color:var(--accent)}
  html[data-emilia-theme] .chronicle-content :is(h3,.item-title),html[data-emilia-theme="weekly"] .chronicle .card:first-child h3{font-size:20px}
 }
 @media print{html[data-emilia-theme] .chronicle-day>summary::after{display:none}}
+
+/* Compact volume headers · reviewed 2026-11-03. Keep palette and reading content. */
+html[data-emilia-theme] .emilia-library-inner{min-height:60px;padding:8px 32px;gap:18px}
+html[data-emilia-theme] .emilia-signature{font-size:22px;gap:9px}
+html[data-emilia-theme] .emilia-signature small{font-size:8px;margin-top:3px;letter-spacing:1px}
+html[data-emilia-theme] .emilia-signature .emilia-bookplate{width:28px;height:32px}
+html[data-emilia-theme] .emilia-back{padding-right:18px}
+html[data-emilia-theme] .emilia-compact-header{display:block;position:relative;text-align:left;padding:18px 24px;margin:18px 0 16px;border-top:2px solid var(--accent);border-bottom:1px solid var(--line);background-color:var(--paper);box-shadow:none}
+html[data-emilia-theme] .emilia-compact-header::after{display:none}
+html[data-emilia-theme] .emilia-compact-header::before{width:44px;height:44px;top:12px;right:16px;opacity:.4}
+html[data-emilia-theme] .emilia-compact-header :is(h1,.brand__title){font-family:var(--editorial-serif);font-size:32px;font-weight:600;line-height:1.35;letter-spacing:.02em;text-align:left;color:var(--ink);margin:6px 0 8px}
+html[data-emilia-theme] .emilia-compact-header :is(.eyebrow,.brand__sub){font:10px/1.5 var(--editorial-ui);letter-spacing:1.5px;border:0;padding:0;margin:0 48px 6px 0;text-align:left;color:var(--accent)}
+html[data-emilia-theme] .emilia-compact-header :is(.intro,.subtitle),html[data-emilia-theme="research"] .emilia-compact-header>p{font-size:14px;line-height:1.65;font-style:normal;font-weight:400;margin:6px 0;max-width:none}
+html[data-emilia-theme] .emilia-compact-header br{display:none}
+html[data-emilia-theme] .emilia-compact-header .updated{font-size:12px;line-height:1.6;margin-top:8px}
+html[data-emilia-theme="opportunities"] .emilia-compact-header p.subtitle{font-size:12px;line-height:1.65;margin:8px 0 0}
+html[data-emilia-theme="weekly"] .emilia-compact-header .issue{padding-top:10px;margin-top:10px;gap:12px;flex-wrap:wrap}
+html[data-emilia-theme="weekly"] .emilia-compact-header .issue-date{font-size:16px;line-height:1.5}
+html[data-emilia-theme="weekly"] .emilia-compact-header .issue :is(p,small,.issue-label){font-size:12px;margin:0}
+html[data-emilia-theme="practice"] .emilia-compact-header .english{font-size:11px;line-height:1.5;margin:0 0 6px;letter-spacing:.5px}
+html[data-emilia-theme="practice"] .emilia-compact-header .meta{padding-top:10px;margin-top:10px;gap:6px 18px;font-size:12px}
+html[data-emilia-theme="practice"] .emilia-compact-header .emilia-inline-mark{display:none}
+html[data-emilia-theme="research"] .emilia-compact-header .hero-index{display:none}
+/* Use the same page edges for every volume, including opportunity filters. */
+html[data-emilia-theme="opportunities"] .container{max-width:1280px;padding:0 32px 48px}
+html[data-emilia-theme="opportunities"] .sidebar{position:static;inset:auto;width:auto;padding:0;margin:0 0 12px;border:0}
+html[data-emilia-theme="opportunities"] .sidebar :is(.brand,.side-label,.sidebar-note){display:none}
+html[data-emilia-theme="opportunities"] .sidebar nav{display:flex;gap:6px;flex-wrap:wrap}
+html[data-emilia-theme="opportunities"] .nav-button{width:auto;min-height:40px;padding:8px 12px;border:1px solid var(--line);gap:10px}
+html[data-emilia-theme="opportunities"] .stats-bar{margin-bottom:12px}
+html[data-emilia-theme="opportunities"] .stat-item{padding:10px 16px;display:flex;align-items:baseline;gap:10px}
+html[data-emilia-theme="opportunities"] .stat-item .stat-num{font-size:24px}
+html[data-emilia-theme="opportunities"] .toolbar{padding:12px;margin-bottom:16px}
+html[data-emilia-theme="weekly"] .toolbar{padding:14px 18px;margin-bottom:20px}
+html[data-emilia-theme="weekly"] .categories{margin-top:12px;padding-top:12px}
+html[data-emilia-theme="research"] .wrap{max-width:1280px;padding:0 32px}
+html[data-emilia-theme="research"] .tabs{margin:0 0 20px}
+html[data-emilia-theme="research"] .tabs a{padding-top:10px;padding-bottom:10px}
+html[data-emilia-theme="practice"] .emilia-compact-header{max-width:1216px;margin:18px auto 12px}
+html[data-emilia-theme="practice"] :is(main,.tabs){max-width:1280px;padding-left:32px;padding-right:32px}
+html[data-emilia-theme="practice"] .tabs{margin:0 auto 16px}
+html[data-emilia-theme="practice"] .tabs a{padding-top:10px;padding-bottom:10px}
+html[data-emilia-theme="practice"] .message:empty{display:none}
+/* Daily concepts retain their local navigation and unmodified article bodies. */
+html[data-emilia-theme="design"] .site-head.emilia-compact-header{width:calc(100% - 64px);max-width:1216px;margin:18px auto 12px;padding-bottom:0}
+html[data-emilia-theme="design"] .site-head__inner{display:flex;flex-wrap:wrap;padding:0;min-height:0;gap:0 20px}
+html[data-emilia-theme="design"] .brand{order:0;flex-basis:100%}
+html[data-emilia-theme="design"] .brand__seal{display:none}
+html[data-emilia-theme="design"] .brand__mark>div{display:flex;flex-direction:column}
+html[data-emilia-theme="design"] .brand__sub{order:-1;display:block}
+html[data-emilia-theme="design"] .head-status{order:1;flex-basis:100%;padding:0;margin:0 0 6px;text-align:left;align-self:auto;font-size:12px}
+html[data-emilia-theme="design"] .head-status__prog{margin-left:12px}
+html[data-emilia-theme="design"] .site-head .tabs{order:2;flex-basis:100%;margin:0;min-height:44px}
+html[data-emilia-theme="design"] main{max-width:1280px;padding:8px 32px 64px}
+html[data-emilia-theme="design"] .page-head{max-width:none;margin-bottom:16px}
+html[data-emilia-theme="design"] .page-head h1{font-size:24px;line-height:1.4;margin:4px 0 6px;letter-spacing:0}
+html[data-emilia-theme="design"] .page-head p{font-size:14px;line-height:1.65;margin:4px 0}
+html[data-emilia-theme="design"] .page-head .eyebrow{font-size:10px;margin:0 0 4px}
+html[data-emilia-theme="design"] .page-head__note{padding:0;border:0}
+html[data-emilia-theme="design"] .masthead{padding:12px 0 16px;margin-bottom:20px}
+html[data-emilia-theme="design"] .masthead__title{font-size:32px;line-height:1.35;margin:8px 0}
+html[data-emilia-theme="design"] .masthead__top{margin-bottom:10px;padding-bottom:8px}
+html[data-emilia-theme="design"] .masthead__en{margin-bottom:10px}
+html[data-emilia-theme="design"] .masthead__standfirst{font-size:16px;line-height:1.7;margin:8px 0}
+@media(max-width:1279px){
+ html[data-emilia-theme="practice"] .emilia-compact-header,html[data-emilia-theme="design"] .site-head.emilia-compact-header{margin-left:32px;margin-right:32px}
+}
+@media(max-width:640px){
+ html[data-emilia-theme] .emilia-library-inner{padding:6px 16px;min-height:56px;gap:12px}
+ html[data-emilia-theme] .emilia-signature{font-size:20px}
+ html[data-emilia-theme] .emilia-back{padding-right:12px;font-size:12px}
+ html[data-emilia-theme] .emilia-compact-header{margin-top:12px;margin-bottom:12px;padding:16px 18px}
+ html[data-emilia-theme] .emilia-compact-header :is(h1,.brand__title){font-size:26px;line-height:1.4;margin:5px 0 6px;letter-spacing:0}
+ html[data-emilia-theme] .emilia-compact-header :is(.eyebrow,.brand__sub){font-size:9px;letter-spacing:.8px}
+ html[data-emilia-theme="weekly"] .wrap,html[data-emilia-theme="research"] .wrap,html[data-emilia-theme="opportunities"] .container{padding-left:16px;padding-right:16px}
+ html[data-emilia-theme="practice"] .emilia-compact-header,html[data-emilia-theme="design"] .site-head.emilia-compact-header{margin:12px 16px}
+ html[data-emilia-theme="practice"] :is(main,.tabs),html[data-emilia-theme="design"] main{padding-left:16px;padding-right:16px}
+ html[data-emilia-theme="weekly"] .emilia-compact-header .issue{display:flex;gap:6px}
+ html[data-emilia-theme="weekly"] .emilia-compact-header .issue>div{display:flex;flex-wrap:wrap;gap:8px;margin:0}
+ html[data-emilia-theme="opportunities"] .stat-item{padding:10px;gap:6px}
+ html[data-emilia-theme="opportunities"] .stat-label{font-size:11px}
+ html[data-emilia-theme="design"] .page-head h1{font-size:22px}
+ html[data-emilia-theme="design"] .masthead__title{font-size:26px}
+}
+
+html[data-emilia-theme="design"] body:not(.has-qnav) #view-today{width:100%;max-width:none;padding-left:0}
+@media(max-width:640px){html[data-emilia-theme="design"] .site-head.emilia-compact-header{width:calc(100% - 32px)}}
