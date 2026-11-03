@@ -15,7 +15,7 @@ const state = {
   status: null,
   articles: new Map(),
   route: 'today',
-  lib: { q: '', theme: 'all', month: 'all', view: 'theme' },
+  lib: { q: '', theme: 'all', month: 'all', view: 'time' },
   records: loadRecords(),
   observer: null,
   onScroll: null,
@@ -299,27 +299,11 @@ async function renderToday() {
     return;
   }
 
-  const article = await getArticle(st.lastConceptId);
   const publishedToday = st.lastPublishedDate === today;
-  const meta = state.index.articles.find((a) => a.id === st.lastConceptId);
+  view.innerHTML = `<div class="page-head"><p class="eyebrow">Daily learning / Timeline</p><h1>每天一个概念，沿时间积累</h1><p>按真实发布日期排列，最新内容在前。打开文章后，继续阅读、划线、练习与记笔记。</p><p class="page-head__note">最近发布：${esc(fmtDateCn(st.lastPublishedDate))} · 已积累 ${state.index.articles.length} 篇 · <a href="#/library">搜索概念库 →</a></p></div>
+    ${publishedToday ? '' : `<div class="notice" role="status">今日尚未发布。以下保留最近已发布内容；每日任务在北京时间 10:00 启动，内容经校验与部署后出现。</div>`}
+    ${conceptTimeline(state.index.articles)}`;
 
-  const staleNote = publishedToday ? '' : `
-    <div class="notice" role="status">
-      <strong>今日尚未发布，以下是最近一期。</strong>
-      今天是 ${esc(fmtDateCn(today))}，站内最新一期为 ${esc(fmtDateCn(st.lastPublishedDate))}。
-      每日任务在 10:00 启动，检索、撰写、校验与部署需要几分钟；若已过预期时间仍未出现，只能确认尚未看到新发布，执行情况需查看 Codex 定时任务记录。
-      页面不会把旧内容说成今天的更新。
-    </div>`;
-
-  view.innerHTML = readerHTML(article, {
-    back: null,
-    meta,
-    notice: staleNote,
-    stateText: publishedToday ? `今日 ${fmtClock(st.lastPublishedAt)} 发布` : `最近一期 ${fmtShort(article.date)}`,
-    stale: !publishedToday,
-  });
-  mountReader(article, meta);
-  mountQNav(article);
   view.hidden = false;
 }
 
@@ -1575,7 +1559,7 @@ function renderLibrary() {
     <div class="page-head">
       <p class="eyebrow">Archive</p>
       <h1>概念库</h1>
-      <p>已发布的全部概念累积在这里，不会因为新一期上线而消失。默认按学习路径的六个主题聚合，可切换为按发布时间浏览，或直接搜索中英文概念名与关键词。</p>
+      <p>已发布的全部概念累积在这里，不会因为新一期上线而消失。默认按发布时间浏览，也可切换为学习路径的六个主题，或直接搜索中英文概念名与关键词。</p>
     </div>
     <div class="toolbar">
       <div class="field field--search">
@@ -1683,6 +1667,13 @@ function libItemHTML(a, query) {
     </li>`;
 }
 
+function conceptTimeline(items, query = '') {
+  return EmiliaTimeline.render(items, {key: a => a.date, label: '发布日期', stamp: a => 'DAY ' + String(a.day).padStart(2, '0'), card: a => {
+    const rec = state.records;
+    return `<article class="concept-card"><div class="concept-meta"><span>${esc(a.theme)} · ${esc(a.type)}</span><span>${a.readingMinutes} 分钟</span></div><h3><a href="#/read/${esc(a.id)}">${highlight(a.titleZh, query)}</a></h3><p class="concept-en">${highlight(a.titleEn, query)}</p><p>${highlight(a.oneLiner, query)}</p><div class="concept-action"><a href="#/read/${esc(a.id)}">${rec.read[a.id] ? '重读概念' : '开始阅读'} →</a>${rec.read[a.id] ? '<span>已读</span>' : ''}${rec.fav[a.id] ? '<span>已收藏</span>' : ''}${rec.notes[a.id] ? '<span>有笔记</span>' : ''}</div></article>`;
+  }});
+}
+
 function renderLibList() {
   const { q, theme, month, view } = state.lib;
   const query = q.trim();
@@ -1701,7 +1692,7 @@ function renderLibList() {
   }
 
   if (view === 'time') {
-    body.innerHTML = `<ul class="lib-list">${items.map((a) => libItemHTML(a, query)).join('')}</ul>`;
+    body.innerHTML = conceptTimeline(items, query);
     return;
   }
 

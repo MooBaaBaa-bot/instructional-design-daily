@@ -327,3 +327,47 @@ html[data-emilia-theme="research"] .filters{padding:20px;background:var(--note-p
 
 /* Programmatic route focus should not frame the entire reading canvas. */
 html[data-emilia-theme] main[tabindex="-1"]:focus{outline:none}
+
+/* Emilia timeline · 2026-11-03. Structure only; colors inherit each volume. */
+html[data-emilia-theme] .chronicle{display:block;min-width:0}
+html[data-emilia-theme] .chronicle-day{border:0;padding:0;margin:0 0 34px;background:none;box-shadow:none}
+html[data-emilia-theme] .chronicle-day>summary{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;list-style:none;cursor:pointer;padding:18px 0 22px;border:0;color:var(--ink);min-height:44px}
+html[data-emilia-theme] .chronicle-day>summary::before{display:none}
+html[data-emilia-theme] .chronicle-day>summary::-webkit-details-marker{display:none}
+html[data-emilia-theme] .chronicle-day>summary::after{content:'−';margin-left:auto;color:var(--accent);font:22px Georgia,serif}
+html[data-emilia-theme] .chronicle-day:not([open])>summary::after{content:'+'}
+html[data-emilia-theme] .chronicle-date{font-size:21px;font-weight:700;letter-spacing:.02em}
+html[data-emilia-theme] .chronicle-count{color:var(--muted);font-size:13px;font-weight:400}
+html[data-emilia-theme] .chronicle-entry{position:relative;display:grid;grid-template-columns:76px minmax(0,1fr);gap:25px;padding:0 0 20px}
+html[data-emilia-theme] .chronicle-entry::before{content:'';position:absolute;left:87px;top:28px;bottom:-28px;width:1px;background:var(--line)}
+html[data-emilia-theme] .chronicle-entry:last-child::before{bottom:36px}
+html[data-emilia-theme] .chronicle-entry::after{content:'';position:absolute;left:82px;top:27px;width:11px;height:11px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 5px var(--bg)}
+html[data-emilia-theme] .chronicle-stamp{padding-top:24px;text-align:left;color:var(--accent);font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;line-height:1.5;overflow-wrap:anywhere}
+html[data-emilia-theme] .chronicle-content{min-width:0}
+html[data-emilia-theme] .chronicle-content :is(.card,.item-card,.panel,.concept-card){margin:0;padding:26px 30px;border:1px solid var(--line);border-radius:10px;background:var(--paper);box-shadow:0 2px 2px rgb(53 43 32 / 3%);min-width:0}
+html[data-emilia-theme] .chronicle-content :is(h3,.item-title){font-size:23px;line-height:1.6;margin:12px 0;color:var(--ink)}
+html[data-emilia-theme] .chronicle-content p{line-height:1.85}
+html[data-emilia-theme="weekly"] #articles{display:block}
+html[data-emilia-theme="weekly"] .chronicle .card:first-child h3{font-size:23px}
+html[data-emilia-theme="weekly"] .chronicle .card:first-child{grid-column:auto;border-top:1px solid var(--line);background:var(--paper)}
+html[data-emilia-theme="opportunities"] .chronicle .timeline-row{display:block;margin:0;padding:0}
+html[data-emilia-theme="opportunities"] .chronicle .timeline-row::before,html[data-emilia-theme="opportunities"] .chronicle .timeline-row::after{display:none}
+html[data-emilia-theme="opportunities"] .chronicle .timeline-gutter{display:none}
+html[data-emilia-theme="design"] .concept-card .concept-meta{display:flex;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:13px}
+html[data-emilia-theme="design"] .concept-card .concept-en{font-size:14px;color:var(--muted);margin-top:0}
+html[data-emilia-theme="design"] .concept-card .concept-action{display:flex;align-items:center;gap:14px;flex-wrap:wrap;border-top:1px solid var(--line-soft);padding-top:16px;margin-top:18px;font-size:14px;color:var(--accent)}
+html[data-emilia-theme="design"] .concept-card a{color:var(--accent)}
+@media(max-width:640px){
+ html[data-emilia-theme] .chronicle-day{margin-bottom:18px}
+ html[data-emilia-theme] .chronicle-day>summary{gap:6px 12px;padding:16px 0}
+ html[data-emilia-theme] .chronicle-date{font-size:17px}
+ html[data-emilia-theme] .chronicle-count{font-size:12px}
+ html[data-emilia-theme] .chronicle-entry{grid-template-columns:minmax(0,1fr);gap:8px;padding-left:20px;padding-bottom:18px}
+ html[data-emilia-theme] .chronicle-entry::before{left:4px;top:8px;bottom:-8px}
+ html[data-emilia-theme] .chronicle-entry::after{left:0;top:6px;width:9px;height:9px;box-shadow:0 0 0 3px var(--bg)}
+ html[data-emilia-theme] .chronicle-entry:last-child::before{bottom:20px}
+ html[data-emilia-theme] .chronicle-stamp{padding-top:0;font-size:12px}
+ html[data-emilia-theme] .chronicle-content :is(.card,.item-card,.panel,.concept-card){padding:20px 18px}
+ html[data-emilia-theme] .chronicle-content :is(h3,.item-title),html[data-emilia-theme="weekly"] .chronicle .card:first-child h3{font-size:20px}
+}
+@media print{html[data-emilia-theme] .chronicle-day>summary::after{display:none}}

@@ -36,7 +36,8 @@ body{background:var(--bg);color:var(--ink);font-family:var(--rr-sans);-webkit-fo
 .rr-page .save-button[aria-pressed=true],.rr-page .bookmark[aria-pressed=true]{background:var(--soft);color:var(--accent)}
  .rr-page .masthead{background:var(--soft);color:var(--ink);border:1px solid var(--line)}.rr-page .masthead__en,.rr-page .masthead__standfirst,.rr-page .masthead__meta,.rr-page .masthead__top,.rr-page .masthead__theme,.rr-page .masthead__date,.rr-page .masthead__of,.rr-page .masthead__no{color:var(--accent)}.rr-page .masthead__standfirst{border-color:var(--accent)}.rr-page .masthead__rule{background:var(--line)}.rr-page .masthead__state--stale{color:#87452f}.rr-page .masthead__state--stale .dot{background:#87452f}.rr-page .series__tick{background:var(--line)}.rr-page .series__tick.is-now,.rr-page .series__tick.is-past{background:var(--accent)}.rr-page .head-status .dot{box-shadow:none}.rr-page .brand__seal{color:var(--accent);border-color:var(--accent)}.rr-page .readbar__fill{background:var(--accent)}</style>
 <!-- Preserve the Emilia kraft theme during content updates. -->
-<link id="emilia-kraft-theme" rel="stylesheet" href="emilia-kraft.css?v=20261101-studio1">
+<link id="emilia-kraft-theme" rel="stylesheet" href="emilia-kraft.css?v=20261103-timeline1">
+<script src="emilia-timeline.js?v=20261103-timeline1"></script>
 </head>
 <body class="rr-page">
 <nav class="emilia-library-bar" aria-label="返回书架"><div class="emilia-library-inner"><a class="emilia-back" href="https://moobaabaa-bot.github.io/ed-tech-opportunity/hub.html"><span aria-hidden="true">←</span> 返回书架</a><div class="emilia-signature"><span class="rr-seal emilia-bookplate" aria-hidden="true"><svg class="emilia-icon" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" > <rect width="8" height="18" x="3" y="3" rx="1" /> <path d="M7 3v18" /> <path d="M20.4 18.9c.2.5-.1 1.1-.6 1.3l-1.9.7c-.5.2-1.1-.1-1.3-.6L11.1 5.1c-.2-.5.1-1.1.6-1.3l1.9-.7c.5-.2 1.1.1 1.3.6Z" /> </svg> </span><span>EMILIA<small>PERSONAL READING LIBRARY</small></span></div><span class="emilia-volume">DAILY CONCEPT</span></div></nav>
@@ -88,7 +89,7 @@ body{background:var(--bg);color:var(--ink);font-family:var(--rr-sans);-webkit-fo
 <footer class="site-foot">
   <div class="site-foot__inner">
     <div>
-      <p>每篇文章发布后即固定，新内容以新增文件的方式累加，旧文不会被覆盖或删除。首页只呈现最新一期；当天尚未发布时会明确提示，不用旧内容冒充更新。</p>
+      <p>每篇文章发布后即固定，新内容以新增文件的方式累加，旧文不会被覆盖或删除。首页按发布日期呈现全部已发布篇目，最新内容在前；当天尚未发布时会明确提示，不用旧内容冒充更新。</p>
       <p>已读、收藏、笔记与划线备注保存在当前浏览器（localStorage），不上传服务器，可在「我的记录」导出备份。</p>
     </div>
     <div>
@@ -105,6 +106,6 @@ body{background:var(--bg);color:var(--ink);font-family:var(--rr-sans);-webkit-fo
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <noscript><p style="max-width:34rem;margin:40px auto;padding:0 20px">本站需要启用 JavaScript 才能显示内容。</p></noscript>
 
-<script src="assets/js/app.js?v=20261101-sync1"></script>
+<script src="assets/js/app.js?v=20261103-timeline1"></script>
 </body>
 </html>

@@ -1,13 +1,14 @@
 {
   "version": 1,
-  "reviewedAt": "2026-11-01",
-  "description": "Emilia AI Studio editorial interiors; independent volumes with return-to-bookshelf navigation. Homepage and content/storage preserved.",
+  "reviewedAt": "2026-11-03",
+  "description": "Reviewed date timelines for scheduled reading sections; kraft palettes, homepage, practice course, historical data and record storage preserved.",
   "files": {
-    "emilia-kraft.css": "02921bb8f78a23bae81dcd49f90319d4efc60f059e73abe918a5dc219302425f",
+    "emilia-kraft.css": "256a145a5e225d23598427ca6e7468c273cce8516f45343ddd94b6b4957e481c",
     "emilia-icons-LICENSE.txt": "b495047bd93a9b06913511076f504daba17d5bbeb3e0650f3bb53a4220329c57",
     "assets/css/style.css": "1187aadde49a731153bcc7f63ebaf124585a9cec4fc5a1a1affc3b1f3d8afc22",
-    "assets/js/app.js": "80b50f7c8229324f57282a36eec987f193de50b0892c168f25d98245af3beb04",
-    "scripts/check_ui.py": "80be6da49608b507dd499594be60b25f9e514f29a0e0208e7b4d8bc2cd6fb290"
+    "assets/js/app.js": "ee90d29190a4638f152061e887005cd58f756fcddf8bac2af08cbeb260c1dca1",
+    "scripts/check_ui.py": "80be6da49608b507dd499594be60b25f9e514f29a0e0208e7b4d8bc2cd6fb290",
+    "emilia-timeline.js": "4d000303e4eea84a39f72ebeb9541d7ebecd02dcb40082f8294d664c48265255"
   },
   "pages": {
     "index.html": {
@@ -20,7 +21,7 @@
         {
           "id": "emilia-kraft-theme",
           "rel": "stylesheet",
-          "href": "emilia-kraft.css?v=20261101-studio1"
+          "href": "emilia-kraft.css?v=20261103-timeline1"
         }
       ],
       "ui_blocks": [
@@ -41,7 +42,14 @@
         [
           "script",
           {
-            "src": "assets/js/app.js?v=20261101-sync1"
+            "src": "emilia-timeline.js?v=20261103-timeline1"
+          },
+          "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        ],
+        [
+          "script",
+          {
+            "src": "assets/js/app.js?v=20261103-timeline1"
           },
           "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
         ]
