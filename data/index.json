@@ -1,8 +1,29 @@
 {
   "site": "教学设计 · 每日一概念",
-  "generatedAt": "2026-11-03T10:00:49+08:00",
-  "count": 9,
+  "generatedAt": "2026-11-05T10:25:32+08:00",
+  "count": 10,
   "articles": [
+    {
+      "id": "attention-working-memory",
+      "day": 10,
+      "date": "2026-11-05",
+      "titleZh": "注意与工作记忆",
+      "titleEn": "Attention and Working Memory",
+      "theme": "学习机制",
+      "stageId": "s2",
+      "type": "机制",
+      "readingMinutes": 5,
+      "wordCount": 844,
+      "oneLiner": "让当前目标与必要信息保持可用，再判断学生是否真正理解。",
+      "keywords": [
+        "注意",
+        "工作记忆",
+        "任务目标"
+      ],
+      "file": "data/articles/attention-working-memory.json",
+      "sourceCount": 1,
+      "updatedAt": "2026-11-05T10:25:32+08:00"
+    },
     {
       "id": "cognitive-load",
       "day": 9,

@@ -266,8 +266,8 @@
       "dependsOn": [
         "cognitive-load"
       ],
-      "status": "planned",
-      "publishedDate": null
+      "status": "published",
+      "publishedDate": "2026-11-05"
     },
     {
       "id": "memory-forgetting",
