@@ -281,8 +281,8 @@
       "dependsOn": [
         "attention-working-memory"
       ],
-      "status": "planned",
-      "publishedDate": null
+      "status": "published",
+      "publishedDate": "2026-11-06"
     },
     {
       "id": "self-determination",

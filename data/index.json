@@ -1,8 +1,30 @@
 {
   "site": "教学设计 · 每日一概念",
-  "generatedAt": "2026-11-05T10:25:32+08:00",
-  "count": 10,
+  "generatedAt": "2026-11-06T10:22:57+08:00",
+  "count": 11,
   "articles": [
+    {
+      "id": "memory-forgetting",
+      "day": 11,
+      "date": "2026-11-06",
+      "titleZh": "记忆与遗忘",
+      "titleEn": "Memory and Forgetting",
+      "theme": "学习机制",
+      "stageId": "s2",
+      "type": "机制",
+      "readingMinutes": 5,
+      "wordCount": 859,
+      "oneLiner": "用延迟后的独立回忆检验保持，不把刚读完的熟悉感当成掌握。",
+      "keywords": [
+        "记忆",
+        "遗忘",
+        "延迟测验",
+        "提取练习"
+      ],
+      "file": "data/articles/memory-forgetting.json",
+      "sourceCount": 1,
+      "updatedAt": "2026-11-06T10:22:57+08:00"
+    },
     {
       "id": "attention-working-memory",
       "day": 10,
