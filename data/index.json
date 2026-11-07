@@ -1,8 +1,30 @@
 {
   "site": "教学设计 · 每日一概念",
-  "generatedAt": "2026-11-06T10:22:57+08:00",
-  "count": 11,
+  "generatedAt": "2026-11-07T10:40:50+08:00",
+  "count": 12,
   "articles": [
+    {
+      "id": "self-determination",
+      "day": 12,
+      "date": "2026-11-07",
+      "titleZh": "自我决定理论",
+      "titleEn": "Self-Determination Theory",
+      "theme": "学习机制",
+      "stageId": "s2",
+      "type": "理论",
+      "readingMinutes": 5,
+      "wordCount": 879,
+      "oneLiner": "设计学习支持时，既看学生是否行动，也看他们为何愿意行动。",
+      "keywords": [
+        "自我决定理论",
+        "自主",
+        "胜任",
+        "归属"
+      ],
+      "file": "data/articles/self-determination.json",
+      "sourceCount": 1,
+      "updatedAt": "2026-11-07T10:40:50+08:00"
+    },
     {
       "id": "memory-forgetting",
       "day": 11,
