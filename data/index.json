@@ -1,8 +1,30 @@
 {
   "site": "教学设计 · 每日一概念",
-  "generatedAt": "2026-11-07T10:40:50+08:00",
-  "count": 12,
+  "generatedAt": "2026-11-09T10:02:01+08:00",
+  "count": 13,
   "articles": [
+    {
+      "id": "metacognition-srl",
+      "day": 13,
+      "date": "2026-11-09",
+      "titleZh": "元认知与自我调节学习",
+      "titleEn": "Metacognition and Self-Regulated Learning",
+      "theme": "学习机制",
+      "stageId": "s2",
+      "type": "机制",
+      "readingMinutes": 5,
+      "wordCount": 906,
+      "oneLiner": "先判断自己懂到哪里，再根据学习证据调整下一步行动。",
+      "keywords": [
+        "元认知",
+        "自我调节学习",
+        "监控",
+        "策略调整"
+      ],
+      "file": "data/articles/metacognition-srl.json",
+      "sourceCount": 1,
+      "updatedAt": "2026-11-09T10:02:01+08:00"
+    },
     {
       "id": "self-determination",
       "day": 12,
