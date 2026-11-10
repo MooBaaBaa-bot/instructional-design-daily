@@ -1,8 +1,30 @@
 {
   "site": "教学设计 · 每日一概念",
-  "generatedAt": "2026-11-09T10:02:01+08:00",
-  "count": 13,
+  "generatedAt": "2026-11-10T10:00:39+08:00",
+  "count": 14,
   "articles": [
+    {
+      "id": "learning-objectives",
+      "day": 14,
+      "date": "2026-11-10",
+      "titleZh": "学习目标与结果分类",
+      "titleEn": "Learning Objectives and Bloom's Taxonomy",
+      "theme": "教学设计",
+      "stageId": "s3",
+      "type": "模型",
+      "readingMinutes": 5,
+      "wordCount": 918,
+      "oneLiner": "先写清学生最终能做什么，再选择任务和判断达标的证据。",
+      "keywords": [
+        "学习目标",
+        "布卢姆分类",
+        "认知过程",
+        "评价证据"
+      ],
+      "file": "data/articles/learning-objectives.json",
+      "sourceCount": 2,
+      "updatedAt": "2026-11-10T10:00:39+08:00"
+    },
     {
       "id": "metacognition-srl",
       "day": 13,

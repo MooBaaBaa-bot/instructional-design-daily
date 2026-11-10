@@ -1,0 +1,182 @@
+{
+  "id": "learning-objectives",
+  "day": 14,
+  "date": "2026-11-10",
+  "titleZh": "学习目标与结果分类",
+  "titleEn": "Learning Objectives and Bloom's Taxonomy",
+  "theme": "教学设计",
+  "stageId": "s3",
+  "type": "模型",
+  "oneLiner": "先写清学生最终能做什么，再选择任务和判断达标的证据。",
+  "plainTalk": "说要学会做饭还不够，能照菜谱做出一道菜、能判断哪里失手、能自行设计菜单，是不同目标，也需要不同的检验办法。",
+  "keywords": [
+    "学习目标",
+    "布卢姆分类",
+    "认知过程",
+    "评价证据"
+  ],
+  "meta": {
+    "generatedBy": "Codex 每日自动化",
+    "wordCount": 918,
+    "updatedAt": "2026-11-10T10:00:39+08:00",
+    "publishedAt": "2026-11-10T10:00:39+08:00"
+  },
+  "sections": [
+    {
+      "key": "concept",
+      "heading": "今日概念",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "学习目标描述学习后学生能够表现出的结果。它应帮助教师和学生判断要练什么、怎样证明学会，而不仅是列出教师准备讲的章节。产品评审时，把“完成课程”改问为“学生能独立完成什么任务”，往往能暴露内容、练习与评价之间的空缺。目标写得漂亮仍不代表教学已经有效。"
+        }
+      ]
+    },
+    {
+      "key": "background",
+      "heading": "理论背景",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "布卢姆等人于一九五六年提出目标分类框架，二〇〇一年出现修订版。本文采用修订版认知过程的六类：记忆、理解、应用、分析、评价、创造。需区分早期版本中的综合、评价顺序与修订后的名称；本篇核对大学教学资源的介绍，不声称阅读全文原著或验证了分类本身的教学效果。"
+        }
+      ]
+    },
+    {
+      "key": "mechanism",
+      "heading": "核心机制",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "可用“动作加对象”起草目标，再补充必要条件与质量标准。例如不是笼统写“理解证据”，而是“给定两份调查摘要，指出各自结论的证据与局限，并说明哪项结论更可靠”。分类用于讨论任务要求；具体归类还要看材料、提示和学生实际需要完成的推理，不能只查一个动词就自动决定层次。"
+        }
+      ]
+    },
+    {
+      "key": "contrast",
+      "heading": "概念辨析",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "层次不是学生能力的永久标签，也不是每节课都必须爬完的阶梯。记忆必要概念仍可能服务重要目标；题目用了“创造”也可能只是套模板。评价学习结果时，还要区分学生自己完成与助手代做。尤其在生成式产品里，输出一份完整方案，不能直接证明学生具备独立设计方案的能力。"
+        }
+      ]
+    },
+    {
+      "key": "scenario",
+      "heading": "教学情境示例",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "设计假设：高校研究方法课的教师用 AI 备课助手生成“批判性评价研究”的练习，系统却只给定义选择题。产品经理可要求教师先确认目标、任务条件和评价标准，再让模型生成一份任务及评分证据说明。教师检查学生是否必须比较方法、引用材料并解释判断；试做后收集真实回答，查看题目是否意外允许抄句子得满分。模型的层次标签仅作候选，最终由教师审阅。"
+        }
+      ]
+    },
+    {
+      "key": "ai",
+      "heading": "与 AI 教育的连接",
+      "blocks": [
+        {
+          "type": "note",
+          "variant": "evidence",
+          "label": "教学资源支持",
+          "text": "大学资源支持用可观察结果表达目标，并提供修订分类。它们不证明自动分类或 AI 出题能改善学习。"
+        },
+        {
+          "type": "note",
+          "variant": "design",
+          "label": "设计假设",
+          "text": "将目标、任务与评分证据放在一起供教师审阅。保留修改理由，并用学生无助手作答检查任务要求是否真实发生。"
+        },
+        {
+          "type": "note",
+          "variant": "caution",
+          "label": "失败反例",
+          "text": "系统把“写出报告”全部标为创造，却允许直接复制生成报告；看似高阶产出，实际缺少学生判断证据。新手还需必要知识与练习支持。"
+        }
+      ]
+    },
+    {
+      "key": "reflection",
+      "heading": "一分钟思考",
+      "question": "目标是评价研究，练习却只要求记住术语，你会先改什么？",
+      "answer": [
+        "明确评价依据，再补一个必须比较证据并说明理由的任务。",
+        "检查评分是否奖励有依据的判断，而不是报告长度或术语数量。"
+      ]
+    },
+    {
+      "key": "reading",
+      "heading": "延伸阅读",
+      "items": [
+        {
+          "authors": "Columbia Business School, Samberg Institute",
+          "year": "n.d.",
+          "title": "Learning Objectives & Bloom’s Taxonomy",
+          "source": "Columbia University",
+          "link": "https://business.columbia.edu/samberg/teaching-strategies/learning-objectives-blooms-taxonomy",
+          "note": "阅读目标定义与 Bloom’s Revised Taxonomy 六行表格。",
+          "verified": "2026-11-10 已核对目标结构和六类定义；非干预实验。"
+        },
+        {
+          "authors": "Cornell University, Center for Teaching Innovation",
+          "year": "n.d.",
+          "title": "Bloom’s Taxonomy",
+          "source": "Cornell University",
+          "link": "https://teaching.cornell.edu/resource/blooms-taxonomy",
+          "note": "Framework 段说明1956框架及2001更新；下方表格含旧版名称，不能混作修订版顺序。",
+          "verified": "2026-11-10 已核对 Framework 段与表头，区分版本。"
+        }
+      ]
+    }
+  ],
+  "learning": {
+    "takeaway": "让目标、学生必须完成的任务和达标证据能相互解释。",
+    "scenario": "高校备课助手将“评价研究”目标配成术语选择题，教师难以发现测量偏差。",
+    "decision": "生成目标—任务—评分证据候选，由教师确认，并用真实学生回答检验。",
+    "counterexample": "将所有写作标为创造，模型代写报告却被当成学生高阶学习成果。",
+    "evaluation": "设计假设：随机分配教师使用普通生成器或证据对照版，控制课程材料与准备时间。盲评目标任务一致性与评分可用性；再比较学生无助手新材料评价任务的表现，另记教师修改量、误分类率与审核时间。仅目标文本改善不能证明学习收益。",
+    "evidenceStatus": "大学教学资源中的定义和版本已核验；AI 分类准确性及教学收益待验证。",
+    "reflection": {
+      "question": "哪条评分证据能够区分学生自己的判断与模型代做？",
+      "answer": "要求用新材料独立说明选择依据并回应反例；保存过程理由，不能只凭最终报告判断。"
+    },
+    "related": [
+      "metacognition-srl",
+      "prior-knowledge",
+      "memory-forgetting"
+    ],
+    "audit": {
+      "status": "权威资源定义及版本已核验",
+      "note": "修订版六类以哥伦比亚表格为准；康奈尔仅用于历史版本说明。未把分类当作效果保证。"
+    },
+    "claims": [
+      {
+        "claim": "学习目标可用动作与对象表达；修订版认知过程含记忆、理解、应用、分析、评价、创造。",
+        "source": "https://business.columbia.edu/samberg/teaching-strategies/learning-objectives-blooms-taxonomy",
+        "locator": "开篇定义段与 Bloom’s Revised Taxonomy 表格",
+        "scope": "教学设计框架，不是学生能力测量量表或 AI 效果证据。",
+        "checkedAt": "2026-11-10"
+      },
+      {
+        "claim": "布卢姆等人1956年提出框架，2001年更新。",
+        "source": "https://teaching.cornell.edu/resource/blooms-taxonomy",
+        "locator": "Framework 首段",
+        "scope": "版本沿革；页面后续旧版名称表不作为修订版顺序依据。",
+        "checkedAt": "2026-11-10"
+      }
+    ],
+    "corrections": []
+  },
+  "weeklyReview": {
+    "heading": "本周回顾：从学习者条件走向目标设计（第8—14篇）",
+    "blocks": [
+      {
+        "type": "p",
+        "text": "先验知识决定从哪里开始；负荷、注意与工作记忆提醒我们检查当前加工；记忆与遗忘要求延迟验证；动机与元认知让我们追问愿不愿学、会不会调整。今天将这些判断落到可观察目标。选一个真实功能，写出目标、学生基础、支持方式和无助手证据，找出目前最薄弱的一环。"
+      }
+    ]
+  },
+  "readingMinutes": 5,
+  "wordCount": 918
+}
