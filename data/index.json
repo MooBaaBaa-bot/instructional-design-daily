@@ -1,8 +1,29 @@
 {
   "site": "教学设计 · 每日一概念",
-  "generatedAt": "2026-11-10T10:00:39+08:00",
-  "count": 14,
+  "generatedAt": "2026-11-11T10:00:51+08:00",
+  "count": 15,
   "articles": [
+    {
+      "id": "constructive-alignment",
+      "day": 15,
+      "date": "2026-11-11",
+      "titleZh": "建构性对齐",
+      "titleEn": "Constructive Alignment",
+      "theme": "教学设计",
+      "stageId": "s3",
+      "type": "原则",
+      "readingMinutes": 5,
+      "wordCount": 852,
+      "oneLiner": "把目标里的动作交给学生练，再从独立作品中找出达标证据。",
+      "keywords": [
+        "建构性对齐",
+        "学习活动",
+        "评价证据"
+      ],
+      "file": "data/articles/constructive-alignment.json",
+      "sourceCount": 1,
+      "updatedAt": "2026-11-11T10:00:51+08:00"
+    },
     {
       "id": "learning-objectives",
       "day": 14,
