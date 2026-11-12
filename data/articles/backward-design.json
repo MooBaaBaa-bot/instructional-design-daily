@@ -1,0 +1,155 @@
+{
+  "id": "backward-design",
+  "day": 16,
+  "date": "2026-11-12",
+  "titleZh": "逆向设计",
+  "titleEn": "Backward Design",
+  "theme": "教学设计",
+  "stageId": "s3",
+  "type": "模型",
+  "oneLiner": "先决定学生用什么表现证明学会，再决定课堂上练什么。",
+  "plainTalk": "教新生查消息，可以先想象结课那天：换一条校园传言，学生能自己找到原始公告，说明哪些细节有依据。想清楚要看见这样的回答，再安排平时的练习。",
+  "keywords": [
+    "逆向设计",
+    "迁移",
+    "评价证据"
+  ],
+  "meta": {
+    "generatedBy": "Codex 每日自动化",
+    "wordCount": 802,
+    "updatedAt": "2026-11-12T11:23:29+08:00",
+    "publishedAt": "2026-11-12T11:23:29+08:00"
+  },
+  "sections": [
+    {
+      "key": "concept",
+      "heading": "今日概念",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "高校图书馆要开一节信息素养课。备课助手收到“辨别信息真伪”后，立即生成十页讲义。此时最值得问教师的是：如果明天学生收到一张奖学金通知截图，你希望他在转发之前能自己做什么？教师说，他应该查到原通知，分清哪些说法有出处，哪些还不能确认。这个回答给后续设计划出了范围。"
+        }
+      ]
+    },
+    {
+      "key": "background",
+      "heading": "理论背景",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "麦克泰格和威金斯在“追求理解的教学设计”框架中提出，从预期结果出发，确定可接受的学习证据，再规划学习活动。作者关注学生能否把所学用在新的情境。这个顺序说的是教师备课时怎样作决定；学生上课依然可以先看示范，再尝试独立完成任务。"
+        }
+      ]
+    },
+    {
+      "key": "mechanism",
+      "heading": "核心机制",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "在这节课里，可接受的证据是一份核查记录。教师准备一张未见过的截图，请学生独立找原文、标出相关段落，说明截图中的截止日期是否可靠。如果材料没有提到截止时间，能说清目前能确定什么，也应得分。只有先想过这类答案，教师才知道练习中需要加入信息不完整的材料。"
+        }
+      ]
+    },
+    {
+      "key": "contrast",
+      "heading": "概念辨析",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "昨天的建构性对齐可以用来检查这份教案：目标要求核查出处，活动和评分是否都让学生做了这件事？逆向设计进一步回答备课从哪儿开始。它也给教师留下了修改空间。若评分时发现两位教师对“有依据”理解不同，可以先共同评两份学生样例，再修订评分标准和练习。"
+        }
+      ]
+    },
+    {
+      "key": "scenario",
+      "heading": "教学情境示例",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "设计假设：让图书馆员在备课助手里先预览学生的最终任务，并对两份候选答案试评分。第一份列出三个转载链接，第二份只引一份原始公告，却逐条解释截图与公告的差异。如果现有规则给第一份更高分，馆员就有理由调整标准，再请系统生成查找原文和处理矛盾信息的练习。"
+        }
+      ]
+    },
+    {
+      "key": "ai",
+      "heading": "与 AI 教育的连接",
+      "blocks": [
+        {
+          "type": "note",
+          "variant": "evidence",
+          "label": "理论依据",
+          "text": "作者的框架支持先约定学习证据，再选择课堂活动。白皮书解释了设计顺序；高校图书馆的工作流是本文提出的应用。"
+        },
+        {
+          "type": "note",
+          "variant": "design",
+          "label": "设计假设",
+          "text": "允许教师保存一份能达标的回答和一份看似完整却缺少依据的回答，让模型据此起草活动。教师仍需打开材料，确认学生能查到出处。"
+        },
+        {
+          "type": "note",
+          "variant": "caution",
+          "label": "适用边界",
+          "text": "如果课程鼓励学生自己提出调查问题，事先固定唯一答案会压缩探索空间。可以约定如何评价证据和推理，同时允许多个有依据的结论。"
+        }
+      ]
+    },
+    {
+      "key": "reflection",
+      "heading": "一分钟思考",
+      "question": "学生提交了三个转载链接就拿满分，你会先改哪条评分规则？怎样知道学生换一条消息仍会核查？",
+      "answer": [
+        "让学生把消息中的具体说法对应到原始材料，并说明证据的局限。一周后换一条陌生通知，独立完成同样的判断。"
+      ]
+    },
+    {
+      "key": "reading",
+      "heading": "延伸阅读",
+      "items": [
+        {
+          "authors": "Jay McTighe & Grant Wiggins",
+          "year": "2014",
+          "title": "Improve Curriculum, Assessment, and Instruction Using the Understanding by Design® Framework",
+          "source": "ASCD Professional Learning Services",
+          "link": "https://jaymctighe.com/wp-content/uploads/2020/06/UbD-White-Paper.pdf",
+          "note": "读导言第 3、4 条原则和 The Three Stages of Backward Design。",
+          "verified": "2026-11-12 核对作者署名、版权年份和原文关于三阶段与迁移的表述。"
+        }
+      ]
+    }
+  ],
+  "learning": {
+    "takeaway": "先决定学生用什么表现证明学会，再决定课堂上练什么。",
+    "scenario": "高校图书馆员用 AI 准备信息核查课，系统先生成讲义，尚未明确如何判断学生学会。",
+    "decision": "教师先确认陌生截图核查任务和评分样例，再生成针对薄弱环节的练习。",
+    "counterexample": "按链接数量评分，让三次转载同一消息的答案胜过逐项核对原文的答案。",
+    "boundary": "探索任务可约定证据质量，保留学生自行选择问题与结论的空间。",
+    "evaluation": "将同一课程的讨论班随机分配到现有教案或按核查证据倒推的教案，控制时长和材料难度。一周后给两组同一条陌生通知，无助手独立核查；由不知道分组的馆员评分，比较准确追溯出处、用原文支持判断和识别证据不足三项达标比例，另记录缺测人数。",
+    "evidenceStatus": "框架原文已核验；备课助手工作流对迁移任务成绩的影响待验证。",
+    "reflection": {
+      "question": "学生提交了三个转载链接就拿满分，你会先改哪条评分规则？怎样知道学生换一条消息仍会核查？",
+      "answer": "让学生把消息中的具体说法对应到原始材料，并说明证据的局限。一周后换一条陌生通知，独立完成同样的判断。"
+    },
+    "related": [
+      "constructive-alignment",
+      "learning-objectives"
+    ],
+    "audit": {
+      "status": "作者原文已核验",
+      "note": "白皮书用于核对设计原则；校内案例和实验均为设计假设。"
+    },
+    "claims": [
+      {
+        "claim": "作者将迁移列为目标，并提出预期结果、评价证据、学习计划三个设计阶段。",
+        "source": "https://jaymctighe.com/wp-content/uploads/2020/06/UbD-White-Paper.pdf",
+        "locator": "Introduction: What Is the UbD Framework? 第 2–4 条原则；The Three Stages of Backward Design 首段。",
+        "scope": "课程及单元的规划框架，未直接检验 AI 备课产品。",
+        "checkedAt": "2026-11-12"
+      }
+    ],
+    "corrections": []
+  },
+  "readingMinutes": 5,
+  "wordCount": 802
+}

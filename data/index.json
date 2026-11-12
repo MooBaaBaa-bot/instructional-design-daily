@@ -1,8 +1,29 @@
 {
   "site": "教学设计 · 每日一概念",
-  "generatedAt": "2026-11-11T10:00:51+08:00",
-  "count": 15,
+  "generatedAt": "2026-11-12T11:23:29+08:00",
+  "count": 16,
   "articles": [
+    {
+      "id": "backward-design",
+      "day": 16,
+      "date": "2026-11-12",
+      "titleZh": "逆向设计",
+      "titleEn": "Backward Design",
+      "theme": "教学设计",
+      "stageId": "s3",
+      "type": "模型",
+      "readingMinutes": 5,
+      "wordCount": 802,
+      "oneLiner": "先决定学生用什么表现证明学会，再决定课堂上练什么。",
+      "keywords": [
+        "逆向设计",
+        "迁移",
+        "评价证据"
+      ],
+      "file": "data/articles/backward-design.json",
+      "sourceCount": 1,
+      "updatedAt": "2026-11-12T11:23:29+08:00"
+    },
     {
       "id": "constructive-alignment",
       "day": 15,
