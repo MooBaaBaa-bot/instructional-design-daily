@@ -1,8 +1,29 @@
 {
   "site": "教学设计 · 每日一概念",
-  "generatedAt": "2026-11-12T11:23:29+08:00",
-  "count": 16,
+  "generatedAt": "2026-11-13T13:02:15+08:00",
+  "count": 17,
   "articles": [
+    {
+      "id": "scaffolding",
+      "day": 17,
+      "date": "2026-11-13",
+      "titleZh": "脚手架",
+      "titleEn": "Scaffolding",
+      "theme": "教学设计",
+      "stageId": "s3",
+      "type": "方法",
+      "readingMinutes": 5,
+      "wordCount": 815,
+      "oneLiner": "看清学生卡在哪一步，给他刚好能继续的帮助，再让他独立试一次。",
+      "keywords": [
+        "脚手架",
+        "临时支持",
+        "独立表现"
+      ],
+      "file": "data/articles/scaffolding.json",
+      "sourceCount": 1,
+      "updatedAt": "2026-11-13T13:02:15+08:00"
+    },
     {
       "id": "backward-design",
       "day": 16,
