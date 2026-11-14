@@ -389,8 +389,8 @@
       "dependsOn": [
         "backward-design"
       ],
-      "status": "planned",
-      "publishedDate": null
+      "status": "published",
+      "publishedDate": "2026-11-14"
     },
     {
       "id": "four-component-id",

@@ -1,8 +1,29 @@
 {
   "site": "教学设计 · 每日一概念",
-  "generatedAt": "2026-11-13T13:02:15+08:00",
-  "count": 17,
+  "generatedAt": "2026-11-14T14:32:27+08:00",
+  "count": 18,
   "articles": [
+    {
+      "id": "addie",
+      "day": 18,
+      "date": "2026-11-14",
+      "titleZh": "ADDIE 教学设计模型",
+      "titleEn": "ADDIE Model",
+      "theme": "教学设计",
+      "stageId": "s3",
+      "type": "模型",
+      "readingMinutes": 5,
+      "wordCount": 833,
+      "oneLiner": "用分析、设计、开发、实施、评价组织教学工作，让学生表现推动下一轮修改。",
+      "keywords": [
+        "ADDIE",
+        "教学设计",
+        "迭代评价"
+      ],
+      "file": "data/articles/addie.json",
+      "sourceCount": 2,
+      "updatedAt": "2026-11-14T14:32:27+08:00"
+    },
     {
       "id": "scaffolding",
       "day": 17,

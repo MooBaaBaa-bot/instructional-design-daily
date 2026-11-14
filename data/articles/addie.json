@@ -1,0 +1,172 @@
+{
+  "id": "addie",
+  "day": 18,
+  "date": "2026-11-14",
+  "titleZh": "ADDIE 教学设计模型",
+  "titleEn": "ADDIE Model",
+  "theme": "教学设计",
+  "stageId": "s3",
+  "type": "模型",
+  "oneLiner": "用分析、设计、开发、实施、评价组织教学工作，让学生表现推动下一轮修改。",
+  "plainTalk": "准备一次新生实验课，先查学生哪里不会，决定怎样练、怎样检查，再做材料、带学生试用，依据他们实际完成的情况继续修改。",
+  "keywords": [
+    "ADDIE",
+    "教学设计",
+    "迭代评价"
+  ],
+  "meta": {
+    "generatedBy": "Codex 每日自动化",
+    "wordCount": 833,
+    "updatedAt": "2026-11-14T14:32:27+08:00",
+    "publishedAt": "2026-11-14T14:32:27+08:00"
+  },
+  "sections": [
+    {
+      "key": "concept",
+      "heading": "今日概念",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "高校物理实验中心希望用 AI 帮学生预习测量误差。产品经理收到的需求是“生成一套微课”，但先看学生的实验报告，可能发现他们记得定义，却不会解释重复测量为什么仍有差异。ADDIE 提供了一组组织工作的阶段，让团队从学习困难出发，逐步走到可试用、可评价的教学方案。"
+        }
+      ]
+    },
+    {
+      "key": "background",
+      "heading": "理论背景",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "ADDIE 的五个字母分别代表分析、设计、开发、实施和评价。大学教学支持资源用它组织课程建设，既讨论学习者先备知识，也讨论活动、材料与课程实施。斯坦福的说明强调课程改进常常逐步发生，各部分可以处于不同阶段。这里采用这一可迭代的解释，用于安排团队的判断与交付。"
+        }
+      ]
+    },
+    {
+      "key": "mechanism",
+      "heading": "核心机制",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "分析阶段访谈教师并抽看匿名报告，确定学生最常见的解释错误。设计阶段写出目标和评分样例，例如给一组陌生测量数据，学生能提出有依据的误差解释。开发阶段制作数据案例和反馈原型。实施阶段在一节课中试用，检查学生能否进入任务、助教能否接住求助。评价阶段结合学生作答与课堂记录，决定保留或修改哪些活动。"
+        }
+      ]
+    },
+    {
+      "key": "contrast",
+      "heading": "概念辨析",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "逆向设计可以帮助团队在设计阶段先约定达标证据。脚手架可以帮助团队决定练习中给多少提示。这些概念能落实到 ADDIE 的具体工作中。若试用发现学生不会读数据表，团队可以重新分析先备知识，再补一个读表活动。每次回到前面的阶段，都应写清触发修改的学生表现。"
+        }
+      ]
+    },
+    {
+      "key": "scenario",
+      "heading": "教学情境示例",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "设计假设：产品经理与实验教师共同评审 AI 预习助手。先用几份真实错误解释建立需求，再让系统生成一组有意保留异常值的练习。教师审核每条反馈是否指向证据。小范围实施时，助教观察学生是否直接抄反馈。若出现这种情况，下一轮可调整反馈出现时机，再给新数据检查学生独立解释的能力。"
+        }
+      ]
+    },
+    {
+      "key": "ai",
+      "heading": "与 AI 教育的连接",
+      "blocks": [
+        {
+          "type": "note",
+          "variant": "evidence",
+          "label": "权威教学资源",
+          "text": "斯坦福介绍五阶段及迭代使用，爱荷华大学介绍开发中的测试、审阅及实施检查。本文用这些资源核对工作结构。"
+        },
+        {
+          "type": "note",
+          "variant": "design",
+          "label": "设计假设",
+          "text": "把每轮试用中学生的错误类型和后续修改理由关联起来。教师可追溯为什么增加一个例题、调整一条提示，并检查修改后的新作答。"
+        },
+        {
+          "type": "note",
+          "variant": "caution",
+          "label": "失败反例与边界",
+          "text": "团队把五个阶段全部打勾，评价却只记录点击率和满意度，仍无法判断学生会不会解释数据。学期时间有限时可以先做一个单元，但仍需保留学习表现检查。"
+        }
+      ]
+    },
+    {
+      "key": "reflection",
+      "heading": "一分钟思考",
+      "question": "预习助手使用率很高，实验报告仍重复同一种错误，你会回到哪个阶段，收集什么材料？",
+      "answer": [
+        "先回到分析，比较学生预习作答与实验报告，确定困难发生在哪一步；再调整设计或反馈，用新的数据解释任务检验改动。"
+      ]
+    },
+    {
+      "key": "reading",
+      "heading": "延伸阅读",
+      "items": [
+        {
+          "authors": "Stanford Teaching Commons",
+          "year": "n.d.",
+          "title": "Instructional Design Framework",
+          "source": "Stanford University",
+          "link": "https://teachingcommons.stanford.edu/teaching-guides/foundations-course-design/theory-practice/instructional-design-framework",
+          "note": "阅读 A systematic approach to designing learning experiences 及末尾迭代说明。",
+          "verified": "2026-11-14 已阅读相关章节并核对定义。"
+        },
+        {
+          "authors": "Tippie College of Business",
+          "year": "n.d.",
+          "title": "ADDIE Model",
+          "source": "The University of Iowa",
+          "link": "https://students.tippie.uiowa.edu/tippie-resources/technology/instructional-design/models/addie-model",
+          "note": "阅读 Steps in the ADDIE model 中的开发、实施和评价段。",
+          "verified": "2026-11-14 已阅读相关章节并核对定义。"
+        }
+      ]
+    }
+  ],
+  "learning": {
+    "takeaway": "用分析、设计、开发、实施、评价组织教学工作，让学生表现推动下一轮修改。",
+    "scenario": "高校实验中心开发 AI 预习助手，学生会背误差定义却难以解释实际测量数据。",
+    "decision": "依据报告中的错误确定目标，制作小单元原型，教师审阅后试用，以独立作答决定下一轮修改。",
+    "counterexample": "五阶段文档齐全，只用点击率判断课程有效。",
+    "boundary": "五阶段可小步迭代；学科解释仍需教师审核，模型生成速度不能代替学生表现证据。",
+    "evaluation": "设计假设：同课讨论班随机使用原预习材料或新原型，保持时间、知识点和测量难度一致。一周后让学生独立解释陌生数据，盲评解释是否引用数值、识别异常并说明推断局限。另记先备知识、缺测比例、教师审核时间与模型反馈错误率。",
+    "evidenceStatus": "大学教学资源支持阶段定义与迭代方式；AI 预习方案的学习效果待验证。",
+    "reflection": {
+      "question": "预习助手使用率很高，实验报告仍重复同一种错误，你会回到哪个阶段，收集什么材料？",
+      "answer": "先回到分析，比较学生预习作答与实验报告，确定困难发生在哪一步；再调整设计或反馈，用新的数据解释任务检验改动。"
+    },
+    "related": [
+      "backward-design",
+      "scaffolding",
+      "learning-objectives"
+    ],
+    "audit": {
+      "status": "权威资源相关章节已核验",
+      "note": "引用限于工作结构与课程改进方法，未宣称 ADDIE 或 AI 产品具有固定效果量。"
+    },
+    "claims": [
+      {
+        "claim": "ADDIE 包含五阶段，课程不同部分可以在不同阶段迭代。",
+        "source": "https://teachingcommons.stanford.edu/teaching-guides/foundations-course-design/theory-practice/instructional-design-framework",
+        "locator": "A systematic approach to designing learning experiences 五条定义及其后两段。",
+        "scope": "高校课程设计方法说明。",
+        "checkedAt": "2026-11-14"
+      },
+      {
+        "claim": "开发阶段可反复测试审阅，实施时检查学生端材料，评价可使用形成性与总结性评估。",
+        "source": "https://students.tippie.uiowa.edu/tippie-resources/technology/instructional-design/models/addie-model",
+        "locator": "Steps in the ADDIE model，Step 3、Step 4、Step 5。",
+        "scope": "大学课程开发指南，未检验本案例 AI 产品。",
+        "checkedAt": "2026-11-14"
+      }
+    ],
+    "corrections": []
+  },
+  "readingMinutes": 5,
+  "wordCount": 833
+}
