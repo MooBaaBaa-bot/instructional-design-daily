@@ -1,8 +1,29 @@
 {
   "site": "教学设计 · 每日一概念",
-  "generatedAt": "2026-11-14T14:32:27+08:00",
-  "count": 18,
+  "generatedAt": "2026-11-15T13:54:02+08:00",
+  "count": 19,
   "articles": [
+    {
+      "id": "four-component-id",
+      "day": 19,
+      "date": "2026-11-15",
+      "titleZh": "四要素教学设计（4C/ID）",
+      "titleEn": "Four-Component Instructional Design",
+      "theme": "教学设计",
+      "stageId": "s3",
+      "type": "模型",
+      "readingMinutes": 5,
+      "wordCount": 871,
+      "oneLiner": "让学生练完整任务，并在需要推理、操作和熟练化的地方配置不同支持。",
+      "keywords": [
+        "4C/ID",
+        "复杂学习",
+        "完整任务"
+      ],
+      "file": "data/articles/four-component-id.json",
+      "sourceCount": 1,
+      "updatedAt": "2026-11-15T13:54:02+08:00"
+    },
     {
       "id": "addie",
       "day": 18,
