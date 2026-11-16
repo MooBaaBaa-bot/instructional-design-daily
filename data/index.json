@@ -1,8 +1,29 @@
 {
   "site": "教学设计 · 每日一概念",
-  "generatedAt": "2026-11-15T13:54:02+08:00",
-  "count": 19,
+  "generatedAt": "2026-11-16T10:02:48+08:00",
+  "count": 20,
   "articles": [
+    {
+      "id": "inquiry-based",
+      "day": 20,
+      "date": "2026-11-16",
+      "titleZh": "探究式学习",
+      "titleEn": "Inquiry-Based Learning",
+      "theme": "教学策略",
+      "stageId": "s4",
+      "type": "方法",
+      "readingMinutes": 5,
+      "wordCount": 847,
+      "oneLiner": "让学生提出可研究的问题，用证据比较解释，并说明为什么这样判断。",
+      "keywords": [
+        "探究",
+        "证据",
+        "解释"
+      ],
+      "file": "data/articles/inquiry-based.json",
+      "sourceCount": 1,
+      "updatedAt": "2026-11-16T10:02:48+08:00"
+    },
     {
       "id": "four-component-id",
       "day": 19,
