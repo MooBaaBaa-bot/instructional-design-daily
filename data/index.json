@@ -1,8 +1,29 @@
 {
   "site": "教学设计 · 每日一概念",
-  "generatedAt": "2026-11-16T10:02:48+08:00",
-  "count": 20,
+  "generatedAt": "2026-11-17T10:02:45+08:00",
+  "count": 21,
   "articles": [
+    {
+      "id": "problem-based",
+      "day": 21,
+      "date": "2026-11-17",
+      "titleZh": "问题式学习",
+      "titleEn": "Problem-Based Learning",
+      "theme": "教学策略",
+      "stageId": "s4",
+      "type": "方法",
+      "readingMinutes": 5,
+      "wordCount": 899,
+      "oneLiner": "用复杂问题暴露知识缺口，再把自主学习的发现带回讨论。",
+      "keywords": [
+        "问题式学习",
+        "知识缺口",
+        "自主学习"
+      ],
+      "file": "data/articles/problem-based.json",
+      "sourceCount": 1,
+      "updatedAt": "2026-11-17T10:02:45+08:00"
+    },
     {
       "id": "inquiry-based",
       "day": 20,
