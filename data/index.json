@@ -1,8 +1,29 @@
 {
   "site": "教学设计 · 每日一概念",
-  "generatedAt": "2026-11-17T10:02:45+08:00",
-  "count": 21,
+  "generatedAt": "2026-11-18T11:10:05+08:00",
+  "count": 22,
   "articles": [
+    {
+      "id": "project-based",
+      "day": 22,
+      "date": "2026-11-18",
+      "titleZh": "项目式学习",
+      "titleEn": "Project-Based Learning",
+      "theme": "教学策略",
+      "stageId": "s4",
+      "type": "方法",
+      "readingMinutes": 5,
+      "wordCount": 818,
+      "oneLiner": "围绕有意义的作品持续调查、反馈和修订，同时检查每个人学会了什么。",
+      "keywords": [
+        "项目式学习",
+        "持续探究",
+        "作品修订"
+      ],
+      "file": "data/articles/project-based.json",
+      "sourceCount": 1,
+      "updatedAt": "2026-11-18T11:10:05+08:00"
+    },
     {
       "id": "problem-based",
       "day": 21,

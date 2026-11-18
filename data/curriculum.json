@@ -452,8 +452,8 @@
       "dependsOn": [
         "problem-based"
       ],
-      "status": "planned",
-      "publishedDate": null
+      "status": "published",
+      "publishedDate": "2026-11-18"
     },
     {
       "id": "cooperative-learning",

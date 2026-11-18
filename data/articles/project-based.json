@@ -1,0 +1,156 @@
+{
+  "id": "project-based",
+  "day": 22,
+  "date": "2026-11-18",
+  "titleZh": "项目式学习",
+  "titleEn": "Project-Based Learning",
+  "theme": "教学策略",
+  "stageId": "s4",
+  "type": "方法",
+  "oneLiner": "围绕有意义的作品持续调查、反馈和修订，同时检查每个人学会了什么。",
+  "plainTalk": "给校园设计一份可用的导览，要调查访客需要，试做路线，请人试走，再改作品。最后每个人还要说清某个设计为什么这样改。",
+  "keywords": [
+    "项目式学习",
+    "持续探究",
+    "作品修订"
+  ],
+  "meta": {
+    "generatedBy": "Codex 每日自动化",
+    "wordCount": 818,
+    "updatedAt": "2026-11-18T11:10:05+08:00",
+    "publishedAt": "2026-11-18T11:10:05+08:00"
+  },
+  "sections": [
+    {
+      "key": "concept",
+      "heading": "今日概念",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "高校交互设计课要求小组为新生制作校园问路助手原型。学生需要理解真实使用者的问题、整理地点信息、测试对话，并向校内服务人员演示成果。项目式学习可以围绕这样的作品组织持续学习，让知识在调查、制作和修改中被使用。教师从开始就需要约定作品标准与个人学习目标，避免只在展示日评价。"
+        }
+      ]
+    },
+    {
+      "key": "background",
+      "heading": "理论背景",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "PBLWorks 的项目设计框架把关键知识、理解和能力作为学习目标，提出有挑战的问题、持续探究、真实性、学生选择、反思、批评与修订、公开成果等设计要素。本文采用这一机构框架帮助审视课程。它提供设计原则，具体高校原型课程的学习效果仍需用学生表现检验。"
+        }
+      ]
+    },
+    {
+      "key": "mechanism",
+      "heading": "核心机制",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "在问路助手项目中，小组发现“去图书馆”可能指主馆或分馆，需要决定何时追问。学生先访谈新生，再比较两种对话方案，邀请同伴试用并记录走错路线的原因。教师让学生说明一次修改依据哪条观察、涉及哪个交互原则。知识应用、反馈和修订形成连续的学习机会，作品版本也能成为讨论依据。"
+        }
+      ]
+    },
+    {
+      "key": "contrast",
+      "heading": "概念辨析",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "昨天的问题式学习常用案例暴露知识缺口，再通过自主学习与讨论整合知识。今天的项目式学习更突出持续制作、修订和面向受众解释成果，两者可以重叠。判断课程是否实现预期，要追踪学生作出了哪些决定、用了什么证据，以及反馈后发生了什么变化。持续时间可以按课程目标与资源调整。"
+        }
+      ]
+    },
+    {
+      "key": "scenario",
+      "heading": "教学情境示例",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "设计假设：AI 项目平台允许学生为一个关键决定保存需求依据、候选方案和测试记录，再生成下一轮检查建议。教师在中期评审时要求每个成员解释不同的一项取舍。助手可以协助整理记录和发现缺失材料，学生需确认建议并给出自己的理由，最终向校内服务人员展示可操作原型。"
+        }
+      ]
+    },
+    {
+      "key": "ai",
+      "heading": "与 AI 教育的连接",
+      "blocks": [
+        {
+          "type": "note",
+          "variant": "evidence",
+          "label": "框架依据",
+          "text": "PBLWorks 强调持续探究、反馈修订与面向课堂外受众展示作品。本文的记录和个人解释功能属于产品设计假设。"
+        },
+        {
+          "type": "note",
+          "variant": "design",
+          "label": "设计假设",
+          "text": "展示前让每人独立解释一个新出现的用户需求将怎样改变设计，再对照小组原型检查知识应用。教师结合过程记录和个人表现评分。"
+        },
+        {
+          "type": "note",
+          "variant": "caution",
+          "label": "失败反例与边界",
+          "text": "一个熟练成员配合 AI 完成全部原型，其他成员只准备演示稿，作品评分掩盖了个人差异。新手可获得例子和阶段支持，教师应控制范围并确保每个人能接触核心任务。"
+        }
+      ]
+    },
+    {
+      "key": "reflection",
+      "heading": "一分钟思考",
+      "question": "小组原型获好评，但有成员无法解释追问逻辑，你会如何补充评价证据？",
+      "answer": [
+        "给每人一个新的歧义问路情境，独立写出追问方案并解释理由，再结合其过程记录判断需要补练的知识。"
+      ]
+    },
+    {
+      "key": "reading",
+      "heading": "延伸阅读",
+      "items": [
+        {
+          "authors": "PBLWorks",
+          "year": "n.d.",
+          "title": "Gold Standard PBL: Essential Project Design Elements",
+          "source": "PBLWorks / Buck Institute for Education",
+          "link": "https://www.pblworks.org/gold-standard/pbl-project-design",
+          "note": "阅读学习目标说明，以及 Sustained Inquiry、Critique & Revision 和 Public Product。",
+          "verified": "2026-11-18 已核对官方框架各设计要素的定义。"
+        }
+      ]
+    }
+  ],
+  "learning": {
+    "takeaway": "围绕有意义的作品持续调查、反馈和修订，同时检查每个人学会了什么。",
+    "scenario": "高校交互设计课开发校园问路助手，小组优秀作品可能掩盖个人理解不足。",
+    "decision": "把关键设计决定关联到需求、测试和修改理由，并加入个人变式任务。",
+    "counterexample": "少数成员用 AI 完成原型，全组同分，无法识别谁掌握核心原则。",
+    "boundary": "按先备知识控制项目范围，提供阶段支持与公平的核心任务参与机会。",
+    "evaluation": "同课小组随机使用现有平台或决定记录加个人解释的原型，控制项目目标、时长与教师支持。一周后个人无助手解决陌生交互情境，盲评需求识别、方案依据及反馈修订质量；另记组内参与分布、缺测率与教师评审时间。",
+    "evidenceStatus": "官方设计框架已核验；高校 AI 平台学习效果待实验。",
+    "reflection": {
+      "question": "小组原型获好评，但有成员无法解释追问逻辑，你会如何补充评价证据？",
+      "answer": "给每人一个新的歧义问路情境，独立写出追问方案并解释理由，再结合其过程记录判断需要补练的知识。"
+    },
+    "related": [
+      "problem-based",
+      "constructive-alignment",
+      "scaffolding"
+    ],
+    "audit": {
+      "status": "机构原始框架已核验",
+      "note": "以框架定义支持课程设计描述，未据此声称固定学习收益。"
+    },
+    "claims": [
+      {
+        "claim": "该框架以知识和能力为目标，包含持续探究、反思、反馈修订和向课堂外受众展示成果。",
+        "source": "https://www.pblworks.org/gold-standard/pbl-project-design",
+        "locator": "学习目标导言及 Seven Essential Project Design Elements 各项定义。",
+        "scope": "PBLWorks 的项目式学习设计框架，高校案例需结合课程验证。",
+        "checkedAt": "2026-11-18"
+      }
+    ],
+    "corrections": []
+  },
+  "readingMinutes": 5,
+  "wordCount": 818
+}
