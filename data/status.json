@@ -1,19 +1,19 @@
 {
-  "lastPublishedAt": "2026-11-18T11:10:05+08:00",
-  "lastPublishedDate": "2026-11-18",
-  "lastConceptId": "project-based",
-  "lastConceptTitle": "项目式学习（Project-Based Learning）",
-  "lastDay": 22,
-  "publishedCount": 22,
+  "lastPublishedAt": "2026-11-19T10:09:44+08:00",
+  "lastPublishedDate": "2026-11-19",
+  "lastConceptId": "cooperative-learning",
+  "lastConceptTitle": "合作学习（Cooperative Learning）",
+  "lastDay": 23,
+  "publishedCount": 23,
   "totalPlanned": 30,
-  "nextConceptId": "cooperative-learning",
-  "nextConceptTitle": "合作学习（Cooperative Learning）",
+  "nextConceptId": "direct-instruction",
+  "nextConceptTitle": "直接教学（Direct Instruction）",
   "schedule": {
     "timezone": "Asia/Shanghai",
     "startTime": "10:00",
     "note": "10:00 是任务启动时间。检索、撰写、校验与提交部署需要数分钟，页面生效通常晚于 10:00；定时服务本身也可能延迟或失败。"
   },
   "publisher": "Codex 每日自动化",
-  "deployVerifiedAt": "2026-11-18T11:11:46+08:00",
+  "deployVerifiedAt": null,
   "deployNote": "内容由定时任务写入 data/ 后提交仓库，GitHub Pages 重建后生效；页面只读取已提交的数据，不会用前端日期切换冒充更新。"
 }

@@ -1,8 +1,29 @@
 {
   "site": "教学设计 · 每日一概念",
-  "generatedAt": "2026-11-18T11:10:05+08:00",
-  "count": 22,
+  "generatedAt": "2026-11-19T10:09:44+08:00",
+  "count": 23,
   "articles": [
+    {
+      "id": "cooperative-learning",
+      "day": 23,
+      "date": "2026-11-19",
+      "titleZh": "合作学习",
+      "titleEn": "Cooperative Learning",
+      "theme": "教学策略",
+      "stageId": "s4",
+      "type": "方法",
+      "readingMinutes": 5,
+      "wordCount": 838,
+      "oneLiner": "让共同目标依靠彼此帮助实现，并为每个人的理解保留证据。",
+      "keywords": [
+        "积极互赖",
+        "个体责任",
+        "合作学习"
+      ],
+      "file": "data/articles/cooperative-learning.json",
+      "sourceCount": 1,
+      "updatedAt": "2026-11-19T10:09:44+08:00"
+    },
     {
       "id": "project-based",
       "day": 22,
