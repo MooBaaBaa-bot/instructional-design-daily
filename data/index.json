@@ -1,8 +1,29 @@
 {
   "site": "教学设计 · 每日一概念",
-  "generatedAt": "2026-11-19T10:09:44+08:00",
-  "count": 23,
+  "generatedAt": "2026-11-20T13:03:49+08:00",
+  "count": 24,
   "articles": [
+    {
+      "id": "direct-instruction",
+      "day": 24,
+      "date": "2026-11-20",
+      "titleZh": "直接教学",
+      "titleEn": "Direct Instruction",
+      "theme": "教学策略",
+      "stageId": "s4",
+      "type": "方法",
+      "readingMinutes": 5,
+      "wordCount": 833,
+      "oneLiner": "把关键判断示范清楚，再让学生逐步承担推理并独立检验。",
+      "keywords": [
+        "直接教学",
+        "明确示范",
+        "引导练习"
+      ],
+      "file": "data/articles/direct-instruction.json",
+      "sourceCount": 1,
+      "updatedAt": "2026-11-20T13:03:49+08:00"
+    },
     {
       "id": "cooperative-learning",
       "day": 23,
