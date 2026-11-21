@@ -1,8 +1,29 @@
 {
   "site": "教学设计 · 每日一概念",
-  "generatedAt": "2026-11-20T13:03:49+08:00",
-  "count": 24,
+  "generatedAt": "2026-11-21T12:45:17+08:00",
+  "count": 25,
   "articles": [
+    {
+      "id": "formative-assessment",
+      "day": 25,
+      "date": "2026-11-21",
+      "titleZh": "形成性评价",
+      "titleEn": "Formative Assessment",
+      "theme": "学习评价",
+      "stageId": "s5",
+      "type": "方法",
+      "readingMinutes": 5,
+      "wordCount": 851,
+      "oneLiner": "让学生的学习证据进入下一步教学决策，并继续检查理解。",
+      "keywords": [
+        "形成性评价",
+        "学习证据",
+        "教学决策"
+      ],
+      "file": "data/articles/formative-assessment.json",
+      "sourceCount": 1,
+      "updatedAt": "2026-11-21T12:45:17+08:00"
+    },
     {
       "id": "direct-instruction",
       "day": 24,
