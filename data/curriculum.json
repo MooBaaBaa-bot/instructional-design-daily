@@ -515,8 +515,8 @@
       "dependsOn": [
         "formative-assessment"
       ],
-      "status": "planned",
-      "publishedDate": null
+      "status": "published",
+      "publishedDate": "2026-11-22"
     },
     {
       "id": "authentic-assessment",

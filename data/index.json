@@ -1,8 +1,29 @@
 {
   "site": "教学设计 · 每日一概念",
-  "generatedAt": "2026-11-21T12:45:17+08:00",
-  "count": 25,
+  "generatedAt": "2026-11-22T10:00:35+08:00",
+  "count": 26,
   "articles": [
+    {
+      "id": "summative-assessment",
+      "day": 26,
+      "date": "2026-11-22",
+      "titleZh": "总结性评价",
+      "titleEn": "Summative Assessment",
+      "theme": "学习评价",
+      "stageId": "s5",
+      "type": "方法",
+      "readingMinutes": 5,
+      "wordCount": 862,
+      "oneLiner": "依据明确标准判断阶段学习成果，并说明分数能够支持什么结论。",
+      "keywords": [
+        "总结性评价",
+        "阶段成果",
+        "评价标准"
+      ],
+      "file": "data/articles/summative-assessment.json",
+      "sourceCount": 2,
+      "updatedAt": "2026-11-22T10:00:35+08:00"
+    },
     {
       "id": "formative-assessment",
       "day": 25,

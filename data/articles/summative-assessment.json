@@ -1,0 +1,172 @@
+{
+  "id": "summative-assessment",
+  "day": 26,
+  "date": "2026-11-22",
+  "titleZh": "总结性评价",
+  "titleEn": "Summative Assessment",
+  "theme": "学习评价",
+  "stageId": "s5",
+  "type": "方法",
+  "oneLiner": "依据明确标准判断阶段学习成果，并说明分数能够支持什么结论。",
+  "plainTalk": "学完一段游泳课程，让学员按约定要求独立游一遍，判断是否达标；成绩要说明他会了什么，不能只看动作是否好看。",
+  "keywords": [
+    "总结性评价",
+    "阶段成果",
+    "评价标准"
+  ],
+  "meta": {
+    "generatedBy": "Codex 每日自动化",
+    "wordCount": 862,
+    "updatedAt": "2026-11-22T10:00:35+08:00",
+    "publishedAt": "2026-11-22T10:00:35+08:00"
+  },
+  "sections": [
+    {
+      "key": "concept",
+      "heading": "今日概念",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "高校研究方法课结束时，教师要判断学生能否提出有证据支撑的研究方案。平台可以汇总期末报告和答辩表现，依据预先说明的标准作出阶段判断，这体现了总结性评价的用途。对产品经理而言，不能只问模型能否快速给分，还要问：分数究竟代表哪项能力，任务是否让学生展示了这项能力，教师凭什么接受这个判断。"
+        }
+      ]
+    },
+    {
+      "key": "background",
+      "heading": "理论背景",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "卡内基梅隆大学教学中心将总结性评价描述为在教学单元结束时，对照标准判断学生学习结果，例子包括期中考试、期末项目和论文。这里的“阶段”可以小于整门课程。该中心同时指出，评价结果仍可用于指导后续学习。本文依据这一定义讨论产品设计，不把总结性评价等同于某一种题型，也不把自动评分速度当作教学效果。"
+        }
+      ]
+    },
+    {
+      "key": "mechanism",
+      "heading": "核心机制",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "在研究方案案例中，先明确三个判断维度：问题是否清楚、方法是否回应问题、证据是否支撑论证。教师为不同水平准备示例，再检查评分理由是否指向作品中的具体内容。平台应保留各维度表现，避免一个总分掩盖不同困难。若任务允许助手参与，还要写明评的是借助工具完成方案的能力，还是学生独立解释方法的能力。"
+        }
+      ]
+    },
+    {
+      "key": "contrast",
+      "heading": "概念辨析",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "形成性评价强调证据如何支持下一步学习，总结性评价强调阶段成果判断。同一份报告可以承担两种用途，关键在结果怎样使用。评分者反复给出接近的分数，也可能始终偏爱华丽措辞；这种一致并不能排除测错目标的可能。教学中心关于目标、任务与教学活动对齐的说明，为检查这类问题提供了设计依据。"
+        }
+      ]
+    },
+    {
+      "key": "scenario",
+      "heading": "教学情境示例",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "设计假设：高校 AI 评分助手先标记报告中的证据段落，再提出分维度评分建议与疑点。教师查看原文后确认，边界案例交由第二位教师复核。学生可看到标准、依据和申诉入口。若报告主张与口头解释不一致，教师补充询问并记录理由，不能让模型仅凭语言流畅程度替代对研究推理的判断。"
+        }
+      ]
+    },
+    {
+      "key": "ai",
+      "heading": "与 AI 教育的连接",
+      "blocks": [
+        {
+          "type": "note",
+          "variant": "evidence",
+          "label": "权威定义与设计原则",
+          "text": "教学中心说明阶段评价的功能及目标对齐要求。这些说明没有验证本文 AI 评分方案的准确性。"
+        },
+        {
+          "type": "note",
+          "variant": "design",
+          "label": "设计假设",
+          "text": "试用阶段让助手只提供可追溯建议，保存人工确认和修改理由，用于检查评分遗漏。"
+        },
+        {
+          "type": "note",
+          "variant": "caution",
+          "label": "失败反例与边界",
+          "text": "按篇幅和术语密度给高分，会奖励包装。不同表达方式需有展示同一能力的机会；重大成绩判断保留人工复核，超出当前任务证据的能力结论不应自动生成。"
+        }
+      ]
+    },
+    {
+      "key": "reflection",
+      "heading": "一分钟思考",
+      "question": "模型与教师总分很接近，是否足以把期末报告交给模型自动定分？",
+      "answer": [
+        "先检查各维度和临界达标案例的分歧，抽查评分依据是否对应目标能力，再用独立解释任务核对。总体相关接近不能排除局部误判，应保留复核与申诉。"
+      ]
+    },
+    {
+      "key": "reading",
+      "heading": "延伸阅读",
+      "items": [
+        {
+          "authors": "Carnegie Mellon University, Eberly Center",
+          "year": "n.d.",
+          "title": "What is the difference between formative and summative assessment?",
+          "source": "Eberly Center 教学资源",
+          "link": "https://www.cmu.edu/teaching/assessment/basics/formative-summative.html",
+          "note": "阅读 Summative assessment 小节的定义、例子与后续使用说明。",
+          "verified": "2026-11-22 已阅读相关正文；页面未标明发布日期。"
+        },
+        {
+          "authors": "Carnegie Mellon University, Eberly Center",
+          "year": "n.d.",
+          "title": "Why should assessments, learning objectives, and instructional strategies be aligned?",
+          "source": "Eberly Center 教学资源",
+          "link": "https://www.cmu.edu/teaching/assessment/basics/alignment.html",
+          "note": "阅读开头三项对齐问题及课程要素错位的例子。",
+          "verified": "2026-11-22 已核验相关正文；属于教学设计指导，非 AI 效果实验。"
+        }
+      ]
+    }
+  ],
+  "learning": {
+    "takeaway": "依据明确标准判断阶段学习成果，并说明分数能够支持什么结论。",
+    "scenario": "高校研究方法课要为期末报告定分，AI 可能把语言包装误当研究推理。",
+    "decision": "先确定能力目标与标准，展示分维度证据，由教师确认建议并复核临界案例。",
+    "counterexample": "术语多、篇幅长就得到高分，模型重复打分稳定却偏离课程目标。",
+    "boundary": "明确工具允许范围和评价对象；重要成绩由教师复核，提供等价表达机会和申诉通道。",
+    "evaluation": "先对去标识化历史作品开展离线盲评：两名学科教师独立评分并讨论分歧，比较 AI 与审定结果的维度偏差、临界达标误判和不同表达群体差异。试点再以独立口头解释任务检查方法选择与证据推理，并记录复核时间。教师评分也需审查；一致性或省时不能单独证明能力解释成立，更不能证明学习提升。",
+    "evidenceStatus": "权威教学资源定义与对齐原则已核验；AI 评分设计尚待验证。",
+    "reflection": {
+      "question": "模型与教师总分很接近，是否足以把期末报告交给模型自动定分？",
+      "answer": "先检查各维度和临界达标案例的分歧，抽查评分依据是否对应目标能力，再用独立解释任务核对。总体相关接近不能排除局部误判，应保留复核与申诉。"
+    },
+    "related": [
+      "formative-assessment",
+      "learning-objectives",
+      "constructive-alignment"
+    ],
+    "audit": {
+      "status": "相关正文已核验",
+      "note": "两条来源均为大学教学中心指导；未声称实验收益或固定效果量。案例与测评方案为原创设计假设。"
+    },
+    "claims": [
+      {
+        "claim": "总结性评价在教学单元结束时对照标准判断学习结果，结果亦可用于后续学习。",
+        "source": "https://www.cmu.edu/teaching/assessment/basics/formative-summative.html",
+        "locator": "Summative assessment 小节，第1段、例子及末段。",
+        "scope": "高等教育教学资源中的功能定义，不限定为期末笔试，不验证 AI 效果。",
+        "checkedAt": "2026-11-22"
+      },
+      {
+        "claim": "评价任务应与学习目标及教学活动对齐，以揭示目标学习成果。",
+        "source": "https://www.cmu.edu/teaching/assessment/basics/alignment.html",
+        "locator": "开头正文和三个对齐问题；What if the components of a course are misaligned? 小节。",
+        "scope": "课程设计指导，支持检查目标与证据的对应关系，不能替代本地评分验证。",
+        "checkedAt": "2026-11-22"
+      }
+    ],
+    "corrections": []
+  },
+  "readingMinutes": 5,
+  "wordCount": 862
+}

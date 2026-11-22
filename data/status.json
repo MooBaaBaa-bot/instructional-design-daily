@@ -1,19 +1,19 @@
 {
-  "lastPublishedAt": "2026-11-21T12:45:17+08:00",
-  "lastPublishedDate": "2026-11-21",
-  "lastConceptId": "formative-assessment",
-  "lastConceptTitle": "形成性评价（Formative Assessment）",
-  "lastDay": 25,
-  "publishedCount": 25,
+  "lastPublishedAt": "2026-11-22T10:00:35+08:00",
+  "lastPublishedDate": "2026-11-22",
+  "lastConceptId": "summative-assessment",
+  "lastConceptTitle": "总结性评价（Summative Assessment）",
+  "lastDay": 26,
+  "publishedCount": 26,
   "totalPlanned": 30,
-  "nextConceptId": "summative-assessment",
-  "nextConceptTitle": "总结性评价（Summative Assessment）",
+  "nextConceptId": "authentic-assessment",
+  "nextConceptTitle": "真实性评价与量规（Authentic Assessment and Rubrics）",
   "schedule": {
     "timezone": "Asia/Shanghai",
     "startTime": "10:00",
     "note": "10:00 是任务启动时间。检索、撰写、校验与提交部署需要数分钟，页面生效通常晚于 10:00；定时服务本身也可能延迟或失败。"
   },
   "publisher": "Codex 每日自动化",
-  "deployVerifiedAt": "2026-11-21T12:46:09+08:00",
+  "deployVerifiedAt": null,
   "deployNote": "内容由定时任务写入 data/ 后提交仓库，GitHub Pages 重建后生效；页面只读取已提交的数据，不会用前端日期切换冒充更新。"
 }
