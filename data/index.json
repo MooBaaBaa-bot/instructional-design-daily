@@ -1,8 +1,29 @@
 {
   "site": "教学设计 · 每日一概念",
-  "generatedAt": "2026-11-22T10:00:35+08:00",
-  "count": 26,
+  "generatedAt": "2026-11-23T10:00:24+08:00",
+  "count": 27,
   "articles": [
+    {
+      "id": "authentic-assessment",
+      "day": 27,
+      "date": "2026-11-23",
+      "titleZh": "真实性评价与量规",
+      "titleEn": "Authentic Assessment and Rubrics",
+      "theme": "学习评价",
+      "stageId": "s5",
+      "type": "方法",
+      "readingMinutes": 5,
+      "wordCount": 848,
+      "oneLiner": "让学生在有约束的实践任务中作出判断，并用可观察的质量描述评价表现。",
+      "keywords": [
+        "真实性评价",
+        "量规",
+        "表现标准"
+      ],
+      "file": "data/articles/authentic-assessment.json",
+      "sourceCount": 2,
+      "updatedAt": "2026-11-23T10:00:24+08:00"
+    },
     {
       "id": "summative-assessment",
       "day": 26,

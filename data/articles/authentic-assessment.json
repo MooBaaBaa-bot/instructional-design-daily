@@ -1,0 +1,172 @@
+{
+  "id": "authentic-assessment",
+  "day": 27,
+  "date": "2026-11-23",
+  "titleZh": "真实性评价与量规",
+  "titleEn": "Authentic Assessment and Rubrics",
+  "theme": "学习评价",
+  "stageId": "s5",
+  "type": "方法",
+  "oneLiner": "让学生在有约束的实践任务中作出判断，并用可观察的质量描述评价表现。",
+  "plainTalk": "学会做饭不能只背菜谱，可以请人按预算做一餐，再看食物是否熟透、搭配是否合理，并请他解释为什么这样安排。",
+  "keywords": [
+    "真实性评价",
+    "量规",
+    "表现标准"
+  ],
+  "meta": {
+    "generatedBy": "Codex 每日自动化",
+    "wordCount": 848,
+    "updatedAt": "2026-11-23T10:00:24+08:00",
+    "publishedAt": "2026-11-23T10:00:24+08:00"
+  },
+  "sections": [
+    {
+      "key": "concept",
+      "heading": "今日概念",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "高校教育技术课程要求学生为教师设计一款作业反馈助手。若期末只考术语定义，很难看到学生能否处理实际设计中的取舍。真实性评价可以安排接近实践的任务：给定教师需求、有限时间和错误反馈样例，让学生提出方案并说明依据。量规则把评价维度及不同质量水平写清楚，帮助学生和教师讨论方案究竟好在哪里。"
+        }
+      ]
+    },
+    {
+      "key": "background",
+      "heading": "理论背景",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "印第安纳大学教学中心强调，将所学用于新情境并作出判断，是真实性任务的重要特点；其页面援引威金斯讨论现实约束和实践表现。本文核验的是该中心的阐释，未把转引当作已读原著。卡内基梅隆大学教学中心则将量规说明为表达表现期待的评分工具，包含任务维度及各水平的特征描述。"
+        }
+      ]
+    },
+    {
+      "key": "mechanism",
+      "heading": "核心机制",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "在反馈助手任务中，可设置“证据与决策对应”这一维度：初步水平只列需求；发展水平能引用访谈片段解释一个功能；较高水平能比较冲突证据、说明取舍，并提出检验办法。这是本文为案例拟定的量规片段，需由教师试评后修订。等级描述围绕同一种能力展开，避免把字数、图表数量当作推理深度。"
+        }
+      ]
+    },
+    {
+      "key": "contrast",
+      "heading": "概念辨析",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "真实客户名称和精美原型不能自动使任务具有真实性。关键是学生是否需要在约束下运用知识、判断并解释。量规也不等于“优秀、良好、一般”三个标签；它应描述可辨认的表现。与总结性评价的关系在于，真实性任务和量规可以服务阶段判断，也可以在草稿互评中帮助学生修改设计。"
+        }
+      ]
+    },
+    {
+      "key": "scenario",
+      "heading": "教学情境示例",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "设计假设：课程平台提供同一组需求材料和故障样例，学生先提交取舍记录，再用量规审阅同伴方案。AI 只协助定位证据、提示尚未解释的矛盾，教师审查建议。最终每人面对一个新的教师限制独立解释如何调整方案。这样可以同时查看团队作品与个人判断，避免把小组原型质量直接归为每个人的能力。"
+        }
+      ]
+    },
+    {
+      "key": "ai",
+      "heading": "与 AI 教育的连接",
+      "blocks": [
+        {
+          "type": "note",
+          "variant": "evidence",
+          "label": "权威教学资源",
+          "text": "两所大学的教学资源分别说明实践任务特点和量规结构，本文未据此宣称 AI 互评已经提升学习。"
+        },
+        {
+          "type": "note",
+          "variant": "design",
+          "label": "设计假设",
+          "text": "让学生用证据解释一次方案修改，再通过独立变式任务观察是否能运用同一判断标准。"
+        },
+        {
+          "type": "note",
+          "variant": "caution",
+          "label": "失败反例与边界",
+          "text": "以演示精美程度评分，会偏向制作资源充足者。提供共同材料和等价表达方式，允许多种合理方案；新手先练习基本判断，量规经样例试评后再用于正式成绩。"
+        }
+      ]
+    },
+    {
+      "key": "reflection",
+      "heading": "一分钟思考",
+      "question": "两个方案都符合模板，一个照搬示例，一个解释了不同取舍，你会怎样修改量规？",
+      "answer": [
+        "增加证据与决策对应的描述，要求说明约束、比较选项和取舍理由。用不同形式的样例试评，再给学生陌生限制独立回应，检查标准是否识别推理而非模板熟练度。"
+      ]
+    },
+    {
+      "key": "reading",
+      "heading": "延伸阅读",
+      "items": [
+        {
+          "authors": "Indiana University Bloomington, Center for Innovative Teaching & Learning",
+          "year": "n.d.",
+          "title": "Authentic Assessment",
+          "source": "CITL 教学资源",
+          "link": "https://citl.indiana.edu/teaching-resources/assessing-student-learning/authentic-assessment/index.html",
+          "note": "阅读定义、任务特点及 Examples of Authentic Assessments；页面转引 Wiggins (1998)，本次未直接核验原著。",
+          "verified": "2026-11-23 已核对网页相关正文。"
+        },
+        {
+          "authors": "Carnegie Mellon University, Eberly Center",
+          "year": "n.d.",
+          "title": "Grading and Performance Rubrics",
+          "source": "Eberly Center 教学资源",
+          "link": "https://www.cmu.edu/teaching/designteach/teach/rubrics.html",
+          "note": "阅读 What are Rubrics? 小节；关注维度和各水平表现描述。",
+          "verified": "2026-11-23 已核对定义与用途正文，未据此推断 AI 效果。"
+        }
+      ]
+    }
+  ],
+  "learning": {
+    "takeaway": "让学生在有约束的实践任务中作出判断，并用可观察的质量描述评价表现。",
+    "scenario": "高校教育技术课程评审 AI 反馈助手，精美团队原型可能掩盖个人不会解释设计取舍。",
+    "decision": "给定共同需求与约束，用证据对应决策的量规评价作品，再让个人独立回应新的限制。",
+    "counterexample": "按图表数量和展示美观给分，学生照搬模板也能获得高评价。",
+    "boundary": "控制资源差异，提供等价表达方式；新手先练基础判断，量规经教师试评，保留多种合理解法。",
+    "evaluation": "同课班级随机使用现有任务说明或共同约束加描述性量规版本，保持材料和学习时长一致。一周后个人无助手完成新情境设计判断，由不了解分组的教师评定证据选择、取舍解释和方案修订；同时记录评分分歧、资源投入与缺测。该比较评估整套设计，不能把收益单独归因于 AI 或量规。",
+    "evidenceStatus": "大学教学资源定义已核验；案例量规、AI 支持和预期收益均待本地验证。",
+    "reflection": {
+      "question": "两个方案都符合模板，一个照搬示例，一个解释了不同取舍，你会怎样修改量规？",
+      "answer": "增加证据与决策对应的描述，要求说明约束、比较选项和取舍理由。用不同形式的样例试评，再给学生陌生限制独立回应，检查标准是否识别推理而非模板熟练度。"
+    },
+    "related": [
+      "summative-assessment",
+      "constructive-alignment",
+      "project-based"
+    ],
+    "audit": {
+      "status": "相关正文已核验",
+      "note": "明确区分机构阐释、转引原著与原创案例。未宣称真实性任务或 AI 普遍优于其他评价形式。"
+    },
+    "claims": [
+      {
+        "claim": "真实性任务要求在新情境中运用所学并作出判断，常包含现实约束。",
+        "source": "https://citl.indiana.edu/teaching-resources/assessing-student-learning/authentic-assessment/index.html",
+        "locator": "Authentic Assessment 定义段及任务特点列表。",
+        "scope": "大学教学中心的设计指导，含对 Wiggins 的转引；不直接证明本文产品效果。",
+        "checkedAt": "2026-11-23"
+      },
+      {
+        "claim": "量规表达表现期待，区分任务维度并描述不同掌握水平的特征，可用于评分或形成性反馈。",
+        "source": "https://www.cmu.edu/teaching/designteach/teach/rubrics.html",
+        "locator": "What are Rubrics? 两段正文。",
+        "scope": "量规定义与用途，具体标准的质量仍需试评，不能替代学科判断。",
+        "checkedAt": "2026-11-23"
+      }
+    ],
+    "corrections": []
+  },
+  "readingMinutes": 5,
+  "wordCount": 848
+}
