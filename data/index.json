@@ -1,8 +1,29 @@
 {
   "site": "教学设计 · 每日一概念",
-  "generatedAt": "2026-11-23T10:00:24+08:00",
-  "count": 27,
+  "generatedAt": "2026-11-24T10:04:48+08:00",
+  "count": 28,
   "articles": [
+    {
+      "id": "transfer",
+      "day": 28,
+      "date": "2026-11-24",
+      "titleZh": "学习迁移",
+      "titleEn": "Transfer of Learning",
+      "theme": "迁移与 AI",
+      "stageId": "s6",
+      "type": "机制",
+      "readingMinutes": 5,
+      "wordCount": 941,
+      "oneLiner": "检查学生能否识别新任务中的相关原理，并据情境调整用法。",
+      "keywords": [
+        "学习迁移",
+        "新情境",
+        "独立运用"
+      ],
+      "file": "data/articles/transfer.json",
+      "sourceCount": 1,
+      "updatedAt": "2026-11-24T10:04:48+08:00"
+    },
     {
       "id": "authentic-assessment",
       "day": 27,
