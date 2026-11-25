@@ -1,8 +1,29 @@
 {
   "site": "教学设计 · 每日一概念",
-  "generatedAt": "2026-11-24T10:04:48+08:00",
-  "count": 28,
+  "generatedAt": "2026-11-25T10:00:17+08:00",
+  "count": 29,
   "articles": [
+    {
+      "id": "intelligent-tutoring",
+      "day": 29,
+      "date": "2026-11-25",
+      "titleZh": "智能辅导系统与自适应学习",
+      "titleEn": "Intelligent Tutoring Systems and Adaptive Learning",
+      "theme": "迁移与 AI",
+      "stageId": "s6",
+      "type": "方法",
+      "readingMinutes": 5,
+      "wordCount": 846,
+      "oneLiner": "依据学生作答证据调整当前支持和后续任务，再检查独立学习表现。",
+      "keywords": [
+        "智能辅导系统",
+        "自适应学习",
+        "学生模型"
+      ],
+      "file": "data/articles/intelligent-tutoring.json",
+      "sourceCount": 1,
+      "updatedAt": "2026-11-25T10:00:17+08:00"
+    },
     {
       "id": "transfer",
       "day": 28,
