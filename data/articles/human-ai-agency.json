@@ -1,0 +1,157 @@
+{
+  "id": "human-ai-agency",
+  "day": 30,
+  "date": "2026-11-26",
+  "titleZh": "人机协同与学习者主体性",
+  "titleEn": "Human-AI Collaboration and Learner Agency",
+  "theme": "迁移与 AI",
+  "stageId": "s6",
+  "type": "原则",
+  "oneLiner": "让学习者参与目标、判断与反思，并获得足以承担这些责任的支持。",
+  "plainTalk": "导航可以帮你看路线，但你要知道去哪、为什么选这条路，遇到封路还能重新判断；学习中的 AI 也应帮助你练会这些决定。",
+  "keywords": [
+    "学习者主体性",
+    "人机协同",
+    "判断责任"
+  ],
+  "meta": {
+    "generatedBy": "Codex 每日自动化",
+    "wordCount": 826,
+    "updatedAt": "2026-11-26T10:45:50+08:00",
+    "publishedAt": "2026-11-26T10:45:50+08:00"
+  },
+  "sections": [
+    {
+      "key": "concept",
+      "heading": "今日概念",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "高校研究方法课里，学生用 AI 生成一份完整研究方案，交付很快，却解释不了为什么选择问卷。人机协同需要回答的不只是工具做了多少，还包括学生承担了哪些判断。本文用学习者主体性讨论学生参与目标设定、行动选择和反思的能力与机会。产品设计应让这些参与留下具体证据，并提供适当支持。"
+        }
+      ]
+    },
+    {
+      "key": "background",
+      "heading": "理论背景",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "经合组织的《二〇三〇学生能动性》概念说明，将学生能动性表述为设定目标、反思并负责任地行动以促成改变的能力。文件提醒，这一概念没有全球一致定义，也不能简单等同于自主、发声或选择。本文沿用课程中的“主体性”标签对应这一框架，引用其概念边界，不据此宣称某个 AI 界面能够提升主体性。"
+        }
+      ]
+    },
+    {
+      "key": "mechanism",
+      "heading": "核心机制",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "在研究方案案例中，学生先写出要回答的问题、现有证据和不确定处，再请助手提出替代方法。随后由学生对照研究目标，解释采用或拒绝建议的理由，并检查引用材料。平台可以保存初始判断与修订记录，让教师看到学习发生在哪个决定上。若学生只复制助手给出的理由，仍需通过追问或新情境任务检查理解。"
+        }
+      ]
+    },
+    {
+      "key": "contrast",
+      "heading": "概念辨析",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "给出很多按钮不等于学生有能力作出有根据的选择；要求所有步骤独立完成，也可能让新手失去必要帮助。主体性可以在师生和同伴支持中发展。对产品而言，需要区分目标能力与辅助劳动：若目标是判断证据质量，就保留学生核验环节；若目标是论证结构，格式整理可以由工具支持，但最终解释仍要由学生完成。"
+        }
+      ]
+    },
+    {
+      "key": "scenario",
+      "heading": "教学情境示例",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "设计假设：高校研究助手在关键节点先收取学生方案，再提供两种有差异的建议和待核实处。学生可以采纳、修改或拒绝，并用来源说明理由。教师为新手提供比较样例和短反馈，允许逐步增加决策空间。系统也提供继续向教师求助的路径，不能把学生拒绝自动建议视为使用失败。"
+        }
+      ]
+    },
+    {
+      "key": "ai",
+      "heading": "与 AI 教育的连接",
+      "blocks": [
+        {
+          "type": "note",
+          "variant": "evidence",
+          "label": "概念框架依据",
+          "text": "经合组织文件用于解释能动性的含义与支持条件，不是生成式 AI 教学效果实验。"
+        },
+        {
+          "type": "note",
+          "variant": "design",
+          "label": "设计假设",
+          "text": "记录关键决定、依据和修订，结合教师反馈与独立任务，观察学生能否负责任地使用建议。"
+        },
+        {
+          "type": "note",
+          "variant": "caution",
+          "label": "失败反例与边界",
+          "text": "默认采纳全部建议，再让学生点击“我已理解”，可能只有形式参与。新手需要知识与示范；允许书面或口头解释，避免把表达流畅或拒绝次数当作主体性高低。"
+        }
+      ]
+    },
+    {
+      "key": "reflection",
+      "heading": "一分钟思考",
+      "question": "为了培养主体性，是否应取消助手的示范和推荐？",
+      "answer": [
+        "先确定学生需要练习的决定，再提供理解标准所需的示范。让学生选择并解释、验证和修订，逐步撤去支持。用新任务观察判断质量，而不以工具使用少作为成功。"
+      ]
+    },
+    {
+      "key": "reading",
+      "heading": "延伸阅读",
+      "items": [
+        {
+          "authors": "OECD",
+          "year": 2019,
+          "title": "Student Agency for 2030",
+          "source": "OECD Future of Education and Skills 2030 Concept Note",
+          "link": "https://www.oecd.org/content/dam/oecd/en/about/projects/edu/education-2040/concept-notes/Student_Agency_for_2030_concept_note.pdf",
+          "note": "PDF第2页 In Brief 定义与共同支持；第4页说明定义边界及成人支持。",
+          "verified": "2026-11-26 已阅读相关原文；概念指导不等于本文 AI 设计的效果验证。"
+        }
+      ]
+    }
+  ],
+  "learning": {
+    "takeaway": "让学习者参与目标、判断与反思，并获得足以承担这些责任的支持。",
+    "scenario": "高校研究助手生成完整方案，学生快速交付但无法解释方法选择与证据依据。",
+    "decision": "先收取个人判断，再提供替代建议；学生核验、说明取舍和修订，教师提供分层支持。",
+    "counterexample": "一键采纳所有建议后勾选已理解，把形式确认误判为有根据的自主决策。",
+    "boundary": "新手需要知识、示范和反馈；表达方式可等价替换，不能以拒绝建议次数或少用工具衡量主体性。",
+    "evaluation": "同课学生随机使用一键建议版或先判断再比较版，保持材料、学习时长和教师支持一致。一周后先无助手完成新研究情境，盲评目标说明、证据核验和方法取舍；再允许工具，观察是否发现并纠正一条教师预设的错误建议。记录依赖程度、负担和缺测，预先区分独立能力与协作表现，不用满意度或采纳率替代学习结果。",
+    "evidenceStatus": "权威概念框架已核验；高校人机协同设计与学习收益待本地实验。",
+    "reflection": {
+      "question": "为了培养主体性，是否应取消助手的示范和推荐？",
+      "answer": "先确定学生需要练习的决定，再提供理解标准所需的示范。让学生选择并解释、验证和修订，逐步撤去支持。用新任务观察判断质量，而不以工具使用少作为成功。"
+    },
+    "related": [
+      "intelligent-tutoring",
+      "metacognition-srl",
+      "self-determination",
+      "transfer"
+    ],
+    "audit": {
+      "status": "相关原文已核验",
+      "note": "明确主体性标签与 student agency 框架的对应；概念定义存在语境差异，未把规范性愿景写成 AI 效果结论。"
+    },
+    "claims": [
+      {
+        "claim": "该框架将能动性联系到目标设定、反思与负责任的行动，并指出它不等同于自主或选择，需要成人支持。",
+        "source": "https://www.oecd.org/content/dam/oecd/en/about/projects/edu/education-2040/concept-notes/Student_Agency_for_2030_concept_note.pdf",
+        "locator": "PDF第2页 In Brief 定义；第4页 Student Agency for 2030 前三段。",
+        "scope": "OECD Learning Compass 2030 的概念界定，无全球统一定义；不直接证明高校 AI 功能有效。",
+        "checkedAt": "2026-11-26"
+      }
+    ],
+    "corrections": []
+  },
+  "readingMinutes": 5,
+  "wordCount": 826
+}
